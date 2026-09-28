@@ -554,7 +554,7 @@ Every candidate problem was scored against 5 yes/no questions. A problem must pa
 ## 6. Project Structure
 
 ```
-CodeSprint/
+MPCAgent/
  ├── README.md                              # This file
  ├── buildplan/
  │   ├── tech-stack.md                      # Why LangGraph, FastAPI, YAML, no database
@@ -834,8 +834,8 @@ The tool adapter (`tool_adapter.py`) translates tool schemas automatically — O
 
 | Deliverable | Spec | Status |
 |-------------|------|--------|
-| **10-slide deck** | Per CodeSprint §6.2: problem → gap → solution → autonomy → architecture → trace → guardrails → scalability → ROI → roadmap | Phase 8.5 |
-| **10-minute video** | Per CodeSprint §6.3: problem (0:00–2:00) → architecture (2:00–3:30) → live walkthrough normal+robustness+platform-switch (3:30–7:30) → safety/scalability (7:30–9:00) → ROI/close (9:00–10:00) | Phase 8.6 |
+| **10-slide deck** | Per MPCAgent §6.2: problem → gap → solution → autonomy → architecture → trace → guardrails → scalability → ROI → roadmap | Phase 8.5 |
+| **10-minute video** | Per MPCAgent §6.3: problem (0:00–2:00) → architecture (2:00–3:30) → live walkthrough normal+robustness+platform-switch (3:30–7:30) → safety/scalability (7:30–9:00) → ROI/close (9:00–10:00) | Phase 8.6 |
 | **Running demo** | Webhook → agent → tools → HITL → monitoring → deviation → re-plan + sibling switch + edge case injection | Phases 4–7 |
 
 ---
