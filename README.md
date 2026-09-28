@@ -1,9 +1,9 @@
-# PSA Nexus — Agentic Multi-Party Coordination Platform
+# Nexus — Agentic Multi-Party Coordination Platform
 
-> **One brain, seven problems.** PSA Nexus is a provider-agnostic, agentic AI platform that coordinates multi-party operations at PSA Singapore. Built for the **PSA Code Sprint: Agentic AI in Action** competition. Flagship demo: cross-terminal container transfers (PPT → Tuas).
+> **One brain, seven problems.** Nexus is a provider-agnostic, agentic AI platform that coordinates multi-party operations at Singapore. Built for the **Code Sprint: Agentic AI in Action** competition. Flagship demo: cross-terminal container transfers (PPT → Tuas).
 
 ```
-  PSA Nexus
+  Nexus
   ├── One LangGraph core — same reasoning engine for every problem
   ├── 7 YAML configs — swap one file, get a different problem
   ├── 8 LLM providers — Claude, GPT-4o, Gemini, DeepSeek, Ollama, vLLM, LM Studio, any OpenAI-compatible API
@@ -14,7 +14,7 @@
 
 ## Table of Contents
 
-1. [What Is PSA Nexus?](#1-what-is-psa-nexus)
+1. [What Is Nexus?](#1-what-is-nexus)
 2. [The Problem & Cluster](#2-the-problem--cluster)
 3. [Why This Needs an Agent (Not a Script)](#3-why-this-needs-an-agent-not-a-script)
 4. [What Happens — How the Agent Solves It](#4-what-happens--how-the-agent-solves-it)
@@ -28,9 +28,9 @@
 
 ---
 
-## 1. What Is PSA Nexus?
+## 1. What Is Nexus?
 
-**PSA Nexus** is an agentic AI coordination platform for port operations. Instead of building seven separate tools for seven separate problems, Nexus builds **one intelligent core** and swaps what it knows per problem.
+**Nexus** is an agentic AI coordination platform for port operations. Instead of building seven separate tools for seven separate problems, Nexus builds **one intelligent core** and swaps what it knows per problem.
 
 | Layer | What It Does |
 |-------|-------------|
@@ -89,8 +89,8 @@ PB-12 is not alone. Six sibling problems share the same root cause — **manual 
 | Road ITT trip (PPT→Tuas, ~35 km) | $150 | Prime mover + driver + fuel |
 | LTA chassis limit | 1× 40ft (FEU) OR 2× 20ft (TEU) per truck | Land Transport Authority |
 | Sea ITT marginal charter | $0 | Existing scheduled feeder rotation |
-| Sea ITT handling | $35/lift-move | PSA standard |
-| Yard re-handle | $35/move | PSA standard |
+| Sea ITT handling | $35/lift-move | standard |
+| Yard re-handle | $35/move | standard |
 | Missed connection | $150/container | SLA penalty |
 | Yard block capacity | 4,500 TEU | CITOS parameter |
 
@@ -119,8 +119,8 @@ Every candidate problem was scored against 5 yes/no questions. A problem must pa
 | Filter | Question | PB-12 Answer | Why It Matters |
 |--------|----------|-------------|----------------|
 | **L1** Non-deterministic | Does it need multi-step reasoning and adaptive re-planning — not just a lookup? | ✅ Yes — road/sea split depends on live truck counts, feeder status, tide windows, and traffic that change every minute | A simple if/else would fail when conditions shift mid-operation |
-| **L2** Multi-system | Does it span 3+ PSA systems? | ✅ Yes — CITOS (PPT), CITOS (Tuas), OptETruck, PORTNET, Feeder operator | The value is bridging disconnected systems no single dashboard covers |
-| **L3** Real cost | Does failure cost PSA money every month? | ✅ Yes — $8K/incident, 4–6/month | No real cost = no real impact |
+| **L2** Multi-system | Does it span 3+ systems? | ✅ Yes — CITOS (PPT), CITOS (Tuas), OptETruck, PORTNET, Feeder operator | The value is bridging disconnected systems no single dashboard covers |
+| **L3** Real cost | Does failure cost money every month? | ✅ Yes — $8K/incident, 4–6/month | No real cost = no real impact |
 | **L4** Needs human judgment | Are some decisions too risky or ambiguous to fully automate? | ✅ Yes — dispatching 16 trucks ($2,400) or holding a feeder ($800/hr, tidal risk) needs a human's sign-off | This is where agents earn trust — by knowing when to ask |
 | **L5** Macro-impact | Does fixing it move a number leadership cares about? | ✅ Yes — vessel dwell time, $384K–$576K annual, $1.26M cluster | A micro-optimisation is not worth an agent |
 
@@ -150,7 +150,7 @@ Every candidate problem was scored against 5 yes/no questions. A problem must pa
 
 ```
  ╔══════════════════════════════════════════════════════════════════════╗
- ║         PSA NEXUS — HOW IT SOLVES A PROBLEM                          ║
+ ║         NEXUS — HOW IT SOLVES A PROBLEM                          ║
  ║         Example: Moving 120 containers from PPT to Tuas              ║
  ╚══════════════════════════════════════════════════════════════════════╝
 
@@ -276,7 +276,7 @@ Every candidate problem was scored against 5 yes/no questions. A problem must pa
 *Standard CS programming methodology flowchart — control flow, decisions, loops, and error paths. Same story as above, in technical notation.*
 
 ```
- PROGRAM: PSA Nexus — Agentic Multi-Party Coordination Platform
+ PROGRAM: Nexus — Agentic Multi-Party Coordination Platform
  LANGUAGE: Python 3.11  |  FRAMEWORK: LangGraph  |  SERVER: FastAPI
 
  ┌─────────────────────────────────────────────────────────────────┐
@@ -317,7 +317,7 @@ Every candidate problem was scored against 5 yes/no questions. A problem must pa
  │  • Controls:      POST /agent/hitl/respond  (approve/reject)    │
  │  │                POST /agent/inject-edge-case                  │
  │  │                POST /agent/run-demo                          │
- │  • Dashboard:     GET  /ui/  (PSA Nexus — problem switcher)     │
+ │  • Dashboard:     GET  /ui/  (Nexus — problem switcher)     │
  └───────────────────────────┬─────────────────────────────────────┘
                              │
                              ▼
@@ -554,7 +554,7 @@ Every candidate problem was scored against 5 yes/no questions. A problem must pa
 ## 6. Project Structure
 
 ```
- PSACodeSprint/
+CodeSprint/
  ├── README.md                              # This file
  ├── buildplan/
  │   ├── tech-stack.md                      # Why LangGraph, FastAPI, YAML, no database
@@ -569,14 +569,14 @@ Every candidate problem was scored against 5 yes/no questions. A problem must pa
  │       ├── Section 8: Gap inventory (23 gaps, honest built-vs-missing)
  │       └── Section 9: Target architecture + tech stack
  │
- ├── research/                              # Phase 1 — How PSA works
+ ├── research/                              # Phase 1 — How works
  │   ├── sectors/
  │   │   ├── berth-marine.md               # Vessels, berths, cranes
  │   │   ├── container-yard-transport.md   # AGVs, yard cranes, reefers
  │   │   ├── gate-haulage.md               # Gates, trucks, customs
  │   │   └── multimodal-logistics.md       # Sea-air, warehousing, visibility
  │   ├── systems/
- │   │   └── baseline-systems.md           # 7 PSA digital systems
+ │   │   └── baseline-systems.md           # 7 digital systems
  │   └── flows/
  │       └── critical-flows.md             # Physical, info, decision flows
  │
@@ -589,7 +589,7 @@ Every candidate problem was scored against 5 yes/no questions. A problem must pa
  │   ├── 03-01-litmus-test-scores.md       # 5-filter litmus test + cluster ranking
  │   └── 03-02-autonomy-level.md           # HITL guardrails + risk profile
  │
- ├── app/                                   # ← NEW: PSA Nexus platform (Phases 4–8)
+ ├── app/                                   # ← NEW: Nexus platform (Phases 4–8)
  │   ├── main.py                           # FastAPI: webhook + SSE + HITL + switch + UI
  │   ├── agent/
  │   │   ├── state.py                      # AgentState (TypedDict — messages, trace, confidence)
@@ -637,7 +637,7 @@ Every candidate problem was scored against 5 yes/no questions. A problem must pa
  │   │   ├── pb-01-berth.yaml             # Sibling: berth delay (VTIS, OptEVoyage)
  │   │   └── pb-0*.yaml                   # 7 C2 configs total (all completed to parity)
  │   ├── ui/
- │   │   ├── index.html                    # PSA Nexus dashboard + problem switcher
+ │   │   ├── index.html                    # Nexus dashboard + problem switcher
  │   │   ├── style.css                     # Professional dark theme
  │   │   └── app.js                        # SSE client, HITL cards, trace, notifications
  │   └── tests/
@@ -676,11 +676,7 @@ Every candidate problem was scored against 5 yes/no questions. A problem must pa
 ### Install & Run
 
 ```bash
-# 1. Clone
-git clone https://github.com/your-org/PSACodeSprint.git
-cd PSACodeSprint
-
-# 2. Install
+# 1. Install
 pip install -r requirements.txt
 # pinned: fastapi, uvicorn, langgraph==1.2.11, anthropic, openai,
 #         pydantic, pyyaml, httpx, google-generativeai, langsmith
@@ -693,15 +689,17 @@ export ANTHROPIC_API_KEY=sk-ant-...          # for Claude
 
 # 4. Start the server
 uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+cd app/frontend
+npm run dev
 
 # 5. Open the dashboard
-open http://localhost:8000/ui/
+open http://localhost:5173/
 ```
 
-### Docker
+### Docker (In Progress)
 
 ```bash
-docker build -t psa-nexus .
+docker build -t-nexus .
 docker compose up              # reads LLM_PROVIDER, LLM_MODEL, LLM_BASE_URL from env
 # or override:
 LLM_PROVIDER=ollama LLM_MODEL=llama3.1:8b LLM_BASE_URL=http://host.docker.internal:11434/v1 docker compose up
@@ -847,7 +845,7 @@ The tool adapter (`tool_adapter.py`) translates tool schemas automatically — O
 | Metric | Value |
 |--------|-------|
 | Operational sectors mapped | 4 (Berth & Marine, Yard & Transport, Gate & Haulage, Multimodal) |
-| Digital systems documented | 7 (CITOS, PORTNET, OptETruck, SmartBooking & iBOX, OptEModal, CALISTA, PSA BDP) |
+| Digital systems documented | 7 (CITOS, PORTNET, OptETruck, SmartBooking & iBOX, OptEModal, CALISTA, BDP) |
 | Disruption scenarios | 16 across all 4 sectors |
 | Problem charters | 16 structured |
 | Litmus test passes | 12 of 16 (4 filtered: deterministic / micro-ROI / pure MILP) |
@@ -871,7 +869,7 @@ The tool adapter (`tool_adapter.py`) translates tool schemas automatically — O
 
 ## 11. Sources & Research
 
-All research claims are cited with a priority ladder: **PSA official → Singapore government → industry/academic → news.**
+All research claims are cited with a priority ladder: **official → Singapore government → industry/academic → news.**
 
 | Phase | What Was Researched | Output |
 |-------|-------------------|--------|
@@ -880,11 +878,11 @@ All research claims are cited with a priority ladder: **PSA official → Singapo
 | **Phase 3** | 5-point litmus test on all 16 → cluster scoring → autonomy level → master charter | `problem-selection/03-01-litmus-test-scores.md`, `problem-selection/03-02-autonomy-level.md`, `buildplan/03-03-master-charter.md` |
 
 **Key references:**
-- PSA Singapore — CITOS, PORTNET, OptETruck, Tuas Mega Port
+- Singapore — CITOS, PORTNET, OptETruck, Tuas Mega Port
 - Singapore Land Transport Authority — Prime mover chassis regulations
 - Maritime and Port Authority of Singapore (MPA) — Vessel arrival and berth planning
 - Industry standards — Vessel demurrage rates, feeder charter rates, container handling costs
 
 ---
 
-*PSA Nexus is a competition prototype — not a production deployment. It runs on mock data that mirrors real PSA operations with Singapore-grounded cost parameters.*
+*Nexus is a competition prototype — not a production deployment. It runs on mock data that mirrors real operations with Singapore-grounded cost parameters.*
