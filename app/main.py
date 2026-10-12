@@ -1,4 +1,4 @@
-"""PSA Nexus — Unified FastAPI app (Phase 6).
+"""Nexus — Unified FastAPI app (Phase 6).
 
 Mounts: health, mocks, webhook (agent entry point), agent switch-problem,
 HITL endpoints, SSE streaming, edge injection.
@@ -19,13 +19,13 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 
-from app.mocks.routers.citos_ppt import router as citos_ppt_router
-from app.mocks.routers.citos_tuas import router as citos_tuas_router
-from app.mocks.routers.optetruck import router as optetruck_router
+from app.mocks.routers.tos_ppt import router as tos_ppt_router
+from app.mocks.routers.tos_tuas import router as tos_tuas_router
+from app.mocks.routers.truck_system import router as truck_system_router
 from app.mocks.routers.feeder import router as feeder_router
-from app.mocks.routers.portnet import router as portnet_router
+from app.mocks.routers.pcs import router as pcs_router
 from app.mocks.routers.notify import router as notify_router
-logger = logging.getLogger("psa-nexus.startup")
+logger = logging.getLogger("nexus.startup")
 
 try:
     from app.mocks.routers.vtis import router as vtis_router
@@ -33,10 +33,10 @@ except ImportError as exc:
     vtis_router = None  # type: ignore
     logger.warning("VTIS router unavailable: %s", exc)
 try:
-    from app.mocks.routers.optevoyage import router as optevoyage_router
+    from app.mocks.routers.voyage_tracking import router as voyage_tracking_router
 except ImportError as exc:
-    optevoyage_router = None  # type: ignore
-    logger.warning("OptEvoyage router unavailable: %s", exc)
+    voyage_tracking_router = None  # type: ignore
+    logger.warning("Voyage Tracking System router unavailable: %s", exc)
 try:
     from app.mocks.routers.berth import router as berth_router
 except ImportError as exc:
@@ -123,11 +123,11 @@ async def lifespan(app: FastAPI):
     if warnings:
         for w in warnings:
             logger.warning("STARTUP: %s", w)
-        print(f"[PSA Nexus] Startup completed with {len(warnings)} warning(s):")
+        print(f"[Nexus] Startup completed with {len(warnings)} warning(s):")
         for w in warnings:
             print(f"  ⚠ {w}")
     else:
-        print("[PSA Nexus] Startup validation passed")
+        print("[Nexus] Startup validation passed")
 
     yield  # app is running
 
@@ -137,10 +137,10 @@ async def lifespan(app: FastAPI):
         cancel_all_timeouts()
     except (ImportError, Exception):
         pass
-    print("[PSA Nexus] Shutdown complete")
+    print("[Nexus] Shutdown complete")
 
 app = FastAPI(
-    title="PSA Nexus — Agentic Multi-Party Coordination Platform",
+    title="Nexus — Agentic Multi-Party Coordination Platform",
     description="Unified platform for Cluster C2 (7 problems) — flagship PB-12 ITT Coordination",
     version="0.1.0",
     lifespan=lifespan,
@@ -155,16 +155,16 @@ app.add_middleware(
 )
 
 # Mount mock routers
-app.include_router(citos_ppt_router)
-app.include_router(citos_tuas_router)
-app.include_router(optetruck_router)
+app.include_router(tos_ppt_router)
+app.include_router(tos_tuas_router)
+app.include_router(truck_system_router)
 app.include_router(feeder_router)
-app.include_router(portnet_router)
+app.include_router(pcs_router)
 app.include_router(notify_router)
 if vtis_router is not None:
     app.include_router(vtis_router)
-if optevoyage_router is not None:
-    app.include_router(optevoyage_router)
+if voyage_tracking_router is not None:
+    app.include_router(voyage_tracking_router)
 if berth_router is not None:
     app.include_router(berth_router)
 
@@ -554,7 +554,7 @@ async def run_demo(payload: dict | None = None):
         event_data = {
             "event_type": "ITT_COORDINATION_REQUEST",
             "timestamp": (_now - timedelta(minutes=5)).isoformat(),
-            "source": "CITOS_PPT",
+            "source": "Terminal Operating System_PPT",
             "priority": "high",
             "origin_terminal": "PPT",
             "destination_terminal": "TUAS",
@@ -606,7 +606,7 @@ async def list_scenarios():
 
 
 # ---------------------------------------------------------------------------
-# Problem switching — PSA Nexus platform core (4.8)
+# Problem switching — Nexus platform core (4.8)
 # Consumer of app/tools/registry.py owned by Phase 5.1 — imported lazily
 # Single source of truth is app.agent.problem_switcher.get_active_problem_id()
 # ---------------------------------------------------------------------------
@@ -796,7 +796,7 @@ async def create_event(problem_id: str):
     event_data = {
         "event_type": "ITT_COORDINATION_REQUEST",
         "timestamp": (_now - timedelta(minutes=random.randint(1, 10))).isoformat(),
-        "source": "CITOS_PPT",
+        "source": "Terminal Operating System_PPT",
         "priority": random.choice(["high", "high", "medium"]),
         "origin_terminal": "PPT",
         "destination_terminal": "TUAS",
@@ -948,7 +948,7 @@ async def simulate_webhook(problem_id: str):
     event_data = {
         "event_type": "ITT_COORDINATION_REQUEST",
         "timestamp": (_now - timedelta(minutes=5)).isoformat(),
-        "source": "CITOS_PPT",
+        "source": "Terminal Operating System_PPT",
         "priority": "high",
         "origin_terminal": "PPT",
         "destination_terminal": "TUAS",
@@ -1059,11 +1059,11 @@ async def mocks_alias(path: str = ""):
         "path": f"/mocks/{path}" if path else "/mocks/",
         "canonical_prefix": "/api",
         "available": [
-            "/api/citos/ppt/containers",
-            "/api/citos/tuas/loading-sequence",
-            "/api/optetruck/capacity",
+            "/api/tos/ppt/containers",
+            "/api/tos/tuas/loading-sequence",
+            "/api/truck_system/capacity",
             "/api/feeder/{feeder_id}",
-            "/api/portnet/feeder/{feeder_id}",
+            "/api/pcs/feeder/{feeder_id}",
         ],
     }
 
@@ -1074,7 +1074,7 @@ async def mocks_alias(path: str = ""):
 
 @app.get("/health")
 async def health():
-    return {"status": "ok", "service": "psa-nexus"}
+    return {"status": "ok", "service": "nexus"}
 
 
 import pathlib as _pathlib

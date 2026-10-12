@@ -2,7 +2,7 @@ from fastapi import APIRouter
 
 from app.mocks.pb01_data import get_berth_data
 
-router = APIRouter(prefix="/api/optevoyage", tags=["OptEVoyage"])
+router = APIRouter(prefix="/api/voyage_tracking", tags=["Voyage Tracking System"])
 
 
 @router.get("/berth/{berth_id}")
@@ -12,4 +12,4 @@ async def get_berth_availability(berth_id: str, vessel_id: str = "MV EVER GIVEN"
 
 @router.get("/health")
 async def health():
-    return {"status": "ok", "service": "optevoyage-mock"}
+    return {"status": "ok", "service": "voyage_tracking-mock"}

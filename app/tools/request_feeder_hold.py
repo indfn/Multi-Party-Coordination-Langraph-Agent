@@ -12,7 +12,7 @@ def _parse_dt(s: str) -> datetime:
 
 class RequestFeederHoldTool(BaseTool):
     name = "request_feeder_hold"
-    description = "Request feeder vessel hold via PORTNET. Requires HITL Gate 3 approval. NOTE: This is a REQUEST \u2014 feeder operator may decline."
+    description = "Request feeder vessel hold via Port Community System. Requires HITL Gate 3 approval. NOTE: This is a REQUEST \u2014 feeder operator may decline."
     parameters_schema = {
         "type": "object",
         "properties": {

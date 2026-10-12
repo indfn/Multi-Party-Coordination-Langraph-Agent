@@ -1,9 +1,9 @@
-"""Canonical Pydantic schemas for PSA Nexus — consolidated from 3 sources.
+"""Canonical Pydantic schemas for Nexus — consolidated from 3 sources.
 
 Sources merged:
   - prototype/mocks/schemas.py (182 lines) — central ITT models
-  - prototype/pre_approval/ppt_citos/models.py (79 lines) — PPT-specific
-  - prototype/pre_approval/sea_itt/models.py (177 lines) — sea ITT / PORTNET
+  - prototype/pre_approval/ppt_tos/models.py (79 lines) — PPT-specific
+  - prototype/pre_approval/sea_itt/models.py (177 lines) — sea ITT / Port Community System
 
 Canonical location: app/shared/models.py (charter §9 target).
 app/mocks must NOT have its own schemas.py — re-export shim only if needed.
@@ -26,7 +26,7 @@ from pydantic import BaseModel, Field, field_validator
 
 
 # ---------------------------------------------------------------------------
-# Tool 1: get_itt_candidates (CITOS PPT)
+# Tool 1: get_itt_candidates (Terminal Operating System PPT)
 # ---------------------------------------------------------------------------
 
 class Container(BaseModel):
@@ -72,14 +72,14 @@ class ITTCandidatesResponse(BaseModel):
 
 
 class ITTCandidatesRequest(BaseModel):
-    """Request model for PPT CITOS Tool 1 (from ppt_citos/models.py)."""
+    """Request model for PPT Terminal Operating System Tool 1 (from ppt_tos/models.py)."""
 
-    cit_ppt_endpoint: str = Field(..., json_schema_extra={"example": "CITOS_PPT"})
+    cit_ppt_endpoint: str = Field(..., json_schema_extra={"example": "Terminal Operating System_PPT"})
     vessel_id: str = Field(..., json_schema_extra={"example": "MV PACIFIC STAR"})
 
 
 class YardStatusResponse(BaseModel):
-    """Yard block occupancy status (from ppt_citos/models.py)."""
+    """Yard block occupancy status (from ppt_tos/models.py)."""
 
     status: str = Field("success")
     terminal: str = Field("PPT")
@@ -89,7 +89,7 @@ class YardStatusResponse(BaseModel):
 
 
 # ---------------------------------------------------------------------------
-# Tool 2: check_road_itt_capacity (OptETruck)
+# Tool 2: check_road_itt_capacity (Truck Management System)
 # ---------------------------------------------------------------------------
 
 class RoadITTCapacityResponse(BaseModel):
@@ -110,7 +110,7 @@ class RoadITTCapacityResponse(BaseModel):
 
 
 # ---------------------------------------------------------------------------
-# Tool 3: check_sea_itt_capacity (PORTNET / Feeder)
+# Tool 3: check_sea_itt_capacity (Port Community System / Feeder)
 # ---------------------------------------------------------------------------
 
 class DepartureWindow(BaseModel):
@@ -170,7 +170,7 @@ class SeaITTCapacityResponse(BaseModel):
 class SeaITTCapacityRequest(BaseModel):
     """Request to check sea ITT capacity (from sea_itt/models.py)."""
 
-    portnet_endpoint: str = Field(..., json_schema_extra={"example": "PORTNET"})
+    pcs_endpoint: str = Field(..., json_schema_extra={"example": "Port Community System"})
     feeder_id: str = Field(..., json_schema_extra={"example": "FEEDER ATLANTIC-03"})
     current_time: str = Field(..., json_schema_extra={"example": "2026-08-19T10:35:00+08:00"})
 
@@ -178,7 +178,7 @@ class SeaITTCapacityRequest(BaseModel):
 class FeederHoldRequest(BaseModel):
     """Request to hold a feeder vessel at berth."""
 
-    portnet_endpoint: str = Field(..., json_schema_extra={"example": "PORTNET"})
+    pcs_endpoint: str = Field(..., json_schema_extra={"example": "Port Community System"})
     feeder_id: str = Field(..., json_schema_extra={"example": "FEEDER ATLANTIC-03"})
     hold_hours: float = Field(..., gt=0, le=6, json_schema_extra={"example": 1.0})
 
@@ -241,7 +241,7 @@ class ITTSplitResponse(BaseModel):
 
 
 # ---------------------------------------------------------------------------
-# Tool 5: update_tuas_loading_sequence (CITOS Tuas)
+# Tool 5: update_tuas_loading_sequence (Terminal Operating System Tuas)
 # ---------------------------------------------------------------------------
 
 class QcAdjustment(BaseModel):
@@ -269,7 +269,7 @@ class LoadingSequenceResponse(BaseModel):
 class ITTCoordinationEvent(BaseModel):
     event_type: str = Field(..., json_schema_extra={"example": "ITT_COORDINATION_REQUEST"})
     timestamp: str = Field(..., json_schema_extra={"example": "2026-08-19T10:30:00+08:00"})
-    source: str = Field(..., json_schema_extra={"example": "CITOS_PPT"})
+    source: str = Field(..., json_schema_extra={"example": "Terminal Operating System_PPT"})
     priority: str = Field(..., json_schema_extra={"example": "high"})
     origin_terminal: str = Field("PPT")
     destination_terminal: str = Field("TUAS")
@@ -300,7 +300,7 @@ class ITTCoordinationEvent(BaseModel):
         return v
 
 
-# Alias for backward compatibility (ppt_citos used WebhookEvent)
+# Alias for backward compatibility (ppt_tos used WebhookEvent)
 WebhookEvent = ITTCoordinationEvent
 
 

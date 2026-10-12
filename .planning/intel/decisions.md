@@ -1,6 +1,6 @@
 # Decisions Intel
 
-Status: NO ADRs in the ingest set. The source document (`/home/ahnaf/Documents/Projects/PSACodeSprint/CodeSprint.md`) is a PRD and contains no formal ADR decision records. However, the source DOES state framing choices (selection preferences / recommended stances). Per synthesis rules these are recorded below as PROPOSED decisions — they are NOT locked, and must be confirmed by the team (e.g., via discussion at the relevant phase or a future ADR) before being treated as binding.
+Status: NO ADRs in the ingest set. The source document (`/home/ahnaf/Documents/Projects/PortCodeSprint/CodeSprint.md`) is a PRD and contains no formal ADR decision records. However, the source DOES state framing choices (selection preferences / recommended stances). Per synthesis rules these are recorded below as PROPOSED decisions — they are NOT locked, and must be confirmed by the team (e.g., via discussion at the relevant phase or a future ADR) before being treated as binding.
 
 Default PRECEDENCE applies (ADR > SPEC > PRD > DOC) — these proposed decisions carry PRD-level authority only until confirmed.
 
@@ -15,7 +15,7 @@ Default PRECEDENCE applies (ADR > SPEC > PRD > DOC) — these proposed decisions
 
 ## D-2 — Target Autonomy Level: HITL Exception Solver (Recommended)
 - Title: Autonomy level recommendation for the agentic solution
-- Source: `/home/ahnaf/Documents/Projects/PSACodeSprint/CodeSprint.md` (§3, Phase 3, 3.2)
+- Source: `/home/ahnaf/Documents/Projects/PortCodeSprint/CodeSprint.md` (§3, Phase 3, 3.2)
 - Status: **proposed** (source marks this autonomy level as "Recommended"; not yet confirmed by the team; must be confirmed during Phase 3 execution — see REQ-p3-autonomy-level)
 - Decision statement (verbatim):
 

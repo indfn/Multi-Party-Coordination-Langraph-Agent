@@ -231,7 +231,7 @@ class TestS3APIFailure:
         mock_data.notification_log.clear()
 
         tool = RoadITTCapacityTool()
-        with mock.patch.object(tool, "execute", side_effect=Exception("503 Service Unavailable: OptETruck unreachable")):
+        with mock.patch.object(tool, "execute", side_effect=Exception("503 Service Unavailable: Truck Management System unreachable")):
             result = asyncio.run(tool.call(terminal="PPT", time_window_start="2026-08-19T11:00:00+08:00", time_window_end="2026-08-19T18:00:00+08:00", _run_id=run_id))
             assert result.confidence == 0.0
             assert "error" in result.output
@@ -255,7 +255,7 @@ class TestS3APIFailure:
         _sse_stub_publish(trace, run_id, "trace_entry", {"fallback_used": True})
 
         notifier = NotifyPartiesTool()
-        alert_msg = "ALERT: OptETruck 503 — using cached road capacity. Operator verification required."
+        alert_msg = "ALERT: Truck Management System 503 — using cached road capacity. Operator verification required."
         rn = asyncio.run(notifier.call(message=alert_msg, parties=["PPT_Yard", "Duty_Manager"], _run_id=run_id))
         assert rn.output["status"] == "sent"
         trace.append({"event": "notification", "parties": ["PPT_Yard", "Duty_Manager"], "message": alert_msg, "risk_score": 0.6})

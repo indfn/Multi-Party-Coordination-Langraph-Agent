@@ -11,9 +11,9 @@
 ## 1. Executive Summary & Operational Context
 
 - **Sector:** Multimodal Logistics & Supply Chain Adjacencies
-- **Target User Persona:** PSA ITT Operations Controller (Pasir Panjang Terminal)
+- **Target User Persona:** Port Operator ITT Operations Controller (Pasir Panjang Terminal)
 - **Parent Cluster:** C2 — Manual Multi-Party Coordination (7 passing problems, ~$316K/month aggregate)
-- **Operational Problem Statement:** When 120+ priority transhipment containers must move from Pasir Panjang Terminal (PPT) to Tuas Port via road or sea ITT during peak traffic, coordination breaks down across road ITT (OptETruck), sea ITT (feeder vessels), yard operations (separate CITOS instances at PPT and Tuas), and gate operations. PPT and Tuas CITOS are not integrated — container availability at PPT is invisible to Tuas yard planners in real-time (PORTNET updates delayed 30–60 min). The ITT split between road and sea modes is negotiated via phone calls between PPT planner, Tuas planner, and feeder operator — no system optimises the split. The result: suboptimal transport mode allocation, missed feeder connections, vessel loading delays at Tuas, and $15,600–$29,000 per incident in combined costs.
+- **Operational Problem Statement:** When 120+ priority transhipment containers must move from Pasir Panjang Terminal (PPT) to Tuas Port via road or sea ITT during peak traffic, coordination breaks down across road ITT (Truck Management System), sea ITT (feeder vessels), yard operations (separate Terminal Operating System instances at PPT and Tuas), and gate operations. PPT and Tuas Terminal Operating System are not integrated — container availability at PPT is invisible to Tuas yard planners in real-time (Port Community System updates delayed 30–60 min). The ITT split between road and sea modes is negotiated via phone calls between PPT planner, Tuas planner, and feeder operator — no system optimises the split. The result: suboptimal transport mode allocation, missed feeder connections, vessel loading delays at Tuas, and $15,600–$29,000 per incident in combined costs.
 - **Selected Autonomy Level:** Tier 2 — Human-in-the-Loop (HITL) Exception Solver
 
 ---
@@ -24,18 +24,18 @@
 
 | Step | Actor | System/Channel | Action | Time |
 |------|-------|---------------|--------|------|
-| 1 | PPT Yard Planner | CITOS (PPT) | Identifies 120 containers ready for ITT | T+0 |
+| 1 | PPT Yard Planner | Terminal Operating System (PPT) | Identifies 120 containers ready for ITT | T+0 |
 | 2 | PPT Yard Planner | Phone | Calls Tuas yard planner to discuss receiving capacity | T+5 min |
 | 3 | Tuas Yard Planner | Phone | Confirms yard blocks available, suggests 60/40 road/sea split | T+15 min |
-| 4 | PPT Yard Planner | Phone | Contacts OptETruck to dispatch 15 trucks | T+20 min |
-| 5 | OptETruck | Auto-dispatch | Dispatches trucks (but PPT gate congestion delays 5 trucks) | T+25 min |
+| 4 | PPT Yard Planner | Phone | Contacts Truck Management System to dispatch 15 trucks | T+20 min |
+| 5 | Truck Management System | Auto-dispatch | Dispatches trucks (but PPT gate congestion delays 5 trucks) | T+25 min |
 | 6 | PPT Yard Planner | Phone | Contacts feeder vessel operator to confirm 1400 departure | T+30 min |
 | 7 | Feeder Operator | Phone | Reports berth conflict — departure delayed to 1600 | T+35 min |
 | 8 | Tuas Yard Planner | Phone (from PPT planner) | Learns of feeder delay | T+40 min |
-| 9 | Tuas Yard Planner | CITOS (Tuas) | Re-sequences QC loading for delayed sea ITT containers | T+50 min |
-| 10 | Road ITT arrives | OptETruck GPS | 10 trucks arrive at Tuas — 60 containers processed | T+3 hrs |
+| 9 | Tuas Yard Planner | Terminal Operating System (Tuas) | Re-sequences QC loading for delayed sea ITT containers | T+50 min |
+| 10 | Road ITT arrives | Truck Management System GPS | 10 trucks arrive at Tuas — 60 containers processed | T+3 hrs |
 | 11 | Sea ITT arrives | Feeder vessel | Feeder arrives at Tuas — 60 containers processed | T+6 hrs |
-| 12 | QC Loading | CITOS (Tuas) | Vessel loading delayed 2 hrs waiting for sea ITT containers | T+8 hrs |
+| 12 | QC Loading | Terminal Operating System (Tuas) | Vessel loading delayed 2 hrs waiting for sea ITT containers | T+8 hrs |
 
 **Total resolution time:** 4–8 hours  
 **Coordination channels:** Phone calls between 5 parties, no system of record  
@@ -45,23 +45,23 @@
 
 | Step | Actor | System | Action | Time |
 |------|-------|--------|--------|------|
-| 1 | Agent | CITOS (PPT) | Receives container readiness event (webhook) | T+0 |
-| 2 | Agent | CITOS (PPT) | Queries PPT yard status — 120 containers confirmed ready | T+0.5 min |
-| 3 | Agent | OptETruck | Queries road ITT capacity — 20 trucks available, 90 min transit | T+1 min |
-| 4 | Agent | PORTNET | Queries feeder status — berth available, departure window 1400–1600 | T+1.5 min |
-| 5 | Agent | PORTNET | Queries downstream port tidal window — feeder must depart by 1530 | T+2 min |
+| 1 | Agent | Terminal Operating System (PPT) | Receives container readiness event (webhook) | T+0 |
+| 2 | Agent | Terminal Operating System (PPT) | Queries PPT yard status — 120 containers confirmed ready | T+0.5 min |
+| 3 | Agent | Truck Management System | Queries road ITT capacity — 20 trucks available, 90 min transit | T+1 min |
+| 4 | Agent | Port Community System | Queries feeder status — berth available, departure window 1400–1600 | T+1.5 min |
+| 5 | Agent | Port Community System | Queries downstream port tidal window — feeder must depart by 1530 | T+2 min |
 | 6 | Agent | Internal | Computes optimal split: 80 road (60 trips: $9,000) / 40 sea ($1,400 handling) (total: $10,400 vs $12,000 baseline) | T+2.5 min |
 | 7 | Agent | HITL Gate | Presents approval card to ITT coordinator | T+3 min |
 | 8 | ITT Coordinator | HITL Card | Reviews cost analysis, approves split | T+5 min |
-| 9 | Agent | OptETruck | Dispatches initial wave of 16 trucks via "PPT -> West Coast Highway -> AYE -> Tuas Port Boulevard" | T+5.5 min |
-| 10 | Agent | PORTNET | Sends feeder hold request (1 hr) with cost analysis | T+6 min |
-| 11 | Agent | CITOS (Tuas) | Updates Tuas yard planner with expected ITT arrival times | T+6.5 min |
-| 12 | Agent | PORTNET | Monitors feeder status — detects berth conflict at T+15 min | T+21 min |
+| 9 | Agent | Truck Management System | Dispatches initial wave of 16 trucks via "PPT -> West Coast Highway -> AYE -> Tuas Port Boulevard" | T+5.5 min |
+| 10 | Agent | Port Community System | Sends feeder hold request (1 hr) with cost analysis | T+6 min |
+| 11 | Agent | Terminal Operating System (Tuas) | Updates Tuas yard planner with expected ITT arrival times | T+6.5 min |
+| 12 | Agent | Port Community System | Monitors feeder status — detects berth conflict at T+15 min | T+21 min |
 | 13 | Agent | Internal | Re-computes split: 100 road / 20 sea (feeder delayed) | T+22 min |
 | 14 | Agent | HITL Gate | Presents emergency re-split to ITT coordinator | T+23 min |
 | 15 | ITT Coordinator | HITL Card | Approves emergency re-split | T+25 min |
-| 16 | Agent | OptETruck | Dispatches 4 additional trucks | T+26 min |
-| 17 | Agent | CITOS (Tuas) | Updates loading sequence for adjusted arrival times | T+27 min |
+| 16 | Agent | Truck Management System | Dispatches 4 additional trucks | T+26 min |
+| 17 | Agent | Terminal Operating System (Tuas) | Updates loading sequence for adjusted arrival times | T+27 min |
 
 **Total resolution time:** 27 minutes (vs. 4–8 hours)  
 **Coordination channels:** Agent handles 5 system queries + 2 HITL approvals (vs. 12+ phone calls)  
@@ -79,7 +79,7 @@ def get_itt_candidates(
     vessel_id: str
 ) -> dict:
     """
-    Query PPT CITOS for containers requiring cross-terminal transfer to Tuas.
+    Query PPT Terminal Operating System for containers requiring cross-terminal transfer to Tuas.
     Returns container list with yard block, weight, DG class, and priority.
     """
     # Sample Output:
@@ -134,13 +134,13 @@ def get_itt_candidates(
 
 ```python
 def check_road_itt_capacity(
-    optetruck_endpoint: str,
+    truck_system_endpoint: str,
     terminal: str,
     time_window_start: str,
     time_window_end: str
 ) -> dict:
     """
-    Query OptETruck for available trucks, transit time, and road conditions
+    Query Truck Management System for available trucks, transit time, and road conditions
     for road ITT from PPT to Tuas.
     """
     # Sample Output:
@@ -171,12 +171,12 @@ def check_road_itt_capacity(
 
 ```python
 def check_sea_itt_capacity(
-    portnet_endpoint: str,
+    pcs_endpoint: str,
     feeder_id: str,
     current_time: str
 ) -> dict:
     """
-    Query PORTNET for feeder vessel availability, berth status, and departure window.
+    Query Port Community System for feeder vessel availability, berth status, and departure window.
     Includes downstream port constraints (tidal windows, connection deadlines).
     """
     # Sample Output:
@@ -322,7 +322,7 @@ def update_tuas_loading_sequence(
 async def receive_webhook(event: ITTCoordinationEvent):
     """
     Webhook endpoint for ITT_COORDINATION_REQUEST events.
-    Called by CITOS (PPT) when 50+ containers are ready for cross-terminal transfer.
+    Called by Terminal Operating System (PPT) when 50+ containers are ready for cross-terminal transfer.
     Validates payload, creates initial agent state, triggers LangGraph agent.
     """
     # Validation
@@ -354,7 +354,7 @@ async def receive_webhook(event: ITTCoordinationEvent):
 class ITTCoordinationEvent(BaseModel):
     event_type: str                    # "ITT_COORDINATION_REQUEST"
     timestamp: str                     # ISO 8601
-    source: str                        # "CITOS_PPT"
+    source: str                        # "Terminal Operating System_PPT"
     priority: str                      # "high" | "critical"
     origin_terminal: str               # "PPT"
     destination_terminal: str          # "TUAS"
@@ -372,7 +372,7 @@ class ITTCoordinationEvent(BaseModel):
 {
     "event_type": "ITT_COORDINATION_REQUEST",
     "timestamp": "2026-08-19T10:30:00+08:00",
-    "source": "CITOS_PPT",
+    "source": "Terminal Operating System_PPT",
     "priority": "high",
     "origin_terminal": "PPT",
     "destination_terminal": "TUAS",
@@ -394,15 +394,15 @@ The following tools execute AFTER human approval. They are defined here for comp
 
 ```python
 def dispatch_road_itt(
-    optetruck_endpoint: str,
+    truck_system_endpoint: str,
     num_trucks: int,
     route: str
 ) -> dict:
-    """Dispatch prime movers via OptETruck. Requires HITL Gate 2 approval."""
+    """Dispatch prime movers via Truck Management System. Requires HITL Gate 2 approval."""
     pass
 
 def request_feeder_hold(
-    portnet_endpoint: str,
+    pcs_endpoint: str,
     feeder_id: str,
     hold_hours: float
 ) -> dict:
@@ -421,7 +421,7 @@ def request_feeder_hold(
 | Gate | Trigger | Action | Timeout | Timeout Action | Rationale |
 |------|---------|--------|---------|----------------|-----------|
 | **HITL-1** | Split computed | Approve ITT Split | 30 min | Escalate to Duty Manager | Financial commitment ($10K+) — requires coordinator sign-off |
-| **HITL-2** | Truck dispatch ready | Approve Truck Dispatch | 15 min | Cancel Dispatch | State-mutating action on external OptETruck system |
+| **HITL-2** | Truck dispatch ready | Approve Truck Dispatch | 15 min | Cancel Dispatch | State-mutating action on external Truck Management System system |
 | **HITL-3** | Feeder hold request | Approve Feeder Hold | 15 min | Escalate to Duty Manager | Commercial decision — delays feeder, may miss tidal window |
 | **HITL-4** | Loading sequence update | Approve Sequence Update | 10 min | Hold Current Sequence | Affects Tuas QC operations — requires yard planner approval |
 | **HITL-5** | Escalation triggered | Escalate to Duty Manager | 30 min | Halt Workflow | Agent cannot resolve — human must intervene directly |
@@ -501,7 +501,7 @@ When the human clicks **REJECT** or **MODIFY SPLIT** on any HITL gate:
 |--------|-------|----------------|
 | T+0 | Agent computes 80/40 split | Presents HITL card |
 | T+5 min | ITT coordinator approves | Agent dispatches trucks, requests feeder hold |
-| T+21 min | PORTNET reports feeder berth conflict — departure delayed to 1600 | Agent detects: feeder will miss downstream tidal window at Port Klang |
+| T+21 min | Port Community System reports feeder berth conflict — departure delayed to 1600 | Agent detects: feeder will miss downstream tidal window at Port Klang |
 | T+22 min | Agent re-computes split: 100 road / 20 sea | Recalculates with feeder constraint |
 | T+23 min | Agent presents emergency re-split to ITT coordinator | Shows cost impact: +$1,500 road cost but avoids $5,000 missed connection |
 | T+25 min | ITT coordinator approves emergency re-split | Agent dispatches 4 additional trucks |
@@ -512,10 +512,10 @@ When the human clicks **REJECT** or **MODIFY SPLIT** on any HITL gate:
 
 | Timing | Event | Agent Response |
 |--------|-------|----------------|
-| T+0 | Agent queries PPT CITOS | Data timestamp: 25 min old |
+| T+0 | Agent queries PPT Terminal Operating System | Data timestamp: 25 min old |
 | T+1 min | Agent detects data age > 20 min | Triggers escalation: "PPT data stale — verify container readiness with yard planner" |
 | T+2 min | Agent presents stale-data alert to ITT coordinator | Asks: "Proceed with cached data or refresh?" |
-| T+3 min | ITT coordinator requests refresh | Agent sends query to PPT CITOS, receives fresh data |
+| T+3 min | ITT coordinator requests refresh | Agent sends query to PPT Terminal Operating System, receives fresh data |
 | T+4 min | Agent notes: 3 containers no longer ready (removed by customs hold) | Adjusts candidate list from 120 to 117 |
 | T+5 min | Agent recomputes split with 117 containers | Presents updated approval card |
 
@@ -536,11 +536,11 @@ When the human clicks **REJECT** or **MODIFY SPLIT** on any HITL gate:
 | Road ITT cost per trip | $150 | PPT→Tuas (~35 km via West Coast Highway/AYE), prime mover + driver + fuel |
 | LTA prime mover chassis capacity | 1 FEU (40ft/45ft) OR up to 2 TEU (20ft) | Singapore Land Transport Authority road safety regulations |
 | Sea ITT marginal charter cost | $0 | Existing scheduled feeder/barge rotation between PPT and Tuas |
-| Sea ITT terminal handling cost | $35/lift-move | PSA standard container handling lift cost at berths |
+| Sea ITT terminal handling cost | $35/lift-move | Port Operator standard container handling lift cost at berths |
 | Sea ITT cost per feeder hold hour | $800/hr | Feeder charter rate |
-| Unproductive yard re-handle | $35/move | PSA standard cost |
+| Unproductive yard re-handle | $35/move | Port Operator standard cost |
 | Dry container missed connection | $150/container | SLA penalty + demurrage at destination |
-| Container yard block max capacity | 4,500 TEU | CITOS yard planning parameter |
+| Container yard block max capacity | 4,500 TEU | Terminal Operating System yard planning parameter |
 | AGV round trip PPT→Tuas (road ITT proxy) | N/A | Road ITT uses external haulier trucks |
 
 ### Anchor Problem ROI (PB-12 Single Incident)
@@ -599,12 +599,12 @@ The agent architecture built for PB-12 (event ingestion, multi-tool orchestratio
 
 | Problem | Core Architecture Reuse | Tool Customisation Required |
 |---------|------------------------|-----------------------------|
-| **PB-01** (Berth Delay) | Event ingestion, multi-tool orchestration, HITL gate | Replace ITT tools with VTIS/OptEVoyage/CITOS berth tools |
-| **PB-02** (DTQC Breakdown) | Event ingestion, multi-tool orchestration, HITL gate | Replace ITT tools with ROCC/CITOS/FMS crane tools |
-| **PB-04** (Missed Connection) | Event ingestion, multi-tool orchestration, HITL gate | Replace ITT tools with PORTNET/CITOS feeder tools |
-| **PB-09** (Expressway Disruption) | Event ingestion, multi-tool orchestration, HITL gate | Replace ITT tools with OptETruck/SmartBooking slot tools |
-| **PB-10** (Sea-Air Cut-Off) | Event ingestion, multi-tool orchestration, HITL gate | Replace ITT tools with OptEModal/TradeNet/SATS tools |
-| **PB-11** (Customs Hold) | Event ingestion, multi-tool orchestration, HITL gate | Replace ITT tools with TradeNet/CALISTA document tools |
+| **PB-01** (Berth Delay) | Event ingestion, multi-tool orchestration, HITL gate | Replace ITT tools with VTIS/Voyage Tracking System/Terminal Operating System berth tools |
+| **PB-02** (DTQC Breakdown) | Event ingestion, multi-tool orchestration, HITL gate | Replace ITT tools with ROCC/Terminal Operating System/FMS crane tools |
+| **PB-04** (Missed Connection) | Event ingestion, multi-tool orchestration, HITL gate | Replace ITT tools with Port Community System/Terminal Operating System feeder tools |
+| **PB-09** (Expressway Disruption) | Event ingestion, multi-tool orchestration, HITL gate | Replace ITT tools with Truck Management System/Unified Booking Platform slot tools |
+| **PB-10** (Sea-Air Cut-Off) | Event ingestion, multi-tool orchestration, HITL gate | Replace ITT tools with Intermodal Coordination Platform/TradeNet/SATS tools |
+| **PB-11** (Customs Hold) | Event ingestion, multi-tool orchestration, HITL gate | Replace ITT tools with TradeNet/Supply Chain Platform document tools |
 
 ### Shared Agentic Primitives
 
@@ -612,7 +612,7 @@ The agent architecture built for PB-12 (event ingestion, multi-tool orchestratio
 |-----------|-------------|----------------|
 | **Event Ingestion Layer** | Webhook receiver for disruption events (vessel delay, QC breakdown, customs hold, etc.) | Identical across all problems — only event schema differs |
 | **Reasoning Planner** | LLM-based planner that ingests event context, queries tools, computes options, and selects optimal action | Identical core prompt — tool descriptions change per problem |
-| **Multi-Tool Orchestrator** | Dynamic tool selection and parallel execution across ≥3 PSA systems | Identical framework — tool definitions change per problem |
+| **Multi-Tool Orchestrator** | Dynamic tool selection and parallel execution across ≥3 Port Operator systems | Identical framework — tool definitions change per problem |
 | **HITL Approval Gate** | Structured approval card with cost analysis, risk assessment, and approve/modify/reject options | Identical UI component — data populated per problem |
 | **Multi-Party Notification** | Automated notification to affected stakeholders (phone/email/system alert) | Identical framework — recipient list and message template change per problem |
 | **Deviation Logger** | Records when agent deviates from original plan and why | Identical across all problems |
@@ -628,7 +628,7 @@ The agent architecture built for PB-12 (event ingestion, multi-tool orchestratio
 | **Agent framework** | LangGraph v1.2.11 | State machine, tool orchestration, HITL nodes |
 | **LLM** | Configurable (Claude Sonnet 4 / GPT-4o / Gemini) | Provider-agnostic via abstraction layer |
 | **Backend** | FastAPI + uvicorn | Serves agent + mock APIs + webhook on one port |
-| **Mock APIs** | In-process Python functions | Simulates all 5 PSA systems with realistic data |
+| **Mock APIs** | In-process Python functions | Simulates all 5 Port Operator systems with realistic data |
 | **Webhook** | `POST /webhook/itt-coordination` (T6) | Entry point — receives ITT_COORDINATION_REQUEST events |
 | **Web UI** | HTML/JS + SSE from FastAPI | Real-time agent decisions streamed to browser |
 | **Tracing** | LangSmith free tier | Full graph execution trace, tool calls, HITL events |
@@ -640,8 +640,8 @@ The agent architecture built for PB-12 (event ingestion, multi-tool orchestratio
 ```
 Run: demo-2026-08-23-001
 ├── [T+0.0s] WEBHOOK: receive_webhook() — ITT_COORDINATION_REQUEST accepted
-├── [T+0.0s] node: ingest → Read from CITOS_PPT (2.1s, 1,200 tokens, confidence: 0.95)
-├── [T+2.1s] node: ingest → Read from OptETruck (1.8s, 800 tokens, confidence: 0.90)
+├── [T+0.0s] node: ingest → Read from Terminal Operating System_PPT (2.1s, 1,200 tokens, confidence: 0.95)
+├── [T+2.1s] node: ingest → Read from Truck Management System (1.8s, 800 tokens, confidence: 0.90)
 ├── [T+3.9s] node: ingest → Read from Feeder (1.5s, 600 tokens, confidence: 0.88)
 ├── [T+5.4s] node: decide → LLM: "query_container_readiness" (3.2s, 2,100 tokens, confidence: 0.92)
 ├── [T+8.6s] node: execute → tool_1 output: 120 containers ready (0.3s)
@@ -656,7 +656,7 @@ Run: demo-2026-08-23-001
 ├── [T+45.0s] node: decide → LLM: "dispatch trucks" (2.0s, 1,400 tokens, confidence: 0.91)
 ├── [T+47.0s] node: hitl_2 → WAITING: "Approve Truck Dispatch"
 │   └── [T+52.0s] HITL DECISION: APPROVED (5.0s response time)
-├── [T+52.0s] node: execute → OptETruck dispatch (1.2s)
+├── [T+52.0s] node: execute → Truck Management System dispatch (1.2s)
 ├── [T+53.2s] node: hitl_3 → WAITING: "Approve Feeder Hold Request"
 │   └── [T+60.0s] HITL DECISION: APPROVED (6.8s response time)
 ├── [T+60.0s] node: execute → Feeder hold request sent (0.8s)
@@ -754,11 +754,11 @@ The team has raised valid questions about whether LangGraph is necessary. Here i
 ```
 ┌─────────────────────────────────────────────────────────────────┐
 │                     EXTERNAL SYSTEMS                             │
-│  CITOS (PPT) ──── POST /webhook/itt-coordination ────┐         │
-│  OptETruck    ──── (mock API, same port) ─────────────┤         │
+│  Terminal Operating System (PPT) ──── POST /webhook/itt-coordination ────┐         │
+│  Truck Management System    ──── (mock API, same port) ─────────────┤         │
 │  Feeder       ──── (mock API, same port) ─────────────┤         │
-│  PORTNET      ──── (mock API, same port) ─────────────┤         │
-│  CITOS (Tuas) ──── (mock API, same port) ─────────────┤         │
+│  Port Community System      ──── (mock API, same port) ─────────────┤         │
+│  Terminal Operating System (Tuas) ──── (mock API, same port) ─────────────┤         │
 └─────────────────────────────────────────────────────── │ ────────┘
                                                         │
                                                         ▼
@@ -794,8 +794,8 @@ The team has raised valid questions about whether LangGraph is necessary. Here i
 │                         ▼                                        │
 │  ┌──────────────────────────────────────────────────────────┐    │
 │  │  MOCK APIs (in-process Python functions)                  │    │
-│  │  citos_ppt.py, citos_tuas.py, optetruck.py,              │    │
-│  │  feeder.py, portnet.py                                    │    │
+│  │  tos_ppt.py, tos_tuas.py, truck_system.py,              │    │
+│  │  feeder.py, pcs.py                                    │    │
 │  └──────────────────────────────────────────────────────────┘    │
 │                                                                  │
 │  ┌──────────────────────────────────────────────────────────┐    │
@@ -830,17 +830,17 @@ prototype/
 ├── pre_approval/            # Agent tools (scattered, not integrated)
 │   ├── orchestrator.py      # Linear async pipeline (NOT LangGraph)
 │   ├── container_readiness/ # T6 webhook (duplicate of mocks/webhook.py)
-│   ├── ppt_citos/           # Tool 1 (has its own mock data, router)
+│   ├── ppt_tos/           # Tool 1 (has its own mock data, router)
 │   ├── road_itt/            # Tool 2
 │   ├── sea_itt/             # Tool 3 (has its own mock data, router, models)
 │   └── ai_optimisation/     # Tool 4 (deterministic math, works standalone)
 ├── in_approval/             # EMPTY — no HITL implementation
 ├── post_approval/           # EMPTY — no dispatch/hold tools
-├── mocks/                   # Mock API server (5 PSA systems)
+├── mocks/                   # Mock API server (5 Port Operator systems)
 │   ├── schemas.py           # Pydantic models (well-defined)
 │   ├── webhook.py           # Webhook endpoint (duplicate)
 │   ├── edge_cases.py        # Edge case simulators (not connected)
-│   ├── citos_ppt.py, citos_tuas.py, optetruck.py, feeder.py, portnet.py
+│   ├── tos_ppt.py, tos_tuas.py, truck_system.py, feeder.py, pcs.py
 │   └── data.py              # Mock data loader
 └── tests/
     └── test_orchestrator.py # Single test file
@@ -927,7 +927,7 @@ prototype/
 ### Partially Built (code exists, but broken or not integrated)
 
 - [~] **Tool 1: Container readiness query** — `pre_approval/container_readiness/` has a webhook handler, but it's a duplicate of `mocks/webhook.py`. Not connected to any agent.
-- [~] **Tool 2: Road ITT capacity** — `pre_approval/road_itt/optetruck_tools.py` works standalone (510 lines, well-structured). Not wired into agent or orchestrator.
+- [~] **Tool 2: Road ITT capacity** — `pre_approval/road_itt/truck_system_tools.py` works standalone (510 lines, well-structured). Not wired into agent or orchestrator.
 - [~] **Tool 3: Sea ITT capacity** — `pre_approval/sea_itt/sea_itt_tools.py` works standalone (580 lines, tidal feasibility). Not wired into agent.
 - [~] **Tool 4: Multi-constraint optimisation** — `pre_approval/ai_optimisation/compute_itt_split.py` works standalone (1148 lines, deterministic math). Not wired into agent. Confidence scoring is deterministic, not LLM-driven.
 - [~] **Tool 5: Tuas loading sequence update** — Schema exists in `schemas.py`. No tool function implemented.
@@ -956,7 +956,7 @@ prototype/
 |-------|----------|-----------|
 | **Stage 1 Litmus** | 4 problems eliminated (PB-03, PB-05, PB-14, PB-16) | Deterministic rule engines (PB-03, PB-05), micro-ROI (PB-14), pure MILP (PB-16) |
 | **Stage 2 Cluster** | C2 selected (score 4.80/5.00) | Highest agentic sweet spot, broadest coverage (7 problems), most compelling demo |
-| **Stage 3 Flagship** | PB-12 selected from C2 | Highest system count (5), systemic architecture gap (CITOS disintegration), dual transport mode optimisation |
+| **Stage 3 Flagship** | PB-12 selected from C2 | Highest system count (5), systemic architecture gap (Terminal Operating System disintegration), dual transport mode optimisation |
 | **Autonomy** | Tier 2 HITL Exception Solver | HIGH financial risk ($15K–$29K/incident) + multi-party authority boundaries + data asymmetry |
 | **Cluster Leverage** | 7 sibling problems addressed by same architecture | Platform generalisation provides $1.26M–$2.08M annual addressable impact |
 
@@ -969,6 +969,6 @@ prototype/
 - `problem-selection/03-01-litmus-test-scores.md` — Litmus filter and cluster scoring
 - `problem-selection/03-02-autonomy-level.md` — Risk profiling and HITL guardrails
 - `research/flows/critical-flows.md` — ITT coordination decision flow
-- `research/systems/baseline-systems.md` — OptETruck, CITOS, PORTNET profiles
+- `research/systems/baseline-systems.md` — Truck Management System, Terminal Operating System, Port Community System profiles
 - `buildplan/tech-stack.md` — Technical implementation plan, LangSmith tracing, YAML config
 - `prototype/` — Current codebase (fragmented, see Section 8 gap inventory)

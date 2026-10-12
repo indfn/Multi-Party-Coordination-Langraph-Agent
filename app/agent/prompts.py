@@ -79,7 +79,7 @@ def build_system_prompt(config: Any) -> str:
     tool_names = _tool_names(tools)
     escalation_text = _escalation_text(escalation_triggers)
 
-    return f"""You are PSA Nexus — an agentic coordinator for PSA Singapore port operations.
+    return f"""You are Nexus — an agentic coordinator for Port Operator port operations.
 
 Problem: {pname} ({pid}) — sector: {sector}
 Description: {description}
@@ -93,7 +93,7 @@ Escalation triggers (charter §4):
 
 === TOOL API REFERENCE (read this before calling any tool) ===
 
-1. get_itt_candidates — Query CITOS PPT for container readiness
+1. get_itt_candidates — Query Terminal Operating System PPT for container readiness
    Args: vessel_id (string, e.g. "MV PACIFIC STAR")
    Returns:
      - total_containers: int — TOTAL containers to move (this is your ground truth)
@@ -105,7 +105,7 @@ Escalation triggers (charter §4):
      - data_age_minutes: float — how stale the data is (>20m = stale)
    Key: total_containers is the real number. Do NOT invent your own.
 
-2. check_road_itt_capacity — Query OptETruck for truck availability
+2. check_road_itt_capacity — Query Truck Management System for truck availability
    Args: terminal (string, e.g. "PPT"), current_time (ISO-8601)
    Returns:
      - available_trucks: int — trucks you can use RIGHT NOW
@@ -119,7 +119,7 @@ Escalation triggers (charter §4):
      - latest_arrival_at_tuas: ISO-8601 — latest allowed arrival
    Key: available_trucks is your real truck count. capacity_ratio <0.6 → escalate.
 
-3. check_sea_itt_capacity — Query PORTNET for feeder vessel status
+3. check_sea_itt_capacity — Query Port Community System for feeder vessel status
    Args: feeder_id (string, e.g. "FEEDER ATLANTIC-03"), current_time (ISO-8601)
    Returns:
      - status: "success"/"error"
@@ -196,7 +196,7 @@ Step 2 — Compute split (pass FULL tool outputs from Step 1):
 
 Step 3 — After HITL-1 approved:
   → dispatch_road_itt(container_ids=split_result.road_container_ids, route="PPT→Tuas")
-  → notify_parties(message="Dispatch planned", stakeholders=["OptETruck","CITOS_PPT"])
+  → notify_parties(message="Dispatch planned", stakeholders=["Truck Management System","Terminal Operating System_PPT"])
 
 Step 4 — After HITL-2 approved:
   → request_feeder_hold(feeder_id="FEEDER ATLANTIC-03", hold_hours=compute from sea_eta gap)
@@ -256,7 +256,7 @@ try:
     _default_cfg = load_problem_config("pb-12-itt")
     SYSTEM_PROMPT = build_system_prompt(_default_cfg)
 except Exception:
-    SYSTEM_PROMPT = "You are PSA Nexus — an agentic coordinator for PSA Singapore."
+    SYSTEM_PROMPT = "You are Nexus — an agentic coordinator for Port Operator."
 
 
 def build_agent_messages(state: dict[str, Any]) -> list[dict[str, Any]]:
@@ -288,7 +288,7 @@ def build_agent_messages(state: dict[str, Any]) -> list[dict[str, Any]]:
     if isinstance(candidates, dict) and candidates.get("total_containers"):
         cb = candidates.get("container_breakdown", {})
         live_sections.append(
-            f"LIVE DATA — Container inventory (from CITOS PPT):\n"
+            f"LIVE DATA — Container inventory (from Terminal Operating System PPT):\n"
             f"  Total containers to move: {candidates.get('total_containers', '?')}\n"
             f"  40ft FEU: {cb.get('40ft_feu', '?')}\n"
             f"  20ft TEU: {cb.get('20ft_teu', '?')}\n"
@@ -299,7 +299,7 @@ def build_agent_messages(state: dict[str, Any]) -> list[dict[str, Any]]:
     road_cap = ctx.get("road_capacity", {})
     if isinstance(road_cap, dict) and road_cap.get("available_trucks") is not None:
         live_sections.append(
-            f"LIVE DATA — Road transport capacity (from OptETruck):\n"
+            f"LIVE DATA — Road transport capacity (from Truck Management System):\n"
             f"  Available trucks: {road_cap.get('available_trucks', '?')}\n"
             f"  Utilization: {road_cap.get('utilization_pct', '?')}%\n"
             f"  LTA compliant: {road_cap.get('lta_compliant', '?')}\n"

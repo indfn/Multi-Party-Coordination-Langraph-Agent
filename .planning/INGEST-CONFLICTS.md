@@ -1,6 +1,6 @@
 ## Conflict Detection Report
 
-No conflicts detected. Single-source ingest (/home/ahnaf/Documents/Projects/PSACodeSprint/CodeSprint.md — one PRD classification), no cross-references, no locked ADRs, no UNKNOWN classifications. Counts below are reported per the doc-conflict-engine contract.
+No conflicts detected. Single-source ingest (/home/ahnaf/Documents/Projects/PortCodeSprint/CodeSprint.md — one PRD classification), no cross-references, no locked ADRs, no UNKNOWN classifications. Counts below are reported per the doc-conflict-engine contract.
 
 ### BLOCKERS (0)
 
@@ -13,7 +13,7 @@ None. No competing acceptance variants: only one source PRD exists, so no two PR
 ### INFO (3)
 
 [INFO] Single-source ingest, trivially clean dependency graph
-  Note: Exactly one classification consumed: codesprint-md.json (type PRD, confidence high, locked false) for source /home/ahnaf/Documents/Projects/PSACodeSprint/CodeSprint.md. cross_refs is empty, so cycle detection (DFS three-color) found no edges and no cycles; traversal cap (50) not approached.
+  Note: Exactly one classification consumed: codesprint-md.json (type PRD, confidence high, locked false) for source /home/ahnaf/Documents/Projects/PortCodeSprint/CodeSprint.md. cross_refs is empty, so cycle detection (DFS three-color) found no edges and no cycles; traversal cap (50) not approached.
 
 [INFO] No ADRs in ingest set — framing decisions recorded as proposed
   Note: CodeSprint.md contains no ADR records. Source-stated framing choices (HITL Exception Solver as recommended autonomy level, Phase 3.2; roadmap scope Phases 1–3 per project-owner instruction) are recorded in decisions.md as PROPOSED (D-1, D-2), not locked. They carry PRD-level authority only until team confirmation.

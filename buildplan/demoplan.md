@@ -1,4 +1,4 @@
-# PSA Nexus — Demo Run Test Plan
+# Nexus — Demo Run Test Plan
 
 > **Purpose**: Exhaustive manual test scripts for every feature, scenario, and edge case.
 > **Environment**: Dev mode — backend `:8000`, frontend `:5173` (vite proxy)
@@ -10,15 +10,15 @@
 
 ```bash
 # Terminal 1: Backend
-cd /home/ahnaf/Documents/Projects/PSACodeSprint
+cd /home/ahnaf/Documents/Projects/PortCodeSprint
 python -m uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 
 # Terminal 2: Frontend
-cd /home/ahnaf/Documents/Projects/PSACodeSprint/app/frontend
+cd /home/ahnaf/Documents/Projects/PortCodeSprint/app/frontend
 npm run dev
 
 # Terminal 3: Tests (run after each section)
-cd /home/ahnaf/Documents/Projects/PSACodeSprint
+cd /home/ahnaf/Documents/Projects/PortCodeSprint
 python3 -m pytest app/tests/ -q --tb=short
 ```
 
@@ -134,7 +134,7 @@ curl -s -X POST http://localhost:8000/agent/create-event/pb-12-itt | python3 -m 
 - [ ] Click `Approve` on HITL-1
 - [ ] HITL-1 card replaced with HITL-2 card
 - [ ] HITL-2 shows Truck Dispatch info
-- [ ] Status cards populate: CITOS shows container count, OptETruck shows truck count
+- [ ] Status cards populate: Terminal Operating System shows container count, Truck Management System shows truck count
 
 ### 2.5 HITL-2 Approval
 
@@ -256,7 +256,7 @@ curl -s http://localhost:8000/agent/active-run | python3 -m json.tool
 
 - [ ] Select `Low Trucks` from scenario dropdown
 - [ ] Click `Run`
-- [ ] OptETruck shows ~18 available trucks (not 40)
+- [ ] Truck Management System shows ~18 available trucks (not 40)
 - [ ] Confidence shows ~62%
 - [ ] Risk score elevated
 
@@ -282,7 +282,7 @@ curl -s http://localhost:8000/agent/active-run | python3 -m json.tool
 
 - [ ] Select `Feeder Berth Conflict` from scenario dropdown
 - [ ] Click `Run`
-- [ ] OptETruck shows ~22 available trucks
+- [ ] Truck Management System shows ~22 available trucks
 - [ ] Confidence shows ~75%
 
 ### 6.2 Inject Berth Conflict
@@ -455,8 +455,8 @@ Run Normal scenario and verify:
 
 ### 10.2 System Status Cards
 
-- [ ] CITOS: shows container count after ingest
-- [ ] OptETruck: shows available trucks after ingest
+- [ ] Terminal Operating System: shows container count after ingest
+- [ ] Truck Management System: shows available trucks after ingest
 - [ ] Feeder: shows berth status after ingest
 - [ ] QC Terminal: shows crane availability after ingest
 - [ ] Cards show "Will populate after webhook event" before run
@@ -486,7 +486,7 @@ Run Normal scenario and verify:
 
 ### 10.6 Browser Tab
 
-- [ ] Title: "PSA Nexus"
+- [ ] Title: "Nexus"
 - [ ] Dashboard title: "Nexus Dashboard"
 
 ---

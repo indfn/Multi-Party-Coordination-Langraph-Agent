@@ -2,7 +2,7 @@
 
 These functions simulate specific disruption scenarios per Master Charter §7:
 - ec_1: Feeder berth conflict (departure delayed to 1600)
-- ec_2: Data staleness (PPT CITOS data > 20 min old)
+- ec_2: Data staleness (PPT Terminal Operating System data > 20 min old)
 
 These are NOT exposed via any API endpoint. Import directly in test code only.
 """
@@ -28,7 +28,7 @@ def simulate_feeder_conflict(feeder_data: dict) -> dict:
     modified["missed_connection_cost"] = 5000
     modified["edge_case"] = "feeder_berth_conflict"
     modified["edge_case_note"] = (
-        "PORTNET reports feeder berth conflict — departure delayed to 1600. "
+        "Port Community System reports feeder berth conflict — departure delayed to 1600. "
         "Feeder will miss downstream tidal window at Port Klang."
     )
     return modified
@@ -36,7 +36,7 @@ def simulate_feeder_conflict(feeder_data: dict) -> dict:
 
 def simulate_stale_data(container_data: dict, stale_minutes: int = 25) -> dict:
     """
-    Simulate data staleness (ec_2): PPT CITOS data is 25 min old.
+    Simulate data staleness (ec_2): PPT Terminal Operating System data is 25 min old.
     Adds stale timestamp to container response.
     """
     modified = container_data.copy()
@@ -45,7 +45,7 @@ def simulate_stale_data(container_data: dict, stale_minutes: int = 25) -> dict:
     modified["data_age_minutes"] = stale_minutes
     modified["edge_case"] = "data_staleness"
     modified["edge_case_note"] = (
-        f"PPT CITOS data is {stale_minutes} min old — containers may not be ready. "
+        f"PPT Terminal Operating System data is {stale_minutes} min old — containers may not be ready. "
         "Trigger escalation."
     )
     return modified
@@ -62,7 +62,7 @@ EDGE_CASES = {
     "ec_2": {
         "name": "Data staleness",
         "inject_at_step": 2,
-        "system": "citos_ppt",
+        "system": "tos_ppt",
         "simulate": simulate_stale_data,
     },
 }

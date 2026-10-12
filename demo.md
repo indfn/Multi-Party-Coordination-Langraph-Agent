@@ -1,4 +1,4 @@
-# PSA Nexus — Demo Guide (Plain English)
+# Nexus — Demo Guide (Plain English)
 
 > Open `http://localhost:8000/ui/` → Left menu: Dashboard | Trace | History | Settings — Top bar: menu button + light/dark switch
 

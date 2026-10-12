@@ -51,7 +51,7 @@ def get_vessel_data(vessel_id: str = "MV EVER GIVEN") -> dict:
 
 
 def get_berth_data(vessel_id: str = "MV EVER GIVEN", berth_id: str = "B-03") -> dict:
-    """OptEVoyage berth availability — randomized when scenario active."""
+    """Voyage Tracking System berth availability — randomized when scenario active."""
     scenario_id, rng, sc = _get_scenario_rng()
 
     if rng is not None and sc is not None:

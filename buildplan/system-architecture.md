@@ -1,8 +1,8 @@
-# PSA Nexus — System Architecture
+# Nexus — System Architecture
 
 ## Overview
 
-PSA Nexus is a LangGraph-based agentic multi-party coordination platform. Think of it as a **virtual human equipped with tools** — it receives a problem (ITT coordination request), reasons about what to do, calls the right tools, asks for human approval on important decisions, and monitors for deviations. The system follows a state graph pattern: a webhook receives events, the LangGraph StateGraph processes them through agent reasoning, tool execution, HITL gates, and monitoring, while an SSE bridge streams real-time updates to a vanilla HTML/JS browser UI.
+Nexus is a LangGraph-based agentic multi-party coordination platform. Think of it as a **virtual human equipped with tools** — it receives a problem (ITT coordination request), reasons about what to do, calls the right tools, asks for human approval on important decisions, and monitors for deviations. The system follows a state graph pattern: a webhook receives events, the LangGraph StateGraph processes them through agent reasoning, tool execution, HITL gates, and monitoring, while an SSE bridge streams real-time updates to a vanilla HTML/JS browser UI.
 
 ---
 
@@ -82,7 +82,7 @@ The tools (get_itt_candidates, compute_itt_split, etc.) are still written by hum
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                        PSA NEXUS — SYSTEM ARCHITECTURE                      │
+│                        Port Operator NEXUS — SYSTEM ARCHITECTURE                      │
 │                    LangGraph StateGraph + FastAPI + SSE UI                  │
 └─────────────────────────────────────────────────────────────────────────────┘
 
@@ -254,10 +254,10 @@ The tools (get_itt_candidates, compute_itt_split, etc.) are still written by hum
 │                                                                             │
 │  ┌─────────────────────────────────────────────────────────────────────┐    │
 │  │                 MOCK DATA LAYER (app/mocks/data.py)                 │    │
-│  │                  The simulation — fake PSA systems                   │    │
+│  │                  The simulation — fake Port Operator systems                   │    │
 │  │                                                                     │    │
 │  │  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐│    │
-│  │  │ CITOS PPT│ │CITOS Tuas│ │OptETruck │ │ Feeder   │ │ PORTNET  ││    │
+│  │  │ Terminal Operating System PPT│ │Terminal Operating System Tuas│ │Truck Management System │ │ Feeder   │ │ Port Community System  ││    │
 │  │  │ containers│ │ loading  │ │ trucks   │ │capacity  │ │ feeder   ││    │
 │  │  └──────────┘ └──────────┘ └──────────┘ └──────────┘ └──────────┘│    │
 │  │                                                                     │    │

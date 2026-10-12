@@ -6,7 +6,7 @@ from app.tools.base import BaseTool, ToolResult
 
 class CheckBerthAvailabilityTool(BaseTool):
     name = "check_berth_availability"
-    description = "Query OptEVoyage for berth window, draft limit and tidal window"
+    description = "Query Voyage Tracking System for berth window, draft limit and tidal window"
     parameters_schema = {
         "type": "object",
         "properties": {

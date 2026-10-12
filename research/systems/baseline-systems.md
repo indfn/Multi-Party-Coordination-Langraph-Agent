@@ -1,42 +1,42 @@
-# Baseline Digital Systems — PSA Singapore
+# Baseline Digital Systems — Port Operator
 
 **Status:** Research complete (Round 2 — Deep Research)
 **Last updated:** 2026-08-17
-**Verification:** Multi-source cross-verified (PSA official, World Bank, industry sources, technical docs)
+**Verification:** Multi-source cross-verified (Port Operator official, World Bank, industry sources, technical docs)
 
 ---
 
 ## System Architecture Overview
 
-PSA Singapore's digital ecosystem spans three layers:
+Port Operator's digital ecosystem spans three layers:
 
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
 │                    REGULATORY / GOVERNMENT LAYER                    │
-│  digitalPORT@SG™ (MPA) ──── TradeNet (Singapore Customs)           │
+│  digitalPORT@SG (MPA) ──── TradeNet (Singapore Customs)           │
 │  VTMS/STRAITREP ──── MPA Maritime Security                         │
 └──────────────────────────────┬──────────────────────────────────────┘
                                │
 ┌──────────────────────────────▼──────────────────────────────────────┐
 │                    PORT COMMUNITY LAYER                              │
-│  PORTNET® ──────── 15,000+ users, 350M transactions/yr             │
-│  CALISTA™ ──────── Supply chain orchestration (physical/reg/financial)│
-│  CALISTA P!NG™ ──── Milestone event tracking                        │
+│  Port Community System ──────── 15,000+ users, 350M transactions/yr             │
+│  Supply Chain Platform ──────── Supply chain orchestration (physical/reg/financial)│
+│  Milestone Tracking Service ──── Milestone event tracking                        │
 └────────┬──────────────────────┬──────────────────────┬──────────────┘
          │                      │                      │
 ┌────────▼────────┐  ┌─────────▼─────────┐  ┌────────▼──────────────┐
 │  TERMINAL OPS   │  │  LANDSIDE OPS     │  │  MULTIMODAL OPS       │
-│  CITOS®         │  │  OptETruck        │  │  OptEModal            │
+│  Terminal Operating System         │  │  Truck Management System        │  │  Intermodal Coordination Platform            │
 │  ┌─ Berth Plan  │  │  ┌─ Job Scheduling│  │  ┌─ Sea-Air Tracking  │
 │  ├─ QC Scheduling│  │  ├─ Route Optim.  │  │  ├─ AI ETA Predictions│
 │  ├─ Yard Plan   │  │  ├─ Asset Pooling │  │  ├─ Delay Detection   │
 │  ├─ AGV Dispatch│  │  └─ Empty Trip    │  │  └─ Flight Recommend. │
 │  ├─ Ship Plan   │  │     Reduction     │  │                       │
-│  └─ Gate Auto.  │  │  SmartBooking™    │  │  PSA BDP Enterprise   │
+│  └─ Gate Auto.  │  │  Unified Booking Platform    │  │  Global Logistics Arm Enterprise   │
 │                  │  │  ┌─ Depot Booking │  │  ┌─ Control Tower     │
-│  ROCC           │  │  ├─ Queue Vis.    │  │  ├─ Smart Suite®      │
-│  (Remote Crane) │  │  └─ Haulier Comm. │  │  ├─ Risk Monitor      │
-│                  │  │  iBOX™            │  │  ├─ Cold Chain        │
+│  ROCC           │  │  ├─ Queue Vis.    │  │  ├─ Visibility Suite      │
+│  (Remote Crane) │  │  └─ Haulier Comm. │  │  ├─ Risk Dashboard      │
+│                  │  │  Depot Management System            │  │  ├─ Cold Chain        │
 │                  │  │  ┌─ Depot Mgmt   │  │  └─ Chemical/DG       │
 │                  │  │  └─ Container    │  │                       │
 │                  │  │     Exchange     │  │                       │
@@ -45,26 +45,26 @@ PSA Singapore's digital ecosystem spans three layers:
 ┌────────▼──────────────────────▼──────────────────────▼──────────────┐
 │                    DATA / INTEGRATION LAYER                          │
 │  50+ APIs ──── 5G/IoT ──── AI/ML Models ──── Blockchain (OTB)     │
-│  Singapore Maritime Data Hub (SG-MDH) ──── digitalOCEANS™           │
+│  Singapore Maritime Data Hub (SG-MDH) ──── Maritime Data Platform           │
 │  SGTraDex ──── Snowflake Data Platform                              │
 └─────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## 1. CITOS® — Computer Integrated Terminal Operations System
+## 1. Terminal Operating System — Computer Integrated Terminal Operations System
 
 **Type:** Terminal Operating System (TOS)
 **Role:** "Brain" of terminal operations — coordinates and integrates all port assets
-**Launched:** 1988 (developed 1988, operationalized 1988–1990 following PORTNET's 1984 inception; continuously upgraded)
-**Developer:** PSA in-house (proprietary)
+**Launched:** 1988 (developed 1988, operationalized 1988–1990 following Port Community System's 1984 inception; continuously upgraded)
+**Developer:** Port Operator in-house (proprietary)
 
 ### Core Capabilities
 
 **Berth Allocation Subsystem:**
 - Assigns berths based on vessel draft, tidal windows, LOA, crane split allocation
 - Optimises quay space utilisation across 56 berths
-- Integrates with PORTNET for vessel arrival data
+- Integrates with Port Community System for vessel arrival data
 - Considers vessel priority, schedule constraints, and equipment availability
 
 **Quay Crane (QC) Scheduling:**
@@ -108,7 +108,7 @@ PSA Singapore's digital ecosystem spans three layers:
 
 | Input Source | Data Type |
 |-------------|-----------|
-| PORTNET | Vessel schedules, bay plans, EDI messages |
+| Port Community System | Vessel schedules, bay plans, EDI messages |
 | Ship agents | Stowage instructions, cargo manifests |
 | Equipment sensors | QC status, AGV position, yard crane status |
 | Gate systems | Truck arrivals, container weights, OCR data |
@@ -117,13 +117,13 @@ PSA Singapore's digital ecosystem spans three layers:
 | Output Destination | Data Type |
 |-------------------|-----------|
 | Equipment operators | Real-time work instructions (wireless) |
-| PORTNET | Berthing schedule, container status |
+| Port Community System | Berthing schedule, container status |
 | Gate systems | Assignment locations, delivery instructions |
 | Yard cranes | Stacking sequences, retrieval orders |
 
 ### Quantum Computing & AI Integration (IBM Partnership)
 
-In September 2020, PSA partnered with IBM Research to explore quantum computing for port optimisation:
+In September 2020, Port Operator partnered with IBM Research to explore quantum computing for port optimisation:
 
 **Use Cases Under Investigation:**
 - Real-time berth allocation using dynamic arrival/departure data
@@ -138,7 +138,7 @@ In September 2020, PSA partnered with IBM Research to explore quantum computing 
 - Performance benchmarked on: container handling time/TEU, crane idle-to-activity ratio, vessel dwell time at berth
 
 **Strategic Status:**
-- PSA Group CEO Tan Chong Meng (April 2021): quantum is "on the passive horizon, not on the active horizon"
+- Port Operator Group CEO Tan Chong Meng (April 2021): quantum is "on the passive horizon, not on the active horizon"
 - Goal: build quantum-ready architecture deployable when commercial quantum acceleration becomes viable
 - Target: Tuas Port as first terminal with integrated quantum optimization layers
 - Related: Singapore's National Quantum-Safe Network (NQSN) initiative for quantum security in strategic sectors
@@ -147,23 +147,23 @@ In September 2020, PSA partnered with IBM Research to explore quantum computing 
 - Proprietary system — limited external documentation
 - Legacy architecture (evolved since 1984) — may have integration constraints
 - Optimisation algorithms may not fully account for cross-terminal coordination (Pasir Panjang ↔ Tuas)
-- Cross-terminal data latency (estimated 30–60 min for inventory synchronisation between PPT and Tuas CITOS instances via PORTNET batch messaging) is an architectural inference from PSA's terminal-partitioned operations — exact replication timing is not publicly documented for this proprietary system
+- Cross-terminal data latency (estimated 30–60 min for inventory synchronisation between PPT and Tuas Terminal Operating System instances via Port Community System batch messaging) is an architectural inference from Port Operator's terminal-partitioned operations — exact replication timing is not publicly documented for this proprietary system
 - Re-optimisation under disruption (equipment failure, weather) may rely on planner simplification
 - Quantum experiments still in simulation phase — not yet deployed in production
 
 ### Integration Map
-- **Upstream:** PORTNET (vessel data), MPA VTMS (traffic data)
+- **Upstream:** Port Community System (vessel data), MPA VTMS (traffic data)
 - **Downstream:** Gate systems, ROCC, equipment controllers
-- **Lateral:** OptETruck (gate data), SmartBooking (container status)
+- **Lateral:** Truck Management System (gate data), Unified Booking Platform (container status)
 
 ---
 
-## 2. PORTNET®
+## 2. Port Community System
 
 **Type:** B2B Port Community Platform (PCS)
 **Role:** "Circulatory system" — manages all business-to-business information flows
 **Launched:** 1984 (world's first nationwide B2B port community solution)
-**Operator:** Portnet.com Pte Ltd (PSA subsidiary)
+**Operator:** Port Community System operator (Port Operator subsidiary)
 
 ### Core Capabilities
 
@@ -183,7 +183,7 @@ In September 2020, PSA partnered with IBM Research to explore quantum computing 
 - **Information Services:** Vessel schedule, berthing schedule, gate schedule, performance reports
 - **Financial Functions:** Online billing, FEDI (Financial EDI), re-billing facilitation
 
-**PORTNET® Mobile:**
+**Port Community System Mobile:**
 - Real-time status gathering on mobile devices
 - Alert report functions
 - Anywhere, anytime terminal operations management
@@ -196,7 +196,7 @@ In September 2020, PSA partnered with IBM Research to explore quantum computing 
 
 **Integration with MPA Systems:**
 - Integrating with MPA's next-generation VTMS
-- digitalPORT@SG™ integration for regulatory clearances
+- digitalPORT@SG integration for regulatory clearances
 - Singapore Customs / TradeNet connectivity
 
 ### Technical Architecture
@@ -237,11 +237,11 @@ In September 2020, PSA partnered with IBM Research to explore quantum computing 
 | Cargo owners | Track and trace, reefer monitoring |
 
 ### Data Flow Patterns
-1. **Vessel arrival:** Shipping line submits pre-arrival declaration → PORTNET routes to MPA/Customs
-2. **Berth application:** Via PORTNET → CITOS processes → berth assigned
-3. **Container tracking:** Real-time status updates from CITOS → PORTNET → stakeholders
+1. **Vessel arrival:** Shipping line submits pre-arrival declaration → Port Community System routes to MPA/Customs
+2. **Berth application:** Via Port Community System → Terminal Operating System processes → berth assigned
+3. **Container tracking:** Real-time status updates from Terminal Operating System → Port Community System → stakeholders
 4. **Gate operations:** Haulier submits pre-gate info via API → gate system validates
-5. **Financial:** PORTNET charges → online viewing → FEDI integration
+5. **Financial:** Port Community System charges → online viewing → FEDI integration
 
 ### Known Limitations
 - Transaction-based pricing model (despite being mandatory)
@@ -257,12 +257,12 @@ In September 2020, PSA partnered with IBM Research to explore quantum computing 
 
 ---
 
-## 3. OptETruck
+## 3. Truck Management System
 
 **Type:** AI-powered Transport Management System (TMS)
 **Role:** Optimise container trucking operations across Singapore
 **Launched:** 2023 (with Enterprise Singapore support)
-**Developer:** PSA in-house (proprietary cloud-based)
+**Developer:** Port Operator in-house (proprietary cloud-based)
 
 ### Core Capabilities
 
@@ -296,10 +296,10 @@ In September 2020, PSA partnered with IBM Research to explore quantum computing 
 - Cloud-based — accessible to SMEs with limited digital capabilities
 
 ### Integration Points
-- **PORTNET:** Job data, container status, port documentation
-- **SmartBooking/iBOX:** Depot booking, truck visibility
+- **Port Community System:** Job data, container status, port documentation
+- **Unified Booking Platform/Depot Management System:** Depot booking, truck visibility
 - **HERE Technologies:** Tour planning, location services, route optimisation
-- **CITOS:** Gate data, container movement events
+- **Terminal Operating System:** Gate data, container movement events
 
 ### Key Metrics
 | Metric | Value |
@@ -318,14 +318,14 @@ In September 2020, PSA partnered with IBM Research to explore quantum computing 
 
 ---
 
-## 4. SmartBooking™ & iBOX™
+## 4. Unified Booking Platform & Depot Management System
 
 **Type:** Integrated logistics platform + Depot management solution
 **Role:** Connect terminals, depots, hauliers, and logistics facilities
 **Launched:** February 2021 (jointly with CDAS)
-**Developer:** PSA in-house
+**Developer:** Port Operator in-house
 
-### SmartBooking™ — Core Capabilities
+### Unified Booking Platform — Core Capabilities
 
 **One-Stop Booking Platform:**
 - Integrated booking for container depots, terminals, hauliers, logistics facilities
@@ -340,11 +340,11 @@ In September 2020, PSA partnered with IBM Research to explore quantum computing 
 - Smart Nation and Digital Government Office (SNDGO)
 - Part of National AI Strategy
 
-### iBOX™ — Core Capabilities
+### Depot Management System — Core Capabilities
 
 **Next-Generation Depot Management:**
 - Digitally connects port with container depots across Singapore
-- Integrated with SmartBooking for seamless data exchange
+- Integrated with Unified Booking Platform for seamless data exchange
 - Better truck visibility between logistics facilities and depots
 - Container tracking and management
 
@@ -356,13 +356,13 @@ In September 2020, PSA partnered with IBM Research to explore quantum computing 
 
 ### Intelligent Logistics Ecosystem
 
-Together, SmartBooking + iBOX + OptETruck form an **Intelligent Logistics Ecosystem**:
+Together, Unified Booking Platform + Depot Management System + Truck Management System form an **Intelligent Logistics Ecosystem**:
 ```
-Terminal (CITOS) ←→ SmartBooking ←→ iBOX ←→ Depots
+Terminal (Terminal Operating System) ←→ Unified Booking Platform ←→ Depot Management System ←→ Depots
                               ↕
-                         OptETruck ←→ Hauliers
+                         Truck Management System ←→ Hauliers
                               ↕
-                         PORTNET ←→ All Stakeholders
+                         Port Community System ←→ All Stakeholders
 ```
 
 ### Awards
@@ -371,21 +371,21 @@ Terminal (CITOS) ←→ SmartBooking ←→ iBOX ←→ Depots
 ### Known Limitations
 - Depot adoption varies — smaller depots may lag
 - Real-time data quality depends on depot input accuracy
-- Integration with non-PSA depot systems may be incomplete
+- Integration with third-party depot systems may be incomplete
 
 ---
 
-## 5. OptEModal
+## 5. Intermodal Coordination Platform
 
 **Type:** Sea-air intermodal shipment management platform
 **Role:** Bridge maritime and air cargo sectors for seamless mode transfers
 **Launched:** August 2025
-**Developer:** PSA + Cargo Community Network (CCN) co-created
+**Developer:** Port Operator + Cargo Community Network (CCN) co-created
 
 ### Core Capabilities
 
 **Digital Corridor:**
-- Integrates real-time data across PSA terminals, ground handlers, airline partners
+- Integrates real-time data across Port Operator terminals, ground handlers, airline partners
 - Seamless cargo movement between vessel and aircraft within **24 hours** of arrival
 - Multi-party visibility across entire supply chain
 
@@ -401,16 +401,16 @@ Terminal (CITOS) ←→ SmartBooking ←→ iBOX ←→ Depots
 - E-commerce (fast-moving consumer goods)
 
 **Stakeholders:**
-- PSA terminals (maritime side)
+- Port Operator terminals (maritime side)
 - SATS and dnata ground handlers (airside)
 - Airline partners
 - Freight forwarders and shippers
 
 ### Integration Points
-- **PSA suite:** CITOS, PORTNET data feeds
+- **Port Operator suite:** Terminal Operating System, Port Community System data feeds
 - **CCN:** Flight schedules, bookings, status tracking
 - **Changi Airfreight Centre:** SATS/dnata systems
-- **CALISTA:** Cargo tracking and compliance
+- **Supply Chain Platform:** Cargo tracking and compliance
 
 ### Known Limitations
 - Recently launched (August 2025) — still early stage
@@ -420,15 +420,15 @@ Terminal (CITOS) ←→ SmartBooking ←→ iBOX ←→ Depots
 
 ---
 
-## 6. CALISTA™ & CALISTA P!NG™
+## 6. Supply Chain Platform & Milestone Tracking Service
 
 **Type:** Global supply chain orchestration platform
 **Role:** Integrate physical, regulatory, and financial flows of trade
 **Launched:** April 2018
-**Developer:** PSA + GeTS (Global eTrade Services, subsidiary of CrimsonLogic)
+**Developer:** Port Operator + GeTS (Global eTrade Services, subsidiary of CrimsonLogic)
 **Investment:** ~US$15 million (Phase 1)
 
-### CALISTA™ — Core Capabilities
+### Supply Chain Platform — Core Capabilities
 
 **Three-Pronged Approach:**
 1. **Physical flow:** Container tracking, cargo movement management
@@ -436,12 +436,12 @@ Terminal (CITOS) ←→ SmartBooking ←→ iBOX ←→ Depots
 3. **Financial flow:** Trade financing, payments, insurance
 
 **Scale:**
-- **4,000+ parties** linked through PSA and GeTS ecosystems
+- **4,000+ parties** linked through Port Operator and GeTS ecosystems
 - **25+ Customs nodes** globally connected (via GeTS)
 - **1,000+ transactions** processed (early stage, growing)
 - Coverage across **60+ economies**
 
-**CALISTA Intelligent Agent (IA):**
+**Supply Chain Intelligent Agent (IA):**
 - AI-driven supply chain decision support
 - Route options, free trade agreements, import/export rules
 - Freight recommendations based on budget and timelines
@@ -450,22 +450,22 @@ Terminal (CITOS) ←→ SmartBooking ←→ iBOX ←→ Depots
 - Available on desktop and mobile
 - Early adopters: BINAL Asia Pacific, CWT Logistics, Elite International Logistics, PIL Logistics
 
-**CALISTA Platform Modules:**
+**Supply Chain Platform Platform Modules:**
 
 | Module | Capability |
 |--------|-----------|
-| CALISTA Intelligent Advisory (CIA) | Navigate trade processes in 180+ countries, HS/tariff codes, preferential duties |
-| CALISTA Regulatory Filing | Fulfil regulatory requirements through 60+ Customs nodes, intelligent data extraction |
-| CALISTA Post Clearance | Post-clearance audit readiness, record management, analytics, flexi-alerts |
-| CALISTA Book & Track | Access 6,000+ global LSPs for ocean/air/rail/freight, carbon footprint calculator |
-| CALISTA Finance | Invoice financing, factoring, working capital, 22-currency payments |
-| CALISTA IOR | Importer of Records services |
-| CALISTA BPO | Business Process Outsourcing (Singapore only) |
+| Supply Chain Advisory Module (CIA) | Navigate trade processes in 180+ countries, HS/tariff codes, preferential duties |
+| Supply Chain Platform Regulatory Filing | Fulfil regulatory requirements through 60+ Customs nodes, intelligent data extraction |
+| Supply Chain Platform Post Clearance | Post-clearance audit readiness, record management, analytics, flexi-alerts |
+| Supply Chain Platform Book & Track | Access 6,000+ global LSPs for ocean/air/rail/freight, carbon footprint calculator |
+| Supply Chain Platform Finance | Invoice financing, factoring, working capital, 22-currency payments |
+| Supply Chain Platform IOR | Importer of Records services |
+| Supply Chain Platform BPO | Business Process Outsourcing (Singapore only) |
 
 **Deployment Options:**
-- **Plug & Play:** Sign up and access services through CALISTA platform
+- **Plug & Play:** Sign up and access services through Supply Chain Platform platform
 - **API Integration:** Maintain own UI, integrate via API
-- **White Labelling:** Company branding on CALISTA UI
+- **White Labelling:** Company branding on Supply Chain Platform UI
 
 **Scale (updated):**
 - **60+ Customs nodes** globally connected
@@ -480,13 +480,13 @@ Terminal (CITOS) ←→ SmartBooking ←→ iBOX ←→ Depots
 - **40+ insurance products** and advisory services
 - Partners: DBS, ICBC, Standard Chartered, UOB, Thunes, Rapyd
 
-**CALISTA Inventory Financing (CIF):**
+**Supply Chain Platform Inventory Financing (CIF):**
 - Integrated with SGTraDex (Singapore Trade Data Exchange)
 - Oil storage financing digitalisation
 - Real-time trade finance data transfer
 - Auditable log of records
 
-### CALISTA P!NG™ — Core Capabilities
+### Milestone Tracking Service — Core Capabilities
 
 **Milestone Event Tracking:**
 - Near-real-time visibility of key cargo event milestones
@@ -513,11 +513,11 @@ Terminal (CITOS) ←→ SmartBooking ←→ iBOX ←→ Depots
 
 ---
 
-## 7. PSA BDP Enterprise Solutions
+## 7. Global Logistics Solutions
 
 **Type:** Global supply chain, transportation, and logistics solutions provider
-**Role:** Cargo Solutions arm of PSA International — end-to-end supply chain orchestration
-**Formed:** April 2023 (combination of PSA Cargo Solutions + BDP International)
+**Role:** Cargo Solutions arm of Port Operator Group — end-to-end supply chain orchestration
+**Formed:** April 2023 (combination of Logistics Solutions Division + Global Logistics Partner)
 **Headquarters:** Philadelphia, USA
 **Scale:** 152 offices globally, 6,900 employees, ~US$2 billion revenue
 
@@ -538,27 +538,27 @@ Terminal (CITOS) ←→ SmartBooking ←→ iBOX ←→ Depots
 - Life Sciences & Healthcare
 - Electric Vehicle & Industrial
 
-### Smart Suite® — Digital Products
+### Visibility Suite — Digital Products
 
-**Smart Navigator:**
+**Shipment Tracker:**
 - Real-time supply chain visibility
 - Predictive ETA tracking
 - Alerting and exception management
 - Customised dashboards
 
-**Risk Monitor:**
+**Risk Dashboard:**
 - 50+ supply chain disruption types monitored
 - Weather events, port congestion, vessel events
 - Geo-political events, security breaches
 - Proactive risk assessment and mitigation
 
-**Smart Classify:**
+**Classification Tool:**
 - Digital product classification tool
 - HTN code validation, ECCN classification
-- Machine learning from CALISTA Intelligent Advisory
+- Machine learning from Supply Chain Advisory Module
 - In-app communication and document sharing
 
-**PSA BDP Temp Guard:**
+**Cold-Chain Monitor:**
 - Temperature-sensitive shipment control
 - Cold chain integrity monitoring
 - Real-time temperature alerts
@@ -569,17 +569,17 @@ Terminal (CITOS) ←→ SmartBooking ←→ iBOX ←→ Depots
 - 40% cost reduction in data ingestion/sharing
 - Streamlit + Cortex AI for rapid use case development
 
-### Integration with PSA Ecosystem
-- **PORTNET:** Port operations data
-- **CALISTA:** Trade compliance and financial flows
+### Integration with Port Operator Ecosystem
+- **Port Community System:** Port operations data
+- **Supply Chain Platform:** Trade compliance and financial flows
 - **Roambee:** Real-time sensor intelligence (70% better ETA, 90%+ cold chain compliance)
 - **BoxVoyant:** End-to-end cargo visibility
 
 ### Known Limitations
 - Global operation — complexity across 152 offices
 - Chemical logistics requires specialised compliance (IMDG, ADR, etc.)
-- Integration of two legacy organisations (PSA Cargo Solutions + BDP)
-- Smart Suite proprietary — limited third-party integration documentation
+- Integration of two legacy organisations (Logistics Solutions Division + Logistics Arm)
+- Visibility Suite proprietary — limited third-party integration documentation
 
 ---
 
@@ -587,27 +587,27 @@ Terminal (CITOS) ←→ SmartBooking ←→ iBOX ←→ Depots
 
 | System | Connects To | Integration Type |
 |--------|------------|-----------------|
-| CITOS | PORTNET, OptETruck, Gate systems, ROCC, equipment | Real-time data, EDI |
-| PORTNET | CITOS, TradeNet, CALISTA, digitalPORT@SG, 50+ APIs | EDI, API, web services |
-| OptETruck | PORTNET, SmartBooking, HERE Technologies | API, cloud |
-| SmartBooking | iBOX, OptETruck, PORTNET, CITOS | API, data exchange |
-| iBOX | SmartBooking, depot systems | API, data exchange |
-| OptEModal | CITOS, PORTNET, CCN, Changi systems | API, real-time data |
-| CALISTA | PORTNET, TradeNet, GeTS, SGTraDex, DBS/ICBC | API, blockchain |
-| PSA BDP | PORTNET, CALISTA, Roambee, BoxVoyant, Snowflake | API, data platform |
-| digitalPORT@SG | MPA VTMS, ICA, NEA, PORTNET, CITOS | API, web portal |
-| TradeNet | PORTNET, CALISTA, Singapore Customs | EDI |
+| Terminal Operating System | Port Community System, Truck Management System, Gate systems, ROCC, equipment | Real-time data, EDI |
+| Port Community System | Terminal Operating System, TradeNet, Supply Chain Platform, digitalPORT@SG, 50+ APIs | EDI, API, web services |
+| Truck Management System | Port Community System, Unified Booking Platform, HERE Technologies | API, cloud |
+| Unified Booking Platform | Depot Management System, Truck Management System, Port Community System, Terminal Operating System | API, data exchange |
+| Depot Management System | Unified Booking Platform, depot systems | API, data exchange |
+| Intermodal Coordination Platform | Terminal Operating System, Port Community System, CCN, Changi systems | API, real-time data |
+| Supply Chain Platform | Port Community System, TradeNet, GeTS, SGTraDex, DBS/ICBC | API, blockchain |
+| Global Logistics Arm | Port Community System, Supply Chain Platform, Roambee, BoxVoyant, Snowflake | API, data platform |
+| digitalPORT@SG | MPA VTMS, ICA, NEA, Port Community System, Terminal Operating System | API, web portal |
+| TradeNet | Port Community System, Supply Chain Platform, Singapore Customs | EDI |
 
 ---
 
 ## Known System-Level Gaps
 
-1. **Cross-terminal optimisation:** CITOS primarily operates per-terminal; cross-terminal (Pasir Panjang ↔ Tuas) coordination may rely on manual processes
+1. **Cross-terminal optimisation:** Terminal Operating System primarily operates per-terminal; cross-terminal (Pasir Panjang ↔ Tuas) coordination may rely on manual processes
 2. **Real-time replanning:** Current systems may not support rapid replanning when disruptions cascade (equipment failure → schedule changes → truck re-routing)
-3. **Empty container matching:** While OptETruck reduces empty trips, system-wide empty container balance across depots and terminals is not fully automated
+3. **Empty container matching:** While Truck Management System reduces empty trips, system-wide empty container balance across depots and terminals is not fully automated
 4. **Data silos:** Despite integration efforts, some data may not flow seamlessly between all systems in real-time
-5. **Legacy architecture:** CITOS (1984) and PORTNET (1984) have evolved over 40+ years — may have architectural constraints vs. modern microservices
-6. **AI adoption:** Most AI capabilities are bolt-on (OptETruck, OptEModal) rather than deeply embedded in core TOS
+5. **Legacy architecture:** Terminal Operating System (1984) and Port Community System (1984) have evolved over 40+ years — may have architectural constraints vs. modern microservices
+6. **AI adoption:** Most AI capabilities are bolt-on (Truck Management System, Intermodal Coordination Platform) rather than deeply embedded in core TOS
 
 ---
 
@@ -615,28 +615,28 @@ Terminal (CITOS) ←→ SmartBooking ←→ iBOX ←→ Depots
 
 | Source | URL | Verified |
 |--------|-----|----------|
-| CITOS/PORTNET Overview (CIO) | https://www.cio.com/article/270577/infrastructure-leveraging-it-at-the-port-of-singapore.html | ✅ |
-| CITOS Case Study (Scribd) | https://www.scribd.com/document/612945384/CASE-STUDY-PSA-Cruising-with-Information-System | ✅ |
-| PORTNET Official | https://www.portnet.com/home | ✅ |
-| World Bank PORTNET Case Study | https://documents1.worldbank.org/curated/en/099100324110022973/pdf/P176587-04998e7f-0d3c-4419-b209-61d8497e34d7.pdf | ✅ |
-| OptETruck PSA Launch | https://www.singaporepsa.com/2023/07/26/psa-innovates-with-optetruck-a-digital-solution-for-singapores-haulier-sector-to-achieve-fleet-optimisation-and-a-greener-footprint/ | ✅ |
-| OptETruck + HERE Technologies | https://www.here.com/about/press-releases/PSA-collaborates-with-HERE-to-optimize-truck-operations-in-Singapore | ✅ |
-| OptETruck World Port Sustainability | https://sustainableworldports.org/project/psa-singapore-optetruck | ✅ |
-| SmartBooking Launch | https://www.singaporepsa.com/2021/02/24/psa-cdas-partner-up-to-launch-smartbooking-a-one-stop-digital-solution-platform-for-the-supply-chain-community/ | ✅ |
-| SmartBooking + iBOX Award | https://www.globalpsa.com/psa-singapore-wins-award-for-its-intelligent-logistics-ecosystem/ | ✅ |
-| OptEModal PSA Launch | https://www.singaporepsa.com/2025/08/05/psa-singapore-and-cargo-community-network-launch-optemodal-to-boost-sea-air-connectivity-through-a-one-stop-digital-platform/ | ✅ |
-| OptEModal Global PSA | https://www.globalpsa.com/psa-singapore-and-cargo-community-network-launch-optemodal-to-boost-sea-air-connectivity-through-a-one-stop-digital-platform/ | ✅ |
-| CALISTA PSA/GeTS | https://www.globalpsa.com/psa-and-gets-team-up-to-develop-calista | ✅ |
-| CALISTA Financial Suite (GTR) | https://www.gtreview.com/news/digital-trade/global-etrade-services-launches-financing-tools-on-its-supply-chain-platform | ✅ |
-| CALISTA Inventory Financing | https://hr.asia/media-outreach/gets-launches-calista-inventory-financing-platform-integrated-with-sgtradex-to-digitalize-and-streamline-singapores-oil-storage-financing/ | ✅ |
-| PSA BDP Rebrand (Seatrade) | https://www.seatrade-maritime.com/ports-logistics/psa-combines-cargo-solutions-and-bdp-in-rebrand | ✅ |
-| PSA BDP Products (Logistics Manager) | https://logistics-manager.com/psa-cargo-solutions-and-bdp-international-form-new-brand-to-deliver-enhanced-end-to-end-supply-chain-solutions/ | ✅ |
-| PSA BDP Smart Classify | https://psabdp.com/news/bdp-international-announces-smart-classify-the-new-digital-product-classification-tool | ✅ |
-| PSA BDP Risk Monitor | https://www.globalpsa.com/psa-bdp-launches-risk-monitor-a-digital-product-solution-for-enhanced-risk-monitoring | ✅ |
-| PSA BDP Snowflake | https://www.snowflake.com/en/customers/all-customers/video/psa-bdp | ✅ |
+| Terminal Operating System/Port Community System Overview (CIO) | https://www.cio.com/article/270577/infrastructure-leveraging-it-at-the-port-of-singapore.html | ✅ |
+| Terminal Operating System Case Study (Scribd) | https://www.scribd.com/document/612945384/CASE-STUDY-Port Operator-Cruising-with-Information-System | ✅ |
+| Port Community System Official | https://www.port-community.example.com/home | ✅ |
+| World Bank Port Community System Case Study | https://documents1.worldbank.org/curated/en/099100324110022973/pdf/P176587-04998e7f-0d3c-4419-b209-61d8497e34d7.pdf | ✅ |
+| Truck Management System Port Operator Launch | https://www.port-operator.example.com/2023/07/26/Port Operator-innovates-with-truck_system-a-digital-solution-for-singapores-haulier-sector-to-achieve-fleet-optimisation-and-a-greener-footprint/ | ✅ |
+| Truck Management System + HERE Technologies | https://www.here.com/about/press-releases/Port Operator-collaborates-with-HERE-to-optimize-truck-operations-in-Singapore | ✅ |
+| Truck Management System World Port Sustainability | https://sustainableworldports.org/project/Port Operator-singapore-truck_system | ✅ |
+| Unified Booking Platform Launch | https://www.port-operator.example.com/2021/02/24/Port Operator-cdas-partner-up-to-launch-booking_platform-a-one-stop-digital-solution-platform-for-the-supply-chain-community/ | ✅ |
+| Unified Booking Platform + Depot Management System Award | https://www.port-operator.example.com/Port Operator-singapore-wins-award-for-its-intelligent-logistics-ecosystem/ | ✅ |
+| Intermodal Coordination Platform Port Operator Launch | https://www.port-operator.example.com/2025/08/05/Port Operator-singapore-and-cargo-community-network-launch-intermodal-to-boost-sea-air-connectivity-through-a-one-stop-digital-platform/ | ✅ |
+| Intermodal Coordination Platform Global Port Operator | https://www.port-operator.example.com/Port Operator-singapore-and-cargo-community-network-launch-intermodal-to-boost-sea-air-connectivity-through-a-one-stop-digital-platform/ | ✅ |
+| Supply Chain Platform Port Operator/GeTS | https://www.port-operator.example.com/Port Operator-and-gets-team-up-to-develop-calista | ✅ |
+| Supply Chain Platform Financial Suite (GTR) | https://www.gtreview.com/news/digital-trade/global-etrade-services-launches-financing-tools-on-its-supply-chain-platform | ✅ |
+| Supply Chain Platform Inventory Financing | https://hr.asia/media-outreach/gets-launches-calista-inventory-financing-platform-integrated-with-sgtradex-to-digitalize-and-streamline-singapores-oil-storage-financing/ | ✅ |
+| Global Logistics Arm Rebrand (Seatrade) | https://www.seatrade-maritime.com/ports-logistics/Port Operator-combines-cargo-solutions-and-bdp-in-rebrand | ✅ |
+| Global Logistics Arm Products (Logistics Manager) | https://logistics-manager.com/Port Operator-cargo-solutions-and-bdp-international-form-new-brand-to-deliver-enhanced-end-to-end-supply-chain-solutions/ | ✅ |
+| Global Logistics Arm Classification Tool | https://logistics-arm.example.com/news/bdp-international-announces-smart-classify-the-new-digital-product-classification-tool | ✅ |
+| Global Logistics Arm Risk Dashboard | https://www.port-operator.example.com/Port Operator-bdp-launches-risk-monitor-a-digital-product-solution-for-enhanced-risk-monitoring | ✅ |
+| Global Logistics Arm Snowflake | https://www.snowflake.com/en/customers/all-customers/video/Port Operator-bdp | ✅ |
 | digitalPORT@SG MPA | https://www.mpa.gov.sg/finance-e-services/digitalport%40sg | ✅ |
 | digitalPORT@SG About | https://digitalport.mpa.gov.sg/about | ✅ |
 | Digital Port Ecosystem | https://sustainableworldports.org/project/mpa-singapore-digital-port-ecosystem | ✅ |
 | Singapore Port Digitalisation | https://mltechsoft.com/blog/singapore-port-digitalisation-ship-managers/ | ✅ |
-| PSA 50+ APIs Launch | https://www.singaporepsa.com/2022/07/25/psa-singapore-launches-initiatives-to-drive-digital-transformation-within-the-local-haulage-industry/ | ✅ |
-| CITOS/PORTNET NUS Paper | https://web2-bschool.nus.edu.sg/wp-content/uploads/media_rp/publications/dpsN51422159833.pdf | ✅ |
+| Port Operator 50+ APIs Launch | https://www.port-operator.example.com/2022/07/25/Port Operator-singapore-launches-initiatives-to-drive-digital-transformation-within-the-local-haulage-industry/ | ✅ |
+| Terminal Operating System/Port Community System NUS Paper | https://web2-bschool.nus.edu.sg/wp-content/uploads/media_rp/publications/dpsN51422159833.pdf | ✅ |

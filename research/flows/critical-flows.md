@@ -1,4 +1,4 @@
-# Critical Flows Per Sector — PSA Singapore
+# Critical Flows Per Sector — Port Operator
 
 **Status:** Synthesis complete
 **Last updated:** 2026-08-17
@@ -59,7 +59,7 @@ Undocking ──► Pilot Station ──► Open Sea / Next Port
 | Pilot boarding to berth (Sines) | 45 min |
 | Pilot boarding to berth (Durban) | 2–3 hrs |
 
-**Key Systems:** VTIS (MPA), OptEVoyage, CITOS (berth allocation), AWP (BerthMaster), Pilot Management System
+**Key Systems:** VTIS (MPA), Voyage Tracking System, Terminal Operating System (berth allocation), AWP (BerthMaster), Pilot Management System
 
 ---
 
@@ -74,14 +74,14 @@ Undocking ──► Pilot Station ──► Open Sea / Next Port
      │     24-hr, 12-hr,                       │
      │     6-hr, 3-hr updates                  │
      │                                         │
-     ├─→→→ [PORTNET] ──→→→ [Shipping Line]
+     ├─→→→ [Port Community System] ──→→→ [Shipping Line]
      │     Vessel call notice                  │
      │                                         │
-     ├─→→→ [CITOS] ──→→→ [Berth Allocation]
+     ├─→→→ [Terminal Operating System] ──→→→ [Berth Allocation]
      │     Vessel particulars                  │
      │     (draft, LOA, cargo manifest)        │
      │                                         │
-     └─→→→ [OptEVoyage] ──→→→ [Pilot Services]
+     └─→→→ [Voyage Tracking System] ──→→→ [Pilot Services]
            ETA predictions                     Scheduling
            (AIS data)
 ```
@@ -92,7 +92,7 @@ Undocking ──► Pilot Station ──► Open Sea / Next Port
 | arrival notification | EDIFACT IFTMIN | 48 hrs before ETA | Pre-arrival clearance |
 | STRAITREP | IMO A.600(15) | 24/12/6/3 hrs before | Security, navigation, ETA |
 | pre-arrival declaration | Singapore Customs | 24 hrs before | Customs clearance |
-| eManifest submission | PORTNET | Per sailing schedule | Cargo documentation |
+| eManifest submission | Port Community System | Per sailing schedule | Cargo documentation |
 | berth application | AWP (BerthMaster) | Via agent/operator | Dynamic allocation request |
 
 ---
@@ -103,31 +103,31 @@ Undocking ──► Pilot Station ──► Open Sea / Next Port
 NOMINAL PATH:
 [Vessel Arrival] ===> [Berth Allocation] ===> [Crane Split Decision] ===> [Yard Block Assignment]
                            │                          │                        │
-                      CITOS AI/ML              QC Scheduler               Yard Planner
+                      Terminal Operating System AI/ML              QC Scheduler               Yard Planner
                       + AWP/BerthMaster        + Terminal Planner          + TBA Logic
                       (automated)              (semi-automated)           (automated)
 
 DISRUPTION PATH:
 [Vessel Delay] ===> [Re-optimise Berth] ===> [Reassign Cranes] ===> [Update Yard Plan]
                            │                          │                        │
-                      CITOS Berth              Re-deploy QC               Adjust stacking
+                      Terminal Operating System Berth              Re-deploy QC               Adjust stacking
                       Planner                 from other berths          for arrival timing
                       (manual override)       (manual + AI suggest)      (automated)
                            │
                       [Vessel Early] ===> [Find available berth] or [Queue at anchorage]
-                                          (CITOS recommendation)
+                                          (Terminal Operating System recommendation)
 ```
 
 **Decision Points:**
 
 | Trigger | Decider | Fallback |
 |---------|---------|----------|
-| Vessel delay >6 hrs | CITOS Berth Planner (human) | Re-optimise berth allocation |
+| Vessel delay >6 hrs | Terminal Operating System Berth Planner (human) | Re-optimise berth allocation |
 | Crane breakdown | QC Scheduler (AI suggest) | Redeploy from other berth/yard crane |
 | Adverse weather (wind >40 kts) | VTIS (MPA) | Suspend operations, vessel to anchorage |
-| Tidal window missed | CITOS + harbour pilot | Vessel waits for next tidal window |
-| Vessel early arrival | CITOS (automated) | Queue at anchorage or find available berth |
-| Berth congestion | BerthMaster (AWP) + CITOS | Prioritise by berth window, feeder connections |
+| Tidal window missed | Terminal Operating System + harbour pilot | Vessel waits for next tidal window |
+| Vessel early arrival | Terminal Operating System (automated) | Queue at anchorage or find available berth |
+| Berth congestion | BerthMaster (AWP) + Terminal Operating System | Prioritise by berth window, feeder connections |
 
 **Key Friction Points:**
 - Berth window mismatches: vessels arrive 6+ hrs late, QC schedules disrupted
@@ -161,7 +161,7 @@ DISRUPTION PATH:
                                    ├── Emergency containment
                                    └── HAZMAT protocols
 
-[Reefer Containers] ──► [Reefer Yard] ──► [ARMS Monitoring]
+[Reefer Containers] ──► [Reefer Yard] ──► [Reefer Monitoring System Monitoring]
                                            │
                                            ├── Power connection
                                            ├── Temperature monitoring
@@ -177,29 +177,29 @@ DISRUPTION PATH:
 | aRMGs | 208 (ordered from ZPMC) |
 | Reefer points | 10,000+ |
 
-**Key Systems:** CITOS (yard planning, AGV dispatch), A*STAR FMS (AGV fleet management), ARMS (reefer monitoring)
+**Key Systems:** Terminal Operating System (yard planning, AGV dispatch), A*STAR FMS (AGV fleet management), Reefer Monitoring System (reefer monitoring)
 
 ---
 
 ## Information Flow — Yard Operations Data
 
 ```
-[AGV] ──→→→ [A*STAR FMS] ──→→→ [CITOS]
+[AGV] ──→→→ [A*STAR FMS] ──→→→ [Terminal Operating System]
      │  Real-time        Fleet status    │
      │  GPS + task status               │
      │                                  │
-[Reefer Sensor] ──→→→ [ARMS] ──→→→ [Operations Team]
+[Reefer Sensor] ──→→→ [Reefer Monitoring System] ──→→→ [Operations Team]
      │  Temperature, power     Alert     │
      │  status, humidity       engine    │
      │                          │        │
-                          [CITOS] ←──→→→ [Operations]
+                          [Terminal Operating System] ←──→→→ [Operations]
                           Yard status    Manual override
                                          request
-[aRMG] ──→→→ [CITOS] ──→→→ [Yard Planner]
+[aRMG] ──→→→ [Terminal Operating System] ──→→→ [Yard Planner]
      │  Job status     Job completion    │
      │  block ID       update            │
      │                                  │
-[QC] ──→→→ [CITOS] ──→→→ [Berth Planner]
+[QC] ──→→→ [Terminal Operating System] ──→→→ [Berth Planner]
      │  Moves count    Crane status      │
      │  per hour       update            │
 ```
@@ -207,10 +207,10 @@ DISRUPTION PATH:
 **Critical Messages:**
 | Message | Source | Destination | Purpose |
 |---------|--------|-------------|---------|
-| AGV task assignment | CITOS | A*STAR FMS → AGV | Dispatch AGV to QC/yard |
-| Reefer temperature alert | ARMS | Operations + CITOS | Power failure or excursion |
-| Yard block status | CITOS | Yard Planner | Block full/almost full |
-| Crane moves report | QC | CITOS | Progress against vessel plan |
+| AGV task assignment | Terminal Operating System | A*STAR FMS → AGV | Dispatch AGV to QC/yard |
+| Reefer temperature alert | Reefer Monitoring System | Operations + Terminal Operating System | Power failure or excursion |
+| Yard block status | Terminal Operating System | Yard Planner | Block full/almost full |
+| Crane moves report | QC | Terminal Operating System | Progress against vessel plan |
 | DG incident alert | Yard system | Emergency response | Mis-declaration or containment breach |
 
 ---
@@ -221,13 +221,13 @@ DISRUPTION PATH:
 NOMINAL PATH:
 [Container Discharged] ===> [Yard Block Assignment] ===> [Stacking Position] ===> [AGV Route]
                               │                              │                      │
-                         CITOS TBA                    CITOS stacking           A*STAR FMS
+                         Terminal Operating System TBA                    Terminal Operating System stacking           A*STAR FMS
                          (automated)                  logic (automated)        (automated)
 
 EXCEPTION PATH:
 [Block Full] ===> [Re-assign Block] ===> [Notify Planner] ===> [Manual Override]
                         │                                           │
-                   CITOS recommends               Yard Planner decides
+                   Terminal Operating System recommends               Yard Planner decides
                    alternate block                based on operational priority
 
 [AGV Deadlock] ===> [FMS Resolution] ===> [Re-route AGVs] ===> [Resume Operations]
@@ -235,7 +235,7 @@ EXCEPTION PATH:
                    A*STAR FMS detects            Automatic rerouting
                    traffic jam                   (resolves in <60 sec)
 
-[Reefer Alarm] ===> [ARMS Alert] ===> [Triage] ===> [Dispatch M&R]
+[Reefer Alarm] ===> [Reefer Monitoring System Alert] ===> [Triage] ===> [Dispatch M&R]
                         │                  │                │
                    Auto-detect         Operations        Maintenance
                    power/temp issue    team decides       crew responds
@@ -245,17 +245,17 @@ EXCEPTION PATH:
 
 | Trigger | Decider | Fallback |
 |---------|---------|----------|
-| Yard block full | CITOS TBA (automated) | Reassign to alternate block |
+| Yard block full | Terminal Operating System TBA (automated) | Reassign to alternate block |
 | AGV traffic deadlock | A*STAR FMS (automated) | Auto-reroute AGVs (resolves <60 sec) |
-| Reefer power failure | ARMS alert → Operations team | Manual power reconnection |
+| Reefer power failure | Reefer Monitoring System alert → Operations team | Manual power reconnection |
 | DG mis-declaration | Yard system + Emergency response | Isolate, contain, report |
 | Container blocking access | Yard Planner (human) | Manual re-handle to adjacent position |
-| Stacking conflict | CITOS (automated) | Manual override by planner |
+| Stacking conflict | Terminal Operating System (automated) | Manual override by planner |
 
 **Key Friction Points:**
 - Yard block saturation during peak vessel calls (multiple vessels sharing limited blocks)
 - AGV traffic congestion at QC land-side pickup points (20+ AGVs queuing)
-- Reefer power failures: ARMS detects, but manual M&R dispatch takes 15–30 min
+- Reefer power failures: Reefer Monitoring System detects, but manual M&R dispatch takes 15–30 min
 - DG mis-declaration: ~500K+ TEUs of DG annually, incidents require emergency protocols
 - Stacking conflicts: high-value containers blocked by low-priority imports
 
@@ -295,29 +295,29 @@ EXCEPTION PATH:
 | Peak gate congestion window | 23:00–01:00 (60% trucks queue) |
 | Average empty container rehandling | 30% (10–15 min each) |
 
-**Key Systems:** AGS (Automated Gate System), AI-OCR, weighbridge, biometric auth, OptETruck, SmartBooking, iBOX
+**Key Systems:** AGS (Automated Gate System), AI-OCR, weighbridge, biometric auth, Truck Management System, Unified Booking Platform, Depot Management System
 
 ---
 
 ## Information Flow — Haulage Ecosystem Data
 
 ```
-{Haulier} ──→→→ [OptETruck] ──→→→ [PORTNET] ──→→→ [CITOS]
+{Haulier} ──→→→ [Truck Management System] ──→→→ [Port Community System] ──→→→ [Terminal Operating System]
      │  Booking     Job scheduling    │  Job confirmation    │
      │  request     + route optim.    │  + gate slot         │
      │                              │                      │
-     ├─→→→ [SmartBooking] ──→→→ [iBOX] ──→→→ [CITOS]
+     ├─→→→ [Unified Booking Platform] ──→→→ [Depot Management System] ──→→→ [Terminal Operating System]
      │     Depot booking        Depot ops      Gate integration
      │     + time slot          + container    + yard assignment
      │                          exchange
      │
-     ├─→→→ [PORTNET] ──→→→ [Customs] ──→→→ [Singapore Customs]
+     ├─→→→ [Port Community System] ──→→→ [Customs] ──→→→ [Singapore Customs]
      │     eManifest          Clearance      │
      │     submission         status         │
      │                                   [Release Order]
      │                                   (automated/checked)
      │
-     └─→→→ [OptETruck] ──→→→ [SG-MDH] ──→→→ [Analytics]
+     └─→→→ [Truck Management System] ──→→→ [SG-MDH] ──→→→ [Analytics]
            Fleet tracking      Data sharing     │
            + CO2 tracking      hub              [Dashboards]
 ```
@@ -325,12 +325,12 @@ EXCEPTION PATH:
 **Critical Messages:**
 | Message | Standard | When | Purpose |
 |---------|----------|------|---------|
-| booking request | OptETruck API | Before gate arrival | Reserve gate slot + yard position |
+| booking request | Truck Management System API | Before gate arrival | Reserve gate slot + yard position |
 | gate entry notification | AGS/OCR | At gate | Verify container, weight, haulier |
-| release order | PORTNET/CUSTOMS | Before gate entry | Confirm customs clearance |
-| truck arrival notification | OptETruck | En route | ETA for yard preparation |
+| release order | Port Community System/CUSTOMS | Before gate entry | Confirm customs clearance |
+| truck arrival notification | Truck Management System | En route | ETA for yard preparation |
 | gate exit confirmation | AGS/OCR | After pickup/dropoff | Complete job cycle |
-| empty return notification | iBOX | At depot | Container condition, next assignment |
+| empty return notification | Depot Management System | At depot | Container condition, next assignment |
 
 ---
 
@@ -340,19 +340,19 @@ EXCEPTION PATH:
 NOMINAL PATH:
 [Truck Arrives] ===> [AGS Processing] ===> [Yard Assignment] ===> [aRMG Job] ===> [Truck Departs]
                           │                      │                    │
-                     25 seconds            CITOS assigns         Automated
+                     25 seconds            Terminal Operating System assigns         Automated
                      (automated)           yard block            dispatch
 
 CONGESTION PATH:
 [Peak Hours] ===> [Queue Build-up] ===> [Dynamic Slot Adjustment] ===> [Rebalance]
                         │                       │                         │
-                   SmartBooking           OptETruck adjusts          Haulier
+                   Unified Booking Platform           Truck Management System adjusts          Haulier
                    queue visibility      gate slot allocation       notification
 
 EXCEPTION PATH:
 [Container Not Ready] ===> [Hold at Gate] ===> [Notify Haulier] ===> [Rebook Slot]
                               │                     │                     │
-                         AGS blocks           iBOX sends alert      SmartBooking
+                         AGS blocks           Depot Management System sends alert      Unified Booking Platform
                          gate entry           to haulier phone       rebook
                               │
                          [VGM Non-Compliance] ===> [Reject] ===> [Re-weigh or Correct]
@@ -367,10 +367,10 @@ EXCEPTION PATH:
 |---------|---------|----------|
 | Container not ready at gate | AGS (automated) | Hold truck, notify haulier, rebook slot |
 | VGM weight discrepancy | Weighbridge + AGS (automated) | Reject entry, require re-weigh or VGM correction |
-| Gate congestion (queue >30 min) | OptETruck + Operations | Dynamic slot rebalancing, open overflow lanes |
-| Haulier late for slot | SmartBooking (automated) | Reassign slot to next haulier, notify delayed haulier |
-| Empty container return | iBOX (automated) | Condition check, route to M&R if damaged |
-| Demurrage threshold approaching | PORTNET + OptETruck (automated) | Alert to customs broker, initiate extension request |
+| Gate congestion (queue >30 min) | Truck Management System + Operations | Dynamic slot rebalancing, open overflow lanes |
+| Haulier late for slot | Unified Booking Platform (automated) | Reassign slot to next haulier, notify delayed haulier |
+| Empty container return | Depot Management System (automated) | Condition check, route to M&R if damaged |
+| Demurrage threshold approaching | Port Community System + Truck Management System (automated) | Alert to customs broker, initiate extension request |
 
 **Key Friction Points:**
 - Peak gate congestion: 60% of trucks queue between 23:00–01:00, causing 2–4 hr delays
@@ -386,15 +386,15 @@ EXCEPTION PATH:
 ## Physical Flow — Sea-Air Intermodal Transfer
 
 ```
-[Origin Port] ──► [PSA Singapore Terminal] ──► [Intermodal Transfer] ──► [Changi Airfreight Centre] ──► [Air Departure]
+[Origin Port] ──► [Port Operator Terminal] ──► [Intermodal Transfer] ──► [Changi Airfreight Centre] ──► [Air Departure]
       │                    │                         │                           │                         │
    Sea leg             Sea-air hub              Transfer ops              Air-side ops              Air leg
-   (vessel)            (PSCH/Keppel)           (truck/barge)            (customs/cargo)           (aircraft)
+   (vessel)            (Supply Chain Hub/Keppel)           (truck/barge)            (customs/cargo)           (aircraft)
                                                                       │
                                                                       ▼
                                                                  [Destination]
 
-TIMELINE (OptEModal target):
+TIMELINE (Intermodal Coordination Platform target):
 Vessel Arrival ──► Terminal Ops ──► Transfer ──► Customs ──► Air Departure
   Day 0              Day 0–1          Day 1        Day 1         Day 1
                                           │
@@ -405,18 +405,18 @@ Vessel Arrival ──► Terminal Ops ──► Transfer ──► Customs ─�
 **Key Transfer Points:**
 | Transfer | Distance | Mode | Duration |
 |----------|----------|------|----------|
-| PSA Terminal → PSCH | ~1 km | Truck (within port) | 15–30 min |
-| PSA Terminal → Changi AFC | ~20 km | Truck (via AYE/PIE) | 45–90 min |
+| Port Operator Terminal → Supply Chain Hub | ~1 km | Truck (within port) | 15–30 min |
+| Port Operator Terminal → Changi AFC | ~20 km | Truck (via AYE/PIE) | 45–90 min |
 | Tuas Port → Changi AFC | ~35 km | Truck (via AYE/PIE) | 60–120 min |
 
-**Key Systems:** OptEModal, CALISTA (milestone tracking), TradeNet (customs), PSA BDP (control tower)
+**Key Systems:** Intermodal Coordination Platform, Supply Chain Platform (milestone tracking), TradeNet (customs), Global Logistics Arm (control tower)
 
 ---
 
 ## Information Flow — Multimodal Coordination Data
 
 ```
-{Shipper/Forwarder} ──→→→ [CALISTA] ──→→→ [OptEModal] ──→→→ [Airline/CCN]
+{Shipper/Forwarder} ──→→→ [Supply Chain Platform] ──→→→ [Intermodal Coordination Platform] ──→→→ [Airline/CCN]
      │  Booking            Milestone         ETA prediction     │
      │  request            tracking          + flight recommend  │
      │                                     │                    │
@@ -426,9 +426,9 @@ Vessel Arrival ──► Terminal Ops ──► Transfer ──► Customs ─�
      │                                      [Airside Customs]
      │                                      (Changi)
      │
-     ├─→→→ [PSA BDP] ──→→→ [Control Tower] ──→→→ [Exception Alert]
-     │     Smart Suite®     Real-time           │
-     │     (Risk Monitor)   visibility          │
+     ├─→→→ [Global Logistics Arm] ──→→→ [Control Tower] ──→→→ [Exception Alert]
+     │     Visibility Suite     Real-time           │
+     │     (Risk Dashboard)   visibility          │
      │                          │
      └─→→→ [BoxVoyant] ──→→→ [Data Aggregation] ──→→→ [Analytics]
            IoT data            Multiple            │
@@ -438,12 +438,12 @@ Vessel Arrival ──► Terminal Ops ──► Transfer ──► Customs ─�
 **Critical Messages:**
 | Message | Source | Destination | Purpose |
 |---------|--------|-------------|---------|
-| sea-air booking | Shipper/Forwarder | CALISTA + OptEModal | Reserve transfer slot |
-| vessel arrival ETA | OptEModal | Airline + Changi AFC | Coordinate air-side readiness |
-| customs clearance (sea side) | TradeNet | PSA Terminal | Release container for transfer |
+| sea-air booking | Shipper/Forwarder | Supply Chain Platform + Intermodal Coordination Platform | Reserve transfer slot |
+| vessel arrival ETA | Intermodal Coordination Platform | Airline + Changi AFC | Coordinate air-side readiness |
+| customs clearance (sea side) | TradeNet | Port Operator Terminal | Release container for transfer |
 | customs clearance (air side) | Changi Customs | Airline | Accept cargo for air shipment |
-| delay notification | OptEModal | All parties | Rebook flights, adjust schedules |
-| milestone update | CALISTA P!NG | Shipper/Forwarder | Track container through intermodal chain |
+| delay notification | Intermodal Coordination Platform | All parties | Rebook flights, adjust schedules |
+| milestone update | Milestone Tracking Service | Shipper/Forwarder | Track container through intermodal chain |
 
 ---
 
@@ -451,7 +451,7 @@ Vessel Arrival ──► Terminal Ops ──► Transfer ──► Customs ─�
 
 ```
 NOMINAL PATH:
-[Vessel Arrives] ===> [OptEModal Transfer Plan] ===> [Truck/Barge Dispatch] ===> [Changi AFC] ===> [Air Departure]
+[Vessel Arrives] ===> [Intermodal Coordination Platform Transfer Plan] ===> [Truck/Barge Dispatch] ===> [Changi AFC] ===> [Air Departure]
                           │                              │                           │
                      AI ETA prediction              Automated dispatch          Customs clearance
                      + flight recommendation        + real-time tracking        + cargo acceptance
@@ -459,12 +459,12 @@ NOMINAL PATH:
 EXCEPTION PATH:
 [Vessel Delay >24 hrs] ===> [Rebook Flight] ===> [Notify Forwarder] ===> [Replan Transfer]
                                 │                      │                       │
-                           OptEModal               CALISTA alert          OptEModal
+                           Intermodal Coordination Platform               Supply Chain Platform alert          Intermodal Coordination Platform
                            AI suggests             to all parties         recalculates
                            alternatives                                   new schedule
                                 │
                            [Short delay] ===> [Adjust truck slot] ===> [No flight change]
-                           [<12 hrs]         (SmartBooking)
+                           [<12 hrs]         (Unified Booking Platform)
 
 [Customs Hold] ===> [Investigate] ===> [Resolve/Override] ===> [Continue Transfer]
                         │                    │                      │
@@ -476,19 +476,19 @@ EXCEPTION PATH:
 
 | Trigger | Decider | Fallback |
 |---------|---------|----------|
-| Vessel delay >24 hrs | OptEModal AI | Rebook flight, notify all parties |
+| Vessel delay >24 hrs | Intermodal Coordination Platform AI | Rebook flight, notify all parties |
 | Customs hold (sea side) | TradeNet + Customs officer | Forwarder provides additional docs |
 | Customs hold (air side) | Changi Customs | Hold cargo, rebook on next available flight |
-| Truck breakdown en route | OptETruck + Operations | Dispatch replacement truck |
-| Transfer time <12 hrs remaining | OptEModal (automated) | Expedite processing, priority handling |
-| Flight cancelled | OptEModal AI | Rebook on next available flight, re-plan transfer |
+| Truck breakdown en route | Truck Management System + Operations | Dispatch replacement truck |
+| Transfer time <12 hrs remaining | Intermodal Coordination Platform (automated) | Expedite processing, priority handling |
+| Flight cancelled | Intermodal Coordination Platform AI | Rebook on next available flight, re-plan transfer |
 
 **Key Friction Points:**
 - Vessel delay causing missed air connection: requires flight rebooking (12–48 hr delay)
 - Customs hold: additional documentation required, cargo stuck at transfer point
 - Transfer time compression: <12 hrs between sea arrival and air departure = high pressure
 - Multi-party coordination: 5+ parties must synchronise (forwarder, trucker, terminal, customs, airline)
-- Visibility gaps: CALISTA P!NG tracks milestones but not all intermediate steps
+- Visibility gaps: Milestone Tracking Service tracks milestones but not all intermediate steps
 
 ---
 
@@ -501,30 +501,30 @@ EXCEPTION PATH:
                     └────┬─────┘
                          │
 ┌──────────┐    ┌────────▼─────┐    ┌──────────┐
-│ OptEVoyage│───►│    CITOS®    │◄───│  PORTNET® │
+│ Voyage Tracking System│───►│    Terminal Operating System    │◄───│  Port Community System │
 │(AIS/ETA)  │    │(TOS core)   │    │(community)│
 └──────────┘    └──┬───┬───┬──┘    └─────┬──────┘
                    │   │   │              │
     ┌──────────────┘   │   └──────┬───────┘
     │                  │          │
 ┌───▼──────┐  ┌───────▼──┐  ┌───▼──────────┐
-│A*STAR FMS │  │  ARMS    │  │ OptETruck    │
+│A*STAR FMS │  │  Reefer Monitoring System    │  │ Truck Management System    │
 │(AGV fleet)│  │(reefer)  │  │(TMS/haulage) │
 └──────────┘  └──────────┘  └──┬───────┬───┘
                                │       │
                       ┌────────▼──┐ ┌──▼──────────┐
-                      │SmartBooking│ │   iBOX™     │
+                      │Unified Booking Platform│ │   Depot Management System     │
                       │(depot book)│ │(depot ops)  │
                       └───────────┘ └─────────────┘
                                                  
 ┌──────────┐    ┌──────────┐    ┌──────────┐
-│CALISTA®  │◄──►│OptEModal │◄──►│ PSA BDP  │
+│Supply Chain Platform  │◄──►│Intermodal Coordination Platform │◄──►│ Global Logistics Arm  │
 │(supply   │    │(sea-air) │    │(control  │
 │ chain)   │    └──────────┘    │ tower)   │
 └────┬─────┘                    └──────────┘
      │
 ┌────▼──────────┐    ┌──────────┐    ┌──────────┐
-│  CALISTA P!NG │    │ TradeNet │    │ SG-MDH   │
+│  Milestone Tracking Service │    │ TradeNet │    │ SG-MDH   │
 │(milestones)   │    │(customs) │    │(data hub)│
 └───────────────┘    └──────────┘    └──────────┘
 ```
@@ -532,19 +532,19 @@ EXCEPTION PATH:
 **Integration Strength:**
 | Connection | Strength | Protocol |
 |-----------|----------|----------|
-| CITOS ↔ A*STAR FMS | Strong (real-time) | Proprietary API |
-| CITOS ↔ PORTNET | Strong | EDIFACT/XML/JSON |
-| OptETruck ↔ SmartBooking | Strong (integrated) | API |
-| CALISTA ↔ TradeNet | Strong | API + EDI |
-| OptEModal ↔ CALISTA | Strong | API |
-| PSA BDP ↔ Snowflake | Strong | Cloud data pipeline |
-| VTIS ↔ CITOS | Medium | EDI |
+| Terminal Operating System ↔ A*STAR FMS | Strong (real-time) | Proprietary API |
+| Terminal Operating System ↔ Port Community System | Strong | EDIFACT/XML/JSON |
+| Truck Management System ↔ Unified Booking Platform | Strong (integrated) | API |
+| Supply Chain Platform ↔ TradeNet | Strong | API + EDI |
+| Intermodal Coordination Platform ↔ Supply Chain Platform | Strong | API |
+| Global Logistics Arm ↔ Snowflake | Strong | Cloud data pipeline |
+| VTIS ↔ Terminal Operating System | Medium | EDI |
 | SG-MDH ↔ All systems | Medium | API (data sharing) |
 
 **Key Gaps:**
 - Empty container tracking across depots (partial — no real-time view)
 - Cross-terminal optimisation (Pasir Panjang ↔ Tuas — not yet live)
-- Haulier fleet real-time visibility (OptETruck limited to participating fleets)
+- Haulier fleet real-time visibility (Truck Management System limited to participating fleets)
 - Real-time yard block status sharing with external planners
 
 ---
@@ -553,13 +553,13 @@ EXCEPTION PATH:
 
 | Source | Used For | Verification |
 |--------|----------|-------------|
-| PSA Annual Reports 2023–2025 | All flows | ✅ Verified |
-| PSA Port Innovation Reports | Berth ops, yard ops | ✅ Verified |
-| OptEVoyage documentation | Vessel information flow | ✅ Verified |
+| Port Operator Annual Reports 2023–2025 | All flows | ✅ Verified |
+| Port Operator Port Innovation Reports | Berth ops, yard ops | ✅ Verified |
+| Voyage Tracking System documentation | Vessel information flow | ✅ Verified |
 | A*STAR press releases | AGV fleet management | ✅ Verified |
-| SmartBooking press releases | Gate operations | ✅ Verified |
-| OptETruck press releases | Haulage operations | ✅ Verified |
-| OptEModal press releases | Multimodal flows | ✅ Verified |
-| CALISTA/GeTS documentation | Supply chain flows | ✅ Verified |
-| PSA BDP documentation | Control tower flows | ✅ Verified |
+| Unified Booking Platform press releases | Gate operations | ✅ Verified |
+| Truck Management System press releases | Haulage operations | ✅ Verified |
+| Intermodal Coordination Platform press releases | Multimodal flows | ✅ Verified |
+| Supply Chain Platform/GeTS documentation | Supply chain flows | ✅ Verified |
+| Global Logistics Arm documentation | Control tower flows | ✅ Verified |
 | World Bank LPI 2023 | Flow benchmarks | ✅ Verified |

@@ -1,9 +1,9 @@
-"""CITOS Tuas — Loading Sequence endpoint (Tool 5)."""
+"""Terminal Operating System Tuas — Loading Sequence endpoint (Tool 5)."""
 
 from fastapi import APIRouter, Body
 from app.mocks.data import get_loading_sequence_data
 
-router = APIRouter(prefix="/api/citos/tuas", tags=["CITOS Tuas"])
+router = APIRouter(prefix="/api/tos/tuas", tags=["Terminal Operating System Tuas"])
 
 
 @router.post("/loading-sequence")

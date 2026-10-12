@@ -1,13 +1,13 @@
-# Nexus — Agentic Multi-Party Coordination Platform
+# Nexus — AI Assistant for Port Container Moves
 
-> **One brain, seven problems.** Nexus is a provider-agnostic, agentic AI platform that coordinates multi-party operations at Singapore. Built for the **Code Sprint: Agentic AI in Action** competition. Flagship demo: cross-terminal container transfers (PPT → Tuas).
+> **In plain English:** moving shipping containers through a busy port takes many parties — ship planners, truck drivers, crane operators — who mostly coordinate by phone. When something slips (a ship arrives late, a crane breaks down, a highway jams), containers miss their connections and ships sit idle, costing thousands of dollars per incident. **Nexus is an AI assistant that watches the live operation, drafts a recovery plan when trouble appears, and always asks a human to approve before anything costly happens.** Built for the **Code Sprint: Agentic AI in Action** competition. Flagship demo: moving 120 containers between two terminals (PPT → Tuas).
 
 ```
   Nexus
-  ├── One LangGraph core — same reasoning engine for every problem
-  ├── 7 YAML configs — swap one file, get a different problem
-  ├── 8 LLM providers — Claude, GPT-4o, Gemini, DeepSeek, Ollama, vLLM, LM Studio, any OpenAI-compatible API
-  └── Live dashboard — watch the agent think, approve its plans, test its limits
+  ├── One AI core — the same assistant handles every scenario
+  ├── 7 scenario files — swap one file, get a different problem
+  ├── Works with 8 AI providers — Claude, GPT-4o, Gemini, DeepSeek, local models, and more
+  └── Live dashboard — see what the AI is thinking, approve its plans, throw surprises at it
 ```
 
 ---
@@ -35,7 +35,7 @@
 | Layer | What It Does |
 |-------|-------------|
 | **Agent Core** | LangGraph state machine — reasons, calls tools, asks humans when unsure, recovers from failures |
-| **Tool Registry** | Plug-in system — each problem registers its own tools (CITOS, OptETruck, PORTNET for ITT; VTIS, OptEVoyage for berth delays, etc.) |
+| **Tool Registry** | Plug-in system — each problem registers its own tools (Terminal Operating System, Truck Management System, Port Community System for ITT; VTIS, Voyage Tracking System for berth delays, etc.) |
 | **Problem Configs** | One YAML file per problem — systems, tools, HITL gates, escalation rules, cost parameters |
 | **Live Dashboard** | Real-time SSE streaming — watch the agent's thoughts, approve its plans, inject edge cases to test it |
 | **LLM Abstraction** | 8 providers behind one interface — swap Claude for a local Ollama model with a single config line |
@@ -48,7 +48,7 @@
 
 ### The Flagship — PB-12: Multi-Party ITT Coordination Failure
 
-A vessel waiting at **Tuas Port** needs **120 containers** moved from **Pasir Panjang Terminal (PPT)** before it departs. The containers can travel by **road** (trucks via OptETruck) or by **sea** (feeder vessel via PORTNET). The PPT and Tuas yard systems (CITOS) are not integrated — what's ready at PPT is invisible at Tuas for 30–60 minutes. The road/sea split is negotiated by **phone calls** between the PPT planner, Tuas planner, and feeder operator.
+A vessel waiting at **Tuas Port** needs **120 containers** moved from **Pasir Panjang Terminal (PPT)** before it departs. The containers can travel by **road** (trucks via Truck Management System) or by **sea** (feeder vessel via Port Community System). The PPT and Tuas yard systems (Terminal Operating System) are not integrated — what's ready at PPT is invisible at Tuas for 30–60 minutes. The road/sea split is negotiated by **phone calls** between the PPT planner, Tuas planner, and feeder operator.
 
 **When it works:** Someone guesses a 60/40 split, calls 15 trucks and a feeder, and hopes. Often it does not line up.
 
@@ -60,13 +60,13 @@ PB-12 is not alone. Six sibling problems share the same root cause — **manual 
 
 | Problem | What Breaks | Who Calls Whom |
 |---------|------------|---------------|
-| **PB-01** Berth Delay Cascade | Vessel arrives late, berth plan must shift | VTIS → OptEVoyage → CITOS |
-| **PB-02** DTQC Breakdown | Quay crane fails mid-operation, jobs must re-route | ROCC → CITOS → FMS |
-| **PB-04** Missed Feeder Connection | Feeder departs without transhipment containers | PORTNET → CITOS |
-| **PB-09** Expressway Blockage | Trucks stuck, gate slots must re-flow | OptETruck → SmartBooking |
-| **PB-10** Sea-Air Cut-Off | Sea leg delayed, air freight must rebook | OptEModal → TradeNet → SATS |
-| **PB-11** Customs Hold | Containers held, loading must deprioritize them | TradeNet → CALISTA |
-| **PB-12** ITT Coordination *(flagship)* | Road/sea split guessed, feeder delayed | CITOS → OptETruck → PORTNET → CITOS (Tuas) |
+| **PB-01** Berth Delay Cascade | Vessel arrives late, berth plan must shift | VTIS → Voyage Tracking System → Terminal Operating System |
+| **PB-02** DTQC Breakdown | Quay crane fails mid-operation, jobs must re-route | ROCC → Terminal Operating System → FMS |
+| **PB-04** Missed Feeder Connection | Feeder departs without transhipment containers | Port Community System → Terminal Operating System |
+| **PB-09** Expressway Blockage | Trucks stuck, gate slots must re-flow | Truck Management System → Unified Booking Platform |
+| **PB-10** Sea-Air Cut-Off | Sea leg delayed, air freight must rebook | Intermodal Coordination Platform → TradeNet → SATS |
+| **PB-11** Customs Hold | Containers held, loading must deprioritize them | TradeNet → Supply Chain Platform |
+| **PB-12** ITT Coordination *(flagship)* | Road/sea split guessed, feeder delayed | Terminal Operating System → Truck Management System → Port Community System → Terminal Operating System (Tuas) |
 
 **Cluster score:** 4.80/5.00 — highest agentic sweet spot, broadest coverage, most compelling demo (litmus test across 16 candidates).
 
@@ -92,7 +92,7 @@ PB-12 is not alone. Six sibling problems share the same root cause — **manual 
 | Sea ITT handling | $35/lift-move | standard |
 | Yard re-handle | $35/move | standard |
 | Missed connection | $150/container | SLA penalty |
-| Yard block capacity | 4,500 TEU | CITOS parameter |
+| Yard block capacity | 4,500 TEU | Terminal Operating System parameter |
 
 **The math:**
 
@@ -119,7 +119,7 @@ Every candidate problem was scored against 5 yes/no questions. A problem must pa
 | Filter | Question | PB-12 Answer | Why It Matters |
 |--------|----------|-------------|----------------|
 | **L1** Non-deterministic | Does it need multi-step reasoning and adaptive re-planning — not just a lookup? | ✅ Yes — road/sea split depends on live truck counts, feeder status, tide windows, and traffic that change every minute | A simple if/else would fail when conditions shift mid-operation |
-| **L2** Multi-system | Does it span 3+ systems? | ✅ Yes — CITOS (PPT), CITOS (Tuas), OptETruck, PORTNET, Feeder operator | The value is bridging disconnected systems no single dashboard covers |
+| **L2** Multi-system | Does it span 3+ systems? | ✅ Yes — Terminal Operating System (PPT), Terminal Operating System (Tuas), Truck Management System, Port Community System, Feeder operator | The value is bridging disconnected systems no single dashboard covers |
 | **L3** Real cost | Does failure cost money every month? | ✅ Yes — $8K/incident, 4–6/month | No real cost = no real impact |
 | **L4** Needs human judgment | Are some decisions too risky or ambiguous to fully automate? | ✅ Yes — dispatching 16 trucks ($2,400) or holding a feeder ($800/hr, tidal risk) needs a human's sign-off | This is where agents earn trust — by knowing when to ask |
 | **L5** Macro-impact | Does fixing it move a number leadership cares about? | ✅ Yes — vessel dwell time, $384K–$576K annual, $1.26M cluster | A micro-optimisation is not worth an agent |
@@ -130,7 +130,7 @@ Every candidate problem was scored against 5 yes/no questions. A problem must pa
 
 | Property | Rule Engine | Agentic Approach |
 |----------|------------|-----------------|
-| **Data** | Assumes data is fresh and complete | Handles stale data (30-min PORTNET delay), incomplete fields, missing containers |
+| **Data** | Assumes data is fresh and complete | Handles stale data (30-min Port Community System delay), incomplete fields, missing containers |
 | **Plan** | One fixed sequence | Dynamic — re-computes the road/sea split when the feeder is delayed |
 | **Failure** | Crashes or silently continues | Detects via guardrails → retries, uses fallback, or escalates to a human |
 | **Human role** | All or nothing (manual or fully auto) | Calibrated — autonomous for gathering, HITL for committing (5 gates, 7 triggers) |
@@ -169,7 +169,7 @@ Every candidate problem was scored against 5 yes/no questions. A problem must pa
   │                                                         │
   │   📦  "What containers are ready?"     → PPT Yard       │
   │   🚛  "How many trucks are free?       → Road System    │
-  │        How long is the drive?"           (OptETruck)    │
+  │        How long is the drive?"           (Truck Management System)    │
   │   🚢  "Is the feeder ship available?   → Port Network   │
   │        Will it catch the tide?"                         │
   └───────────────────────┬─────────────────────────────────┘
@@ -308,9 +308,9 @@ Every candidate problem was scored against 5 yes/no questions. A problem must pa
                              ▼
  ┌─────────────────────────────────────────────────────────────────┐
  │  [PROCESS]  START SERVER  (port 8000)                           │
- │  • Mock systems:  /api/citos/ppt  /api/optetruck                │
- │  │                /api/feeder  /api/portnet  /api/citos/tuas    │
- │  │                /api/vtis  /api/optevoyage (sibling PB-01)    │
+ │  • Mock systems:  /api/tos/ppt  /api/truck_system                │
+ │  │                /api/feeder  /api/pcs  /api/tos/tuas    │
+ │  │                /api/vtis  /api/voyage_tracking (sibling PB-01)    │
  │  • Entry point:   POST /webhook/itt-coordination → run_agent()  │
  │  • Problem switch: POST /agent/switch-problem/{id}              │
  │  • Live stream:   GET  /agent/stream/{run_id}  (SSE)            │
@@ -615,13 +615,13 @@ MPCAgent/
  │   │   ├── dispatch_road_itt.py          # T6: dispatch_road_itt (HITL-2 gated, delta support)
  │   │   ├── request_feeder_hold.py        # T7: request_feeder_hold (HITL-3 gated)
  │   │   ├── notify.py                     # T8: notify_parties (primitive #5)
- │   │   ├── pb01/                         # PB-01 sibling stubs (VTIS, OptEVoyage, CITOS berth)
+ │   │   ├── pb01/                         # PB-01 sibling stubs (VTIS, Voyage Tracking System, Terminal Operating System berth)
  │   │   ├── edge_cases.py                 # Hooks: inject_feeder_conflict, inject_stale_data (per-run)
  │   │   └── fallbacks.py                  # cached_road/sea_capacity (fallback_used flag)
  │   ├── mocks/
  │   │   ├── data.py                       # Canonical fixtures (120 containers, 20 trucks, feeder windows)
  │   │   ├── edge_cases.py                 # simulate_feeder_conflict, simulate_stale_data
- │   │   └── routers/                      # Mock API endpoints (CITOS, OptETruck, PORTNET, VTIS, etc.)
+ │   │   └── routers/                      # Mock API endpoints (Terminal Operating System, Truck Management System, Port Community System, VTIS, etc.)
  │   ├── hitl/
  │   │   ├── models.py                     # HITLGate, HITLDecision, HITL_GATES (5 gates, timeouts)
  │   │   ├── gates.py                      # hitl_node: interrupt({card}) + build_approval_card()
@@ -634,7 +634,7 @@ MPCAgent/
  │   │   └── yaml_reader.py                # YAML loading with defaults
  │   ├── configs/
  │   │   ├── pb-12-itt.yaml               # Flagship: 5 systems, 8 tools, 5 HITL, 7 triggers, edge cases
- │   │   ├── pb-01-berth.yaml             # Sibling: berth delay (VTIS, OptEVoyage)
+ │   │   ├── pb-01-berth.yaml             # Sibling: berth delay (VTIS, Voyage Tracking System)
  │   │   └── pb-0*.yaml                   # 7 C2 configs total (all completed to parity)
  │   ├── ui/
  │   │   ├── index.html                    # Nexus dashboard + problem switcher
@@ -738,8 +738,8 @@ One YAML file = one problem. The agent core never changes.
 problem:                                       problem:
   id: PB-12                                      id: PB-01
   name: "ITT Coordination Failure"                name: "Berth Delay Cascade"
-systems: [citos_ppt, citos_tuas,               systems: [vtis, optevoyage, citos_ppt]
-           optetruck, feeder, portnet]         tools: [query_vessel_arrival,
+systems: [tos_ppt, tos_tuas,               systems: [vtis, voyage_tracking, tos_ppt]
+           truck_system, feeder, pcs]         tools: [query_vessel_arrival,
 tools: [get_itt_candidates,                      check_berth_availability,
         check_road_itt_capacity, ...]                   check_qc_availability, ...]
 hitl_gates: 5  |  triggers: 7                 hitl_gates: 2  |  triggers: 7
@@ -845,7 +845,7 @@ The tool adapter (`tool_adapter.py`) translates tool schemas automatically — O
 | Metric | Value |
 |--------|-------|
 | Operational sectors mapped | 4 (Berth & Marine, Yard & Transport, Gate & Haulage, Multimodal) |
-| Digital systems documented | 7 (CITOS, PORTNET, OptETruck, SmartBooking & iBOX, OptEModal, CALISTA, BDP) |
+| Digital systems documented | 7 (Terminal Operating System, Port Community System, Truck Management System, Unified Booking Platform & Depot Management System, Intermodal Coordination Platform, Supply Chain Platform, Logistics Arm) |
 | Disruption scenarios | 16 across all 4 sectors |
 | Problem charters | 16 structured |
 | Litmus test passes | 12 of 16 (4 filtered: deterministic / micro-ROI / pure MILP) |
@@ -878,7 +878,7 @@ All research claims are cited with a priority ladder: **official → Singapore g
 | **Phase 3** | 5-point litmus test on all 16 → cluster scoring → autonomy level → master charter | `problem-selection/03-01-litmus-test-scores.md`, `problem-selection/03-02-autonomy-level.md`, `buildplan/03-03-master-charter.md` |
 
 **Key references:**
-- Singapore — CITOS, PORTNET, OptETruck, Tuas Mega Port
+- Singapore — Terminal Operating System, Port Community System, Truck Management System, Tuas Mega Port
 - Singapore Land Transport Authority — Prime mover chassis regulations
 - Maritime and Port Authority of Singapore (MPA) — Vessel arrival and berth planning
 - Industry standards — Vessel demurrage rates, feeder charter rates, container handling costs

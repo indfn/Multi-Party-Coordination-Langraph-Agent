@@ -19,7 +19,7 @@ import asyncio
 import logging
 from typing import Any
 
-logger = logging.getLogger("psa-nexus.hitl.timeout")
+logger = logging.getLogger("nexus.hitl.timeout")
 
 # Pending timeout tasks: (run_id, gate_id) -> asyncio.Task
 _pending: dict[tuple[str, str], asyncio.Task] = {}

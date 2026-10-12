@@ -1,6 +1,6 @@
 # Tech Stack Selection Decision Report
 
-**PSA Code Sprint — Agentic AI for Cross-Terminal ITT Coordination**  
+**Port Operator Code Sprint — Agentic AI for Cross-Terminal ITT Coordination**  
 **Date:** 2026-08-23  
 **Audience:** Build team (developers + architect)
 
@@ -9,19 +9,19 @@
 ## 1. Requirements Analysis
 
 ### Business Scenario
-Build a working product demo of an agentic AI system that coordinates multi-party inter-terminal transfer (ITT) operations at PSA Singapore. The flagship problem (PB-12) involves moving 120 containers from Pasir Panjang Terminal (PPT) to Tuas Port, optimising the road/sea transport split across 5 disconnected systems.
+Build a working product demo of an agentic AI system that coordinates multi-party inter-terminal transfer (ITT) operations at Port Operator. The flagship problem (PB-12) involves moving 120 containers from Pasir Panjang Terminal (PPT) to Tuas Port, optimising the road/sea transport split across 5 disconnected systems.
 
 ### Core Requirements
 
 | Requirement | Detail |
 |-------------|--------|
 | **Agent capability** | Dynamically decide tool usage based on real-time conditions (traffic, berth conflicts, feeder availability, data staleness) |
-| **Multi-system coordination** | Read/write across 5 mock PSA systems (CITOS×2, OptETruck, Feeder, PORTNET) |
+| **Multi-system coordination** | Read/write across 5 mock Port Operator systems (Terminal Operating System×2, Truck Management System, Feeder, Port Community System) |
 | **Human-in-the-loop** | 5 mandatory HITL gates: (1) Split approval, (2) Truck dispatch, (3) Feeder hold request, (4) Loading sequence update, (5) Escalation to Duty Manager |
 | **Escalation triggers** | 7 automatic escalation triggers with threshold checks (confidence, tidal tolerance, financial, data freshness, capacity, responsiveness, planner conflict) |
 | **Confidence scoring** | Agent must output confidence score (0–1) per decision; triggers escalation when < 0.85 |
 | **Edge case handling** | Stale data (30–60 min latency), berth conflicts, feeder departure slips, AYE peak congestion |
-| **Event ingestion** | Webhook endpoint to receive `ITT_COORDINATION_REQUEST` events from CITOS |
+| **Event ingestion** | Webhook endpoint to receive `ITT_COORDINATION_REQUEST` events from Terminal Operating System |
 | **Provider flexibility** | Should not be locked to a single LLM vendor — ability to swap models/providers |
 | **Generalisation** | Same agent core, different configs for 7 Cluster C2 problems |
 | **Demo deployment** | Must be deployable and presentable within <1 week |
@@ -32,7 +32,7 @@ Build a working product demo of an agentic AI system that coordinates multi-part
 |------------|--------|
 | **Timeline** | <1 week to working demo |
 | **Infrastructure** | Starting from zero (no cloud accounts, no CI/CD) |
-| **API access** | Mock APIs only — no real PSA system integration |
+| **API access** | Mock APIs only — no real Port Operator system integration |
 | **Budget** | Minimal — free-tier hosting, LLM costs under $20 for demo |
 | **Team** | Assumed small (1–3 developers), variable AI experience |
 
@@ -299,7 +299,7 @@ langsmith>=0.8.0                # optional: tracing
 ## 7. Project Structure
 
 ```
-psa-agent/
+Port Operator-agent/
 ├── prototype/
 │   ├── main.py                  # FastAPI app entry point
 │   ├── configs/                 # Problem configs (YAML)
@@ -317,17 +317,17 @@ psa-agent/
 │   │   ├── ai_optimisation/
 │   │   │   └── compute_itt_split.py  # Tool 4: optimisation engine
 │   │   ├── road_itt/
-│   │   │   └── optetruck_tools.py    # Tool 2: road ITT capacity
-│   │   ├── ppt_citos/            # Tool 1: container readiness
+│   │   │   └── truck_system_tools.py    # Tool 2: road ITT capacity
+│   │   ├── ppt_tos/            # Tool 1: container readiness
 │   │   ├── sea_itt/              # Tool 3: feeder capacity
 │   │   └── container_readiness/
 │   └── mocks/                   # Mock API servers
 │   ├── __init__.py
-│   ├── citos_ppt.py           # PPT CITOS mock
-│   ├── citos_tuas.py          # Tuas CITOS mock
-│   ├── optetruck.py           # OptETruck mock
+│   ├── tos_ppt.py           # PPT Terminal Operating System mock
+│   ├── tos_tuas.py          # Tuas Terminal Operating System mock
+│   ├── truck_system.py           # Truck Management System mock
 │   ├── feeder.py              # Feeder operator mock
-│   ├── portnet.py             # PORTNET mock
+│   ├── pcs.py             # Port Community System mock
 │   └── app.py                 # FastAPI mock server
 ├── api/
 │   ├── __init__.py
@@ -371,42 +371,42 @@ problem:
   description: "Move 120 containers PPT→Tuas, optimise road/sea split"
 
 systems:
-  - name: citos_ppt
+  - name: tos_ppt
     type: terminal_os
-    mock: mocks.citos_ppt
+    mock: mocks.tos_ppt
     capabilities: [container_readiness, yard_status, customs_hold]
     data_freshness_max_min: 30   # escalation if data age > 30 min
-  - name: citos_tuas
+  - name: tos_tuas
     type: terminal_os
-    mock: mocks.citos_tuas
+    mock: mocks.tos_tuas
     capabilities: [yard_blocks, vessel_schedule, loading_sequence]
     data_freshness_max_min: 30
-  - name: optetruck
+  - name: truck_system
     type: transport
-    mock: mocks.optetruck
+    mock: mocks.truck_system
     capabilities: [truck_availability, routing, gps_tracking]
   - name: feeder
     type: vessel
     mock: mocks.feeder
     capabilities: [departure_window, capacity, hold_request]
     response_timeout_min: 15     # escalation if no response in 15 min
-  - name: portnet
+  - name: pcs
     type: community
-    mock: mocks.portnet
+    mock: mocks.pcs
     capabilities: [inventory_sync, message_relay]
 
 # --- 6 Tools (matches Master Charter §Tools) ---
 tools:
   - name: query_container_readiness
-    systems: [citos_ppt]
+    systems: [tos_ppt]
     description: "Check which containers are ready for ITT transfer"
     tool_id: tool_1
   - name: check_road_itt_capacity
-    systems: [optetruck]
+    systems: [truck_system]
     description: "Query available prime movers, chassis, transit time, road conditions"
     tool_id: tool_2
   - name: check_sea_itt_capacity
-    systems: [feeder, citos_tuas]
+    systems: [feeder, tos_tuas]
     description: "Check feeder vessel availability and Tuas berth capacity"
     tool_id: tool_3
   - name: compute_itt_split
@@ -414,11 +414,11 @@ tools:
     description: "Compute optimal road/sea split minimising total cost subject to constraints"
     tool_id: tool_4
   - name: update_tuas_loading_sequence
-    systems: [citos_tuas]
+    systems: [tos_tuas]
     description: "Update vessel loading sequence at Tuas with ITT arrival slots"
     tool_id: tool_5
   - name: receive_webhook
-    systems: [citos_ppt]
+    systems: [tos_ppt]
     description: "Webhook endpoint for ITT_COORDINATION_REQUEST events"
     tool_id: trigger
     type: event_trigger
@@ -436,7 +436,7 @@ hitl_gates:
     trigger: truck_dispatch_ready
     action: require_approval
     label: "Approve Truck Dispatch"
-    description: "Agent is ready to dispatch trucks via OptETruck — requires approval"
+    description: "Agent is ready to dispatch trucks via Truck Management System — requires approval"
     timeout_minutes: 15
     timeout_action: cancel_dispatch
   - gate_id: hitl_3
@@ -534,12 +534,12 @@ edge_cases:
   - case_id: ec_1
     name: "Feeder berth conflict"
     inject_at_step: 8
-    description: "PORTNET reports feeder berth conflict — departure delayed to 1600"
+    description: "Port Community System reports feeder berth conflict — departure delayed to 1600"
     agent_response: "Detect deviation, re-compute split (80/40 → 100/20), request re-approval"
   - case_id: ec_2
     name: "Data staleness"
     inject_at_step: 2
-    description: "PPT CITOS data is 25 min old — containers may not be ready"
+    description: "PPT Terminal Operating System data is 25 min old — containers may not be ready"
     agent_response: "Trigger escalation, present stale-data alert to ITT coordinator"
 ```
 
@@ -560,7 +560,7 @@ problem:
   sector: "Container Yard & Internal Transport"
 
 systems:
-  - name: citos_yard
+  - name: tos_yard
     type: terminal_os
     capabilities: [block_occupancy, rehandle_queue, equipment_status]
   - name: crane_ctrl
@@ -622,7 +622,7 @@ cost_params:
 |------|-----------|--------|------------|
 | **API downtime during demo** | Low | Critical | Provider abstraction → fallback to second provider |
 | **LLM hallucination in tool calls** | Medium | High | Input validation on all tool outputs; HITL gates catch bad decisions |
-| **Mock APIs unrealistic** | Medium | Medium | Ground mock data in actual PSA operational parameters (from Phase 1 research) |
+| **Mock APIs unrealistic** | Medium | Medium | Ground mock data in actual Port Operator operational parameters (from Phase 1 research) |
 | **Demo doesn't impress judges** | Medium | High | Focus on edge case handling (stale data, berth conflict) — that's the drama |
 | **Over-engineering kills timeline** | High | Critical | Strict scope: PB-12 only, no multi-agent, no database, no fancy UI |
 | **LangGraph learning curve** | Medium | Medium | Start with simple linear graph, add branches incrementally |
@@ -655,7 +655,7 @@ LangGraph has **native LangSmith integration** — every graph execution is auto
 import os
 os.environ["LANGCHAIN_TRACING_V2"] = "true"
 os.environ["LANGCHAIN_API_KEY"] = os.getenv("LANGSMITH_API_KEY")
-os.environ["LANGCHAIN_PROJECT"] = "psa-code-sprint"
+os.environ["LANGCHAIN_PROJECT"] = "Port Operator-code-sprint"
 ```
 
 **Free tier:** 5K traces/month — sufficient for ~100 demo runs (~15 traces each = 1,500 traces).
@@ -746,8 +746,8 @@ class DeviationLogger:
 
 ```
 Run: demo-2026-08-23-001
-├── [T+0.0s] node: ingest → Read from CITOS_PPT (2.1s, 1,200 tokens)
-├── [T+2.1s] node: ingest → Read from OptETruck (1.8s, 800 tokens)
+├── [T+0.0s] node: ingest → Read from Terminal Operating System_PPT (2.1s, 1,200 tokens)
+├── [T+2.1s] node: ingest → Read from Truck Management System (1.8s, 800 tokens)
 ├── [T+3.9s] node: ingest → Read from Feeder (1.5s, 600 tokens)
 ├── [T+5.4s] node: decide → LLM call: "query_container_readiness" (3.2s, 2,100 tokens, confidence: 0.92)
 ├── [T+8.6s] node: execute → tool_1 output: 120 containers ready (0.3s)
@@ -762,7 +762,7 @@ Run: demo-2026-08-23-001
 ├── [T+45.0s] node: decide → LLM call: "dispatch trucks" (2.0s, 1,400 tokens, confidence: 0.91)
 ├── [T+47.0s] node: hitl_2 → WAITING: "Approve Truck Dispatch"
 │   └── [T+52.0s] HITL DECISION: APPROVED (5.0s response time)
-├── [T+52.0s] node: execute → OptETruck dispatch (1.2s)
+├── [T+52.0s] node: execute → Truck Management System dispatch (1.2s)
 ├── [T+53.2s] node: hitl_3 → WAITING: "Approve Feeder Hold Request"
 │   └── [T+60.0s] HITL DECISION: APPROVED (6.8s response time)
 ├── [T+60.0s] node: execute → Feeder hold request sent (0.8s)

@@ -15,7 +15,7 @@ Each scenario is grounded in specific Phase 1 research findings. Scenarios are m
 
 Every scenario satisfies three quality constraints:
 1. **Non-deterministic** — outcome depends on timing, weather, equipment state, or human decision
-2. **Cross-system handoff** — involves 2+ interacting PSA systems or entities
+2. **Cross-system handoff** — involves 2+ interacting Port Operator systems or entities
 3. **Measurable cost** — quantifiable financial, operational, or ESG impact
 
 ---
@@ -26,10 +26,10 @@ Every scenario satisfies three quality constraints:
 
 **Trigger:** Mother vessel ETA slips 6+ hours due to weather or congestion in Singapore Strait; misses pre-booked high tide window at deep-water berth.
 
-**Systems involved:** VTIS/STRAITREP → CITOS (berth allocation) → PORTNET (vessel schedules) → OptEVoyage (JIT ETA updates) → A*STAR FMS (AGV scheduling).
+**Systems involved:** VTIS/STRAITREP → Terminal Operating System (berth allocation) → Port Community System (vessel schedules) → Voyage Tracking System (JIT ETA updates) → A*STAR FMS (AGV scheduling).
 
 **Scenario:**  
-A 14,000 TEU mother vessel on OptEVoyage JIT tracker reports ETA slip from 0600 to 1230 due to monsoon swell in the Malacca Strait. The berth allocated at Pasir Panjang (23m draft, tidal-restricted) requires high tide at 0800 for safe berthing. CITOS must now decide: (a) hold berth and waste QC capacity, (b) reallocate berth to another vessel, or (c) re-sequence crane splits across adjacent berths to accommodate both vessels.
+A 14,000 TEU mother vessel on Voyage Tracking System JIT tracker reports ETA slip from 0600 to 1230 due to monsoon swell in the Malacca Strait. The berth allocated at Pasir Panjang (23m draft, tidal-restricted) requires high tide at 0800 for safe berthing. Terminal Operating System must now decide: (a) hold berth and waste QC capacity, (b) reallocate berth to another vessel, or (c) re-sequence crane splits across adjacent berths to accommodate both vessels.
 
 Simultaneously, 3 feeder vessels scheduled for transhipment connections have cut-off deadlines tied to the mother vessel's original berthing. The delay cascades: if the mother vessel misses the 1800 cut-off for outbound feeders, 150+ transhipment containers miss connections, requiring rolling to next sailing or emergency feeder rerouting.
 
@@ -41,7 +41,7 @@ Simultaneously, 3 feeder vessels scheduled for transhipment connections have cut
 
 **Research grounding:**
 - JIT 72-hr berth allocation notification: `berth-marine.md:75-80`
-- CITOS berth allocation considers draft, tidal windows, crane split: `berth-marine.md:113-120`
+- Terminal Operating System berth allocation considers draft, tidal windows, crane split: `berth-marine.md:113-120`
 - Transhipment connection scheduling: `berth-marine.md:229-254`
 - Known friction: vessel arrival timing mismatch, tidal window constraints: `berth-marine.md:260-268`
 - Decision flow — disruption path: `critical-flows.md:110-131`
@@ -52,10 +52,10 @@ Simultaneously, 3 feeder vessels scheduled for transhipment connections have cut
 
 **Trigger:** DTQC main trolley or gantry trolley fails mid-operation; QC goes offline during active discharge of a mother vessel.
 
-**Systems involved:** CITOS (QC scheduling) → A*STAR FMS (AGV dispatch) → ROCC (remote crane operations) → PORTNET (vessel schedule updates).
+**Systems involved:** Terminal Operating System (QC scheduling) → A*STAR FMS (AGV dispatch) → ROCC (remote crane operations) → Port Community System (vessel schedule updates).
 
 **Scenario:**  
-At Tuas Port, a DTQC servicing an 18,000 TEU vessel suffers a gantry trolley motor failure at 1400 during peak discharge operations. The vessel has 4 QCs assigned with a 36-hour berth window. Losing one QC reduces throughput by 25%. CITOS must immediately:
+At Tuas Port, a DTQC servicing an 18,000 TEU vessel suffers a gantry trolley motor failure at 1400 during peak discharge operations. The vessel has 4 QCs assigned with a 36-hour berth window. Losing one QC reduces throughput by 25%. Terminal Operating System must immediately:
 
 1. Redeploy QCs from adjacent berths (if available) — but those vessels also have tight schedules
 2. Reschedule AGV dispatch sequences — the QC's yard-side buffer queue now has 12 AGVs waiting with no pickup point
@@ -83,17 +83,17 @@ The breakdown creates a quay-side AGV traffic jam. A*STAR FMS attempts rerouting
 
 **Trigger:** Shipping line submits DG declaration amendments 6 hours before vessel arrival; containers already planned in stowage sequence have IMDG class conflicts with adjacent containers.
 
-**Systems involved:** PORTNET (EDI DG declaration) → CITOS (stowage planning) → MPA (DGPE enforcement) → ship planner (manual intervention).
+**Systems involved:** Port Community System (EDI DG declaration) → Terminal Operating System (stowage planning) → MPA (DGPE enforcement) → ship planner (manual intervention).
 
 **Scenario:**  
-A mother vessel carrying 45 DG containers has a stowage plan finalised 24 hours before arrival. At T-6 hours, the shipping line submits a DG amendment via PORTNET EDI: Container SGPQ1234567 declared as Class 3 (flammable liquid) is actually Class 6.1 (toxic substance) with a Class 3 subsidiary risk. IMDG Code requires minimum 3m separation between Class 6.1 and Class 8 (corrosive) containers — but the current plan has them stacked in the same bay, 2 positions apart.
+A mother vessel carrying 45 DG containers has a stowage plan finalised 24 hours before arrival. At T-6 hours, the shipping line submits a DG amendment via Port Community System EDI: Container SGPQ1234567 declared as Class 3 (flammable liquid) is actually Class 6.1 (toxic substance) with a Class 3 subsidiary risk. IMDG Code requires minimum 3m separation between Class 6.1 and Class 8 (corrosive) containers — but the current plan has them stacked in the same bay, 2 positions apart.
 
-CITOS flags the conflict but the automated stowage optimizer cannot resolve it — the vessel has limited Class 6.1-compatible stowage positions due to deck vs. hold constraints. The ship planner must:
+Terminal Operating System flags the conflict but the automated stowage optimizer cannot resolve it — the vessel has limited Class 6.1-compatible stowage positions due to deck vs. hold constraints. The ship planner must:
 1. Identify all affected containers in the bay
 2. Re-stowage plan: move Class 6.1 container to a compliant position
 3. Check vessel stability/trim after repositioning
 4. Coordinate with MPA for re-approval
-5. Update CITOS yard assignment (containers may need to be re-stacked at yard to match new stowage sequence)
+5. Update Terminal Operating System yard assignment (containers may need to be re-stacked at yard to match new stowage sequence)
 
 DG declaration deadline is 12 hours before arrival (MPA requirement). Late amendments create compliance risk: MPA can impose penalties or require off-vessel inspection.
 
@@ -116,7 +116,7 @@ DG declaration deadline is 12 hours before arrival (MPA requirement). Late amend
 
 **Trigger:** Inbound mother vessel delay of 8+ hours risks 100+ transhipment containers missing outbound feeder connections; requires trade-off reasoning between vessel hold vs. rolling cargo.
 
-**Systems involved:** CITOS (berth allocation + ship planning) → PORTNET (feeder schedules) → OptEVoyage (JIT tracking) → yard operations (transhipment clustering).
+**Systems involved:** Terminal Operating System (berth allocation + ship planning) → Port Community System (feeder schedules) → Voyage Tracking System (JIT tracking) → yard operations (transhipment clustering).
 
 **Scenario:**  
 A mother vessel from Europe arrives 10 hours late due to Red Sea diversions. 200 transhipment containers are planned for three outbound feeder vessels departing between 1800–2200 tonight. With the mother vessel now berthing at 1600, QC discharge rate of 30 moves/hour means:
@@ -125,7 +125,7 @@ A mother vessel from Europe arrives 10 hours late due to Red Sea diversions. 200
 - Feeder 2 (2000 departure): Can discharge 60 of 70 planned containers → 10 missed  
 - Feeder 3 (2200 departure): Can discharge all 50 planned → 0 missed
 
-CITOS and the terminal duty manager must decide:
+Terminal Operating System and the terminal duty manager must decide:
 1. **Hold Feeder 1** by 2 hours (delays feeder's entire schedule, downstream impacts at 3 regional ports)
 2. **Roll 40 containers** to next day's feeder (demurrage risk, customer SLA breach)
 3. **Prioritise discharge** of transhipment containers over import containers (disrupts import yard plan)
@@ -150,21 +150,21 @@ Each option has cascading consequences across the port network. The decision req
 
 ## B1: Reefer Cold-Chain Telemetry Excursion (High-Value Pharma Cargo)
 
-**Trigger:** ARMS detects temperature excursion (>2°C deviation from setpoint) on a reefer container carrying pharmaceutical cargo; requires verifying power plug, technician dispatch, cargo value assessment, and emergency response.
+**Trigger:** Reefer Monitoring System detects temperature excursion (>2°C deviation from setpoint) on a reefer container carrying pharmaceutical cargo; requires verifying power plug, technician dispatch, cargo value assessment, and emergency response.
 
-**Systems involved:** ARMS (reefer monitoring) → CITOS (yard assignment) → shipping line agent (cargo owner) → maintenance crew → insurance.
+**Systems involved:** Reefer Monitoring System (reefer monitoring) → Terminal Operating System (yard assignment) → shipping line agent (cargo owner) → maintenance crew → insurance.
 
 **Scenario:**  
-At 0200, ARMS flags Container ONEU4567890 — temperature rising from 2–8°C to 12°C (pharma cold chain tolerance: 2–8°C). The container is in reefer yard block R-07, plugged into power point #4521. ARMS auto-generates alert to operations team.
+At 0200, Reefer Monitoring System flags Container ONEU4567890 — temperature rising from 2–8°C to 12°C (pharma cold chain tolerance: 2–8°C). The container is in reefer yard block R-07, plugged into power point #4521. Reefer Monitoring System auto-generates alert to operations team.
 
 Operations team must triage:
-1. **Power supply check:** Is the power plug functional? (ARMS shows "power on" but temperature rising — could be plug fault, compressor failure, or door seal breach)
+1. **Power supply check:** Is the power plug functional? (Reefer Monitoring System shows "power on" but temperature rising — could be plug fault, compressor failure, or door seal breach)
 2. **Technician dispatch:** Maintenance crew dispatched (15–30 min response time at 0200)
 3. **Cargo value assessment:** Pharma cargo (insulin) valued at ~$500,000; spoilage = total loss
 4. **Emergency options:** (a) Repair in-situ, (b) Move container to functioning reefer point, (c) Request emergency off-vessel reefer from shipping line
-5. **Notification chain:** Shipping line agent, cargo owner, insurer, PSA operations manager
+5. **Notification chain:** Shipping line agent, cargo owner, insurer, Port Operator operations manager
 
-ARMS auto-blocking prevents the container from being loaded onto a vessel, but the decision to repair vs. reroute vs. emergency repack requires multi-party coordination within the critical temperature window (pharma typically allows 2–4 hrs excursion before spoilage risk).
+Reefer Monitoring System auto-blocking prevents the container from being loaded onto a vessel, but the decision to repair vs. reroute vs. emergency repack requires multi-party coordination within the critical temperature window (pharma typically allows 2–4 hrs excursion before spoilage risk).
 
 **Cost impact:**
 - Cargo spoilage: ~$500,000 (total loss if excursion exceeds 4 hrs)
@@ -175,7 +175,7 @@ ARMS auto-blocking prevents the container from being loaded onto a vessel, but t
 - Vessel loading delay if container is critical: ~$3,000–$5,000/hr
 
 **Research grounding:**
-- ARMS monitoring 10,000+ reefers: `container-yard-transport.md:240-248`
+- Reefer Monitoring System monitoring 10,000+ reefers: `container-yard-transport.md:240-248`
 - Reefer infrastructure (13,000+ power points): `container-yard-transport.md:232-237`
 - Known friction: power outage response, repair coordination: `container-yard-transport.md:266-271`
 - Decision flow — reefer alarm: `critical-flows.md:238-241`
@@ -186,15 +186,15 @@ ARMS auto-blocking prevents the container from being loaded onto a vessel, but t
 
 **Trigger:** Vessel delay of 12+ hours causes export containers to accumulate in yard blocks beyond planned capacity, forcing unproductive re-handles and blocking aRMG crane corridors.
 
-**Systems involved:** CITOS (yard planning) → A*STAR FMS (AGV dispatch) → aRMG controllers → gate operations (export arrivals).
+**Systems involved:** Terminal Operating System (yard planning) → A*STAR FMS (AGV dispatch) → aRMG controllers → gate operations (export arrivals).
 
 **Scenario:**  
 A vessel scheduled to load 2,000 export containers at 0800 is delayed to 2000. Meanwhile, gate operations continue receiving export containers — 200 trucks arrive between 0800–1200 with containers destined for yard blocks B-12 through B-15 (assigned for this vessel). By 1200, yard blocks B-12 and B-13 reach 95% utilisation.
 
-CITOS yard planner attempts dynamic rebalancing:
+Terminal Operating System yard planner attempts dynamic rebalancing:
 1. Redirect new export containers to overflow blocks B-20/B-21 (farther from wharf — longer AGV travel time)
 2. Re-stack existing containers to create space — but this requires aRMG re-handles (~$30–$50/move)
-3. Notify gate to slow export arrivals (OptETruck slot rebalancing)
+3. Notify gate to slow export arrivals (Truck Management System slot rebalancing)
 4. Coordinate with ship planner for updated loading sequence (containers may not be in optimal yard position when vessel finally berths)
 
 The overflow creates a cascade: aRMG corridors become congested with re-handle operations, AGV travel times increase by 40%, and the yard blocks near the wharf (normally reserved for high-priority transhipment) are now occupied by delayed export containers.
@@ -217,12 +217,12 @@ The overflow creates a cascade: aRMG corridors become congested with re-handle o
 
 **Trigger:** Manifest amendment received after container stacking reveals an IMDG class conflict with an adjacent container; requires minimum-move yard relocation plan.
 
-**Systems involved:** PORTNET (DG declaration update) → CITOS (yard inventory) → aRMG (re-handle) → MPA (DGPE compliance) → emergency response.
+**Systems involved:** Port Community System (DG declaration update) → Terminal Operating System (yard inventory) → aRMG (re-handle) → MPA (DGPE compliance) → emergency response.
 
 **Scenario:**  
 Two DG containers are stacked in yard block DG-03 (dedicated DG yard). Container A (Class 3 — flammable liquid) was stacked at position DG-03-04-A. Container B (Class 9 — miscellaneous DG) was stacked at position DG-03-04-B (adjacent). This stacking was compliant at time of stacking.
 
-Six hours later, PORTNET receives a DG amendment for Container B: original declaration of Class 9 was incorrect — actual classification is Class 4.1 (flammable solid). IMDG Code requires minimum separation between Class 3 and Class 4.1 containers. CITOS flags the conflict.
+Six hours later, Port Community System receives a DG amendment for Container B: original declaration of Class 9 was incorrect — actual classification is Class 4.1 (flammable solid). IMDG Code requires minimum separation between Class 3 and Class 4.1 containers. Terminal Operating System flags the conflict.
 
 Yard planner must:
 1. Identify all containers in DG-03 affected by the reclassification
@@ -230,7 +230,7 @@ Yard planner must:
 3. Check if any compliant adjacent position exists (considering other DG classes present)
 4. Coordinate aRMG re-handle during a window that doesn't conflict with active loading operations
 5. Notify MPA of the re-stowage plan for approval
-6. Update CITOS yard inventory and DG tracking
+6. Update Terminal Operating System yard inventory and DG tracking
 
 **Cost impact:**
 - aRMG re-handle: ~$30–$50/move × 3–5 moves = ~$90–$250
@@ -251,7 +251,7 @@ Yard planner must:
 
 **Trigger:** Private 5G network at Tuas Port experiences outage (hardware failure or congestion); AGV fleet coordination degraded; fallback to 4G with higher latency.
 
-**Systems involved:** 5G network (Singtel partnership) → A*STAR FMS → CITOS (AGV dispatch) → aRMG controllers → QC operations.
+**Systems involved:** 5G network (Singtel partnership) → A*STAR FMS → Terminal Operating System (AGV dispatch) → aRMG controllers → QC operations.
 
 **Scenario:**  
 At 1000 during peak discharge operations, the private 5G network at Tuas Port suffers a base station failure. AGV-to-FMS communication degrades from 10ms latency (5G) to 20–40ms (4G fallback). A*STAR FMS detects increased latency and activates traffic de-rating protocols:
@@ -287,12 +287,12 @@ The 5G outage lasts 90 minutes. During this period:
 
 **Trigger:** Haulier arrives with invalid electronic Delivery Order (eDO) or container weight (VGM) mismatch; gate kiosk halts entry, causing queue backup across OCR lanes.
 
-**Systems involved:** PORTNET (eDO) → AGS/OCR (gate system) → weighbridge → CITOS (yard assignment) → OptETruck (slot management).
+**Systems involved:** Port Community System (eDO) → AGS/OCR (gate system) → weighbridge → Terminal Operating System (yard assignment) → Truck Management System (slot management).
 
 **Scenario:**  
 At 2300 (peak gate congestion window), a haulier arrives at Tuas Port Gate with a container booked for import pickup. The AGS system checks:
 1. OCR reads container number: verified ✓
-2. eDO status: **NOT FOUND** — the shipping line has not yet released the delivery order in PORTNET
+2. eDO status: **NOT FOUND** — the shipping line has not yet released the delivery order in Port Community System
 3. Weighbridge: VGM shows 28,500 kg, but declared VGM is 24,000 kg (>5% discrepancy)
 
 AGS blocks entry. The truck pulls aside to the exception lane, but this blocks one of 4 OCR lanes. Queue builds rapidly:
@@ -302,9 +302,9 @@ AGS blocks entry. The truck pulls aside to the exception lane, but this blocks o
 
 Operations team must:
 1. Contact shipping line agent (at 2300 — limited staff) to release eDO
-2. Verify VGM discrepancy — haulier must re-advise VGM in PORTNET (>4 hrs before vessel ETB or face $10/container charge)
+2. Verify VGM discrepancy — haulier must re-advise VGM in Port Community System (>4 hrs before vessel ETB or face $10/container charge)
 3. Manually clear queue by opening overflow processing lane
-4. Coordinate with OptETruck to rebalance remaining time slots
+4. Coordinate with Truck Management System to rebalance remaining time slots
 
 **Cost impact:**
 - Gate processing delay: ~$50–$100/truck × 30 trucks × 30 min = ~$750–$1,500
@@ -322,9 +322,9 @@ Operations team must:
 
 ## C2: External Disruption to Haulier Pools (Weather/Fleet Shortage)
 
-**Trigger:** Expressway congestion (accident, weather, road works) causes 40% of booked hauliers to miss time-slots; requires dynamic slot re-balancing between OptETruck and SmartBooking.
+**Trigger:** Expressway congestion (accident, weather, road works) causes 40% of booked hauliers to miss time-slots; requires dynamic slot re-balancing between Truck Management System and Unified Booking Platform.
 
-**Systems involved:** OptETruck (TMS) → SmartBooking (slot management) → PORTNET (gate schedule) → CITOS (yard planning) → affected hauliers.
+**Systems involved:** Truck Management System (TMS) → Unified Booking Platform (slot management) → Port Community System (gate schedule) → Terminal Operating System (yard planning) → affected hauliers.
 
 **Scenario:**  
 A major accident on the Ayer Rajah Expressway (AYE) at 0700 blocks 2 lanes for 3 hours. 60% of booked haulier slots for the 0700–1000 window are for export containers. Affected hauliers:
@@ -332,11 +332,11 @@ A major accident on the Ayer Rajah Expressway (AYE) at 0700 blocks 2 lanes for 3
 - 40 trucks booked for 0800–0900 slot: 20 delayed (50%)
 - 35 trucks booked for 0900–1000 slot: 10 delayed (29%)
 
-OptETruck attempts dynamic rebalancing:
+Truck Management System attempts dynamic rebalancing:
 1. Reallocate delayed slots to hauliers stuck in queue (but they cannot reach terminal)
 2. Push delayed slots to afternoon window (but afternoon slots already 80% booked)
 3. Notify yard planner — export containers now arrive 3+ hours late, affecting vessel loading sequence
-4. Coordinate with SmartBooking — depot bookings for empty container pickups also delayed
+4. Coordinate with Unified Booking Platform — depot bookings for empty container pickups also delayed
 
 The delay cascades to yard operations: vessel loading planned for 1200 now has 85 containers not yet arrived at yard. Ship planner must re-sequence loading to prioritise containers already in yard.
 
@@ -347,8 +347,8 @@ The delay cascades to yard operations: vessel loading planned for 1200 now has 8
 - Carbon impact: ~60 trucks idling × 3 hr × 2.5 kg CO2/hr = ~450 kg CO2
 
 **Research grounding:**
-- OptETruck scheduling and slot management: `gate-haulage.md:135-163`
-- SmartBooking integration: `gate-haulage.md:165-178`
+- Truck Management System scheduling and slot management: `gate-haulage.md:135-163`
+- Unified Booking Platform integration: `gate-haulage.md:165-178`
 - Known friction: gate congestion, haulier slot mismatches: `gate-haulage.md:355-363`
 - Decision flow — congestion path: `critical-flows.md:347-350`
 
@@ -358,7 +358,7 @@ The delay cascades to yard operations: vessel loading planned for 1200 now has 8
 
 **Trigger:** Haulier arrives with damaged empty box rejected by terminal inspection; requires real-time routing to depot M&R without deadhead trucking miles.
 
-**Systems involved:** AGS (gate inspection) → iBOX (depot management) → OptETruck (routing) → depot M&R system → shipping line agent.
+**Systems involved:** AGS (gate inspection) → Depot Management System (depot management) → Truck Management System (routing) → depot M&R system → shipping line agent.
 
 **Scenario:**  
 A haulier delivers an empty container (CMAU7890123) to the on-dock depot after completing an import de-stuffing. Gate inspection detects:
@@ -369,11 +369,11 @@ A haulier delivers an empty container (CMAU7890123) to the on-dock depot after c
 AGS flags container as "defective — requires M&R assessment." The container cannot be restuffed for export until repaired. The haulier is now stuck:
 1. Container rejected at on-dock depot → cannot drop off
 2. Must take container to off-dock M&R facility → 45 min drive to Jurong
-3. But haulier has a return job (OptETruck matched) → must complete pickup within 2 hours or lose incentive
+3. But haulier has a return job (Truck Management System matched) → must complete pickup within 2 hours or lose incentive
 4. If haulier drives to M&R, the return job is missed → empty trip added back to statistics
 5. If haulier completes return job first, the defective container sits on chassis → blocking chassis pool
 
-Shipping line agent must be notified to authorise M&R. iBOX must find available M&R slot at nearest depot. OptETruck must re-route haulier to M&R and reassign the return job to another truck.
+Shipping line agent must be notified to authorise M&R. Depot Management System must find available M&R slot at nearest depot. Truck Management System must re-route haulier to M&R and reassign the return job to another truck.
 
 **Cost impact:**
 - M&R repair: ~$200–$800 (corner post repair)
@@ -385,7 +385,7 @@ Shipping line agent must be notified to authorise M&R. iBOX must find available 
 **Research grounding:**
 - iWX container reuse prediction: `container-yard-transport.md:364-382`
 - Empty depot management: `container-yard-transport.md:355-362`
-- Known friction: empty container imbalances, OptETruck adoption gaps: `gate-haulage.md:359-363`
+- Known friction: empty container imbalances, Truck Management System adoption gaps: `gate-haulage.md:359-363`
 - Empty container return logistics: `gate-haulage.md:268-324`
 
 ---
@@ -394,7 +394,7 @@ Shipping line agent must be notified to authorise M&R. iBOX must find available 
 
 **Trigger:** Demurrage/detention clock expiring on import cargo while haulier chassis availability is constrained; requires cross-haulier asset-pooling coordination.
 
-**Systems involved:** PORTNET (demurrage tracking) → OptETruck (asset pooling) → SmartBooking (slot management) → iBOX (depot ops) → haulier fleet systems.
+**Systems involved:** Port Community System (demurrage tracking) → Truck Management System (asset pooling) → Unified Booking Platform (slot management) → Depot Management System (depot ops) → haulier fleet systems.
 
 **Scenario:**  
 Import container CMAU5678901 has been at the terminal for 5 days. Free time expires at midnight — demurrage of $150/day begins tomorrow. The cargo consignee has arranged pickup, but the haulier's chassis pool is fully utilised:
@@ -405,24 +405,24 @@ Import container CMAU5678901 has been at the terminal for 5 days. Free time expi
 
 Options:
 1. **Extend free time:** Contact shipping line for 1-day extension (may not be granted, fee ~$50–$100)
-2. **Asset pool via OptETruck:** Request chassis from partner haulier (OptETruck asset pooling) — but partner has 60% utilisation, only 4 chassis available
+2. **Asset pool via Truck Management System:** Request chassis from partner haulier (Truck Management System asset pooling) — but partner has 60% utilisation, only 4 chassis available
 3. **Emergency chassis rental:** Contact depot for emergency chassis (premium rate ~$200/day)
 4. **Accept demurrage:** Let clock run, pass cost to consignee (~$150/day)
 
-OptETruck attempts cross-haulier matching but asset pooling requires real-time visibility of partner chassis availability — data may be stale by 15–30 minutes. The decision window is 6 hours before free time expiry.
+Truck Management System attempts cross-haulier matching but asset pooling requires real-time visibility of partner chassis availability — data may be stale by 15–30 minutes. The decision window is 6 hours before free time expiry.
 
 **Cost impact:**
 - Demurrage: ~$150/day × 1–3 days = ~$150–$450
 - Emergency chassis rental: ~$200/day × 1 day = ~$200
-- OptETruck asset pool coordination: ~$0 (platform cost) but ~2 hr planner time
+- Truck Management System asset pool coordination: ~$0 (platform cost) but ~2 hr planner time
 - Customer relationship: demurrage passed to consignee, potential dispute
 - Carbon: additional truck trip if emergency rental used
 
 **Research grounding:**
 - Demurrage/detention tracking: `gate-haulage.md:282-297`
-- OptETruck asset pooling: `gate-haulage.md:138-152`
-- SmartBooking slot management: `gate-haulage.md:165-178`
-- Known friction: demurrage/detention disputes, OptETruck adoption gaps: `gate-haulage.md:359-363`
+- Truck Management System asset pooling: `gate-haulage.md:138-152`
+- Unified Booking Platform slot management: `gate-haulage.md:165-178`
+- Known friction: demurrage/detention disputes, Truck Management System adoption gaps: `gate-haulage.md:359-363`
 
 ---
 
@@ -432,7 +432,7 @@ OptETruck attempts cross-haulier matching but asset pooling requires real-time v
 
 **Trigger:** Vessel berthing delay jeopardises a tight 12-hour transfer window to Changi Airport for scheduled flight departure; requires priority discharge, express customs clearance, and airline flight rebooking.
 
-**Systems involved:** OptEModal (sea-air platform) → CITOS (terminal ops) → CALISTA (milestone tracking) → TradeNet (customs) → SATS/dnata (ground handling) → airline.
+**Systems involved:** Intermodal Coordination Platform (sea-air platform) → Terminal Operating System (terminal ops) → Supply Chain Platform (milestone tracking) → TradeNet (customs) → SATS/dnata (ground handling) → airline.
 
 **Scenario:**  
 A vessel carrying 50 sea-air containers (electronics components for Samsung, valued at ~$2M) arrives at 0600, 8 hours late. The cargo must reach Changi Airfreight Centre and clear customs by 1800 for a 2000 departure on Singapore Airlines cargo flight SQ7890. Timeline:
@@ -448,11 +448,11 @@ A vessel carrying 50 sea-air containers (electronics components for Samsung, val
 | 1200–1800 | SATS handling + cargo acceptance | Must accept by 1800 |
 | 2000 | Flight departure | Hard deadline |
 
-OptEModal AI detects the risk and recommends:
-1. **Priority discharge:** Request CITOS to assign 6 QCs (instead of 4) to accelerate discharge
+Intermodal Coordination Platform AI detects the risk and recommends:
+1. **Priority discharge:** Request Terminal Operating System to assign 6 QCs (instead of 4) to accelerate discharge
 2. **Express customs:** Pre-lodge TradeNet clearance while cargo is in transit
 3. **Express ITT:** Dispatch dedicated prime movers (not shared ITT pool)
-4. **Flight rebooking:** If 12-hr window cannot be met, OptEModal suggests alternative flights (next day 0800, or competitor flights at 2200)
+4. **Flight rebooking:** If 12-hr window cannot be met, Intermodal Coordination Platform suggests alternative flights (next day 0800, or competitor flights at 2200)
 
 But each option requires multi-party coordination: terminal ops, customs, trucking, ground handling, airline. No single system has authority to expedite all steps.
 
@@ -464,9 +464,9 @@ But each option requires multi-party coordination: terminal ops, customs, trucki
 - Carbon: additional flight or extended trucking
 
 **Research grounding:**
-- OptEModal platform (24-hr transfer target): `multimodal-logistics.md:119-134`
+- Intermodal Coordination Platform platform (24-hr transfer target): `multimodal-logistics.md:119-134`
 - Changi Airfreight Centre operations: `multimodal-logistics.md:142-157`
-- PSA-SATS partnership: `multimodal-logistics.md:159-165`
+- Port Operator-SATS partnership: `multimodal-logistics.md:159-165`
 - Known friction: sea-air transfer timing, multi-party coordination: `multimodal-logistics.md:396-404`
 - Decision flow — vessel delay path: `critical-flows.md:460-467`
 
@@ -476,10 +476,10 @@ But each option requires multi-party coordination: terminal ops, customs, trucki
 
 **Trigger:** Singapore Customs or phytosanitary agency places an unexpected inspection hold on multimodal cargo mid-transit; requires multi-party notification and partial manifest release.
 
-**Systems involved:** TradeNet (customs) → CALISTA (milestone tracking) → OptEModal (transfer coordination) → SATS/dnata (airside) → forwarder/shipper.
+**Systems involved:** TradeNet (customs) → Supply Chain Platform (milestone tracking) → Intermodal Coordination Platform (transfer coordination) → SATS/dnata (airside) → forwarder/shipper.
 
 **Scenario:**  
-Sea-air cargo (pharmaceutical raw materials from India, transhipped via Singapore) is in transit from PSA terminal to Changi Airfreight Centre. At 1100, TradeNet flags the shipment for phytosanitary inspection — random selection triggered by HS code classification (plant-derived compound).
+Sea-air cargo (pharmaceutical raw materials from India, transhipped via Singapore) is in transit from Port Operator terminal to Changi Airfreight Centre. At 1100, TradeNet flags the shipment for phytosanitary inspection — random selection triggered by HS code classification (plant-derived compound).
 
 The inspection hold means:
 1. Cargo cannot proceed past Changi FTZ "In" gate
@@ -487,7 +487,7 @@ The inspection hold means:
 3. Airline has cargo space booked for 1600 departure
 4. Inspector is available at 1500 (earliest)
 
-CALISTA milestone tracker shows the hold to all parties. OptEModal recalculates:
+Supply Chain Platform milestone tracker shows the hold to all parties. Intermodal Coordination Platform recalculates:
 - If inspection clears by 1600: cargo makes 1600 flight (tight but possible)
 - If inspection clears by 1800: cargo misses 1600, next available flight is 2200 (6-hr delay)
 - If inspection requires lab testing: cargo delayed 24–48 hrs
@@ -504,36 +504,36 @@ The forwarder must provide additional documentation (certificate of origin, phyt
 **Research grounding:**
 - TradeNet (16 agency forms, single window): `multimodal-logistics.md:256-266`
 - Regulatory hold management: `multimodal-logistics.md:284-296`
-- CALISTA milestone tracking: `multimodal-logistics.md:301-320`
+- Supply Chain Platform milestone tracking: `multimodal-logistics.md:301-320`
 - Known friction: customs clearance delays, inter-modal documentation: `multimodal-logistics.md:398-400`
 
 ---
 
 ## D3: Cold-Chain Pharma Discrepancy at Regional Distribution Hub
 
-**Trigger:** Temperature logger mismatch during container devanning at PSA Supply Chain Hub @ Tuas (PSCH); requires coordination between forwarder, insurer, and terminal.
+**Trigger:** Temperature logger mismatch during container devanning at Port Operator Supply Chain Hub @ Tuas (Supply Chain Hub); requires coordination between forwarder, insurer, and terminal.
 
-**Systems involved:** Roambee (sensor data) → PSA BDP Temp Guard (cold chain) → CALISTA (milestone tracking) → PSCH warehouse ops → shipping line → insurer.
+**Systems involved:** Roambee (sensor data) → Cold-Chain Monitor (cold chain) → Supply Chain Platform (milestone tracking) → Supply Chain Hub warehouse ops → shipping line → insurer.
 
 **Scenario:**  
-A reefer container (MSCU7890123) carrying temperature-sensitive pharmaceuticals arrives at PSCH for devanning and regional distribution. During unloading:
+A reefer container (MSCU7890123) carrying temperature-sensitive pharmaceuticals arrives at Supply Chain Hub for devanning and regional distribution. During unloading:
 
 1. **Physical temperature logger** (placed inside container at origin): Shows temperature exceeded 8°C threshold for 3 hours during transit
 2. **Digital telematics** (ONE reefer fleet, installed device): Shows temperature remained at 2–8°C throughout transit
-3. **Roambee sensor** (placed at PSCH intake): Confirms current temperature is 4°C (within range)
+3. **Roambee sensor** (placed at Supply Chain Hub intake): Confirms current temperature is 4°C (within range)
 
 The discrepancy creates a dispute:
 - Forwarder claims cargo is fine (telematics data shows compliance)
 - Consignee demands physical logger data be honoured (shows excursion)
 - Insurer requires third-party verification before coverage decision
-- PSA BDP Temp Guard flags the discrepancy in the control tower dashboard
+- Cold-Chain Monitor flags the discrepancy in the control tower dashboard
 
 Resolution requires:
 1. Cross-reference Roambee historical data (item-level tracking) with telematics
 2. Verify physical logger calibration certificate
 3. Obtain lab analysis of cargo (if required by consignee)
 4. Multi-party decision: accept cargo, reject cargo, or partial acceptance with discount
-5. Update CALISTA milestone with exception status
+5. Update Supply Chain Platform milestone with exception status
 
 **Cost impact:**
 - Cargo hold: ~$2,000–$5,000/day (pharmaceuticals in cold storage)
@@ -544,8 +544,8 @@ Resolution requires:
 
 **Research grounding:**
 - Roambee partnership (70% better ETA, 90%+ cold chain compliance): `multimodal-logistics.md:338-349`
-- PSA BDP Temp Guard: `baseline-systems.md:561-564`
-- CALISTA milestone tracking: `multimodal-logistics.md:301-320`
+- Cold-Chain Monitor: `baseline-systems.md:561-564`
+- Supply Chain Platform milestone tracking: `multimodal-logistics.md:301-320`
 - Known friction: temperature-sensitive cargo handling, real-time data integration: `multimodal-logistics.md:401-403`
 
 ---
@@ -554,7 +554,7 @@ Resolution requires:
 
 **Trigger:** Priority transhipment containers must move from Pasir Panjang to Tuas during peak road traffic; coordination breakdown between road ITT, sea ITT, and yard operations at both terminals.
 
-**Systems involved:** CITOS (both terminals) → OptETruck (road ITT) → feeder vessels (sea ITT) → PORTNET (inventory tracking) → gate operations.
+**Systems involved:** Terminal Operating System (both terminals) → Truck Management System (road ITT) → feeder vessels (sea ITT) → Port Community System (inventory tracking) → gate operations.
 
 **Scenario:**  
 120 transhipment containers at Pasir Panjang Terminal (PPT) must reach Tuas Port for loading on a vessel departing at 2000. Current time: 1000. Transfer options:
@@ -574,7 +574,7 @@ Resolution requires:
 - Arrives Tuas at 1800 — tight for 2000 vessel departure
 
 **Coordination failure:**
-- Road ITT: OptETruck dispatches 15 trucks, but 5 are stuck at PPT gate (gate congestion)
+- Road ITT: Truck Management System dispatches 15 trucks, but 5 are stuck at PPT gate (gate congestion)
 - Sea ITT: Feeder vessel delayed 1 hour (berth conflict at PPT)
 - Yard at Tuas: Tuas yard planner expects containers at 1600 (road ITT) — but sea ITT delivers at 1800
 - QC loading sequence must be re-planned

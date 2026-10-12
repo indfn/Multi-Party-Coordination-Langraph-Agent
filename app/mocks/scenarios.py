@@ -89,7 +89,7 @@ PB12_SCENARIOS: dict[str, PB12Scenario] = {
     "stale": PB12Scenario(
         id="stale",
         name="Stale/Missing Data",
-        description="PPT CITOS data is 25+ minutes old. Guardrails fire.",
+        description="PPT Terminal Operating System data is 25+ minutes old. Guardrails fire.",
         container_count=Dist(100, 15, 80, 120),
         available_trucks=Dist(32, 5, 25, 40),
         feeder_occupancy_teu=Dist(550, 80, 400, 650),

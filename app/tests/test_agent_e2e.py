@@ -33,7 +33,7 @@ def _make_event():
     return ITTCoordinationEvent(
         event_type="ITT_COORDINATION_REQUEST",
         timestamp="2026-08-19T10:30:00+08:00",
-        source="CITOS_PPT",
+        source="Terminal Operating System_PPT",
         priority="high",
         origin_terminal="PPT",
         destination_terminal="TUAS",

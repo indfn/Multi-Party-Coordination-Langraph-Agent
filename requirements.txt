@@ -1,4 +1,4 @@
-# PSA Nexus — Python dependencies
+# Nexus — Python dependencies
 # Core framework
 fastapi==0.141.1
 uvicorn==0.52.4

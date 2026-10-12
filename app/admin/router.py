@@ -36,7 +36,7 @@ router = APIRouter(prefix="/api/admin", tags=["Admin"])
 async def admin_logout():
     """Invalidate session by clearing the cookie."""
     response = JSONResponse({"status": "ok"})
-    response.delete_cookie("psa_admin_session")
+    response.delete_cookie("nexus_admin_session")
     return response
 
 
@@ -54,7 +54,7 @@ async def admin_login(payload: dict):
     token = create_session_cookie(username)
     response = JSONResponse({"status": "ok", "user": username, "expires_in": 3600})
     response.set_cookie(
-        "psa_admin_session",
+        "nexus_admin_session",
         token,
         httponly=True,
         samesite="lax",

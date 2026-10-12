@@ -1,8 +1,8 @@
-# Multimodal Logistics & Supply Chain Adjacencies — PSA Singapore
+# Multimodal Logistics & Supply Chain Adjacencies — Port Operator
 
 **Status:** Research complete (Round 1)
 **Last updated:** 2026-08-17
-**Verification:** Multi-source cross-verified (PSA official, MPA, Changi Airport Group, industry sources)
+**Verification:** Multi-source cross-verified (Port Operator official, MPA, Changi Airport Group, industry sources)
 
 ---
 
@@ -12,13 +12,13 @@
 SEA-TO-AIR MULTIMODAL CORRIDOR
     │
     ▼
-Vessel Arrival (PSA Terminal)
+Vessel Arrival (Port Operator Terminal)
     │
     ▼
-CITOS® Discharge → Yard Operations
+Terminal Operating System Discharge → Yard Operations
     │
     ▼
-OptEModal ──── Real-time tracking initiated
+Intermodal Coordination Platform ──── Real-time tracking initiated
     │              AI-powered ETA predictions
     │              Proactive delay identification
     │              Smart flight recommendations
@@ -42,7 +42,7 @@ DESTINATION
 PORT-ADJACENT WAREHOUSING & DISTRIBUTION
     │
     ▼
-PSA Supply Chain Hub @ Tuas (PSCH) ──── Ready 2027
+Port Operator Supply Chain Hub @ Tuas (Supply Chain Hub) ──── Ready 2027
     │   ├── Container Freight Station (CFS)
     │   │       Multi-country consolidation/deconsolidation
     │   │       Automated storage & retrieval (ASRS)
@@ -85,7 +85,7 @@ MPA Regulatory Checks
     │   Security inspection holds
     │   Port State Control
     ▼
-CALISTA ──── Cross-border customs orchestration
+Supply Chain Platform ──── Cross-border customs orchestration
     │           Milestone event tracking
     │           Trade corridor coverage
     ▼
@@ -96,10 +96,10 @@ CARGO RELEASE
 END-TO-END CARGO VISIBILITY
     │
     ▼
-CALISTA P!NG ──── Near-real-time milestone tracking
+Milestone Tracking Service ──── Near-real-time milestone tracking
     │               GeTS/CrimsonLogic integration
     ▼
-PSA BDP ──── Control tower platform
+Global Logistics Arm ──── Control tower platform
     │           Cold-chain integrity monitoring
     │           Chemical/hazardous logistics
     ▼
@@ -113,14 +113,14 @@ STAKEHOLDER DASHBOARD
 
 ---
 
-## 1. Sea-to-Air Multimodal Transfers (OptEModal)
+## 1. Sea-to-Air Multimodal Transfers (Intermodal Coordination Platform)
 
-### 1.1 OptEModal Platform
+### 1.1 Intermodal Coordination Platform Platform
 
-**Launched August 2025** by PSA Singapore and Cargo Community Network (CCN), OptEModal is a next-generation digital platform for sea-air intermodal transhipment.
+**Launched August 2025** by Port Operator and Cargo Community Network (CCN), Intermodal Coordination Platform is a next-generation digital platform for sea-air intermodal transhipment.
 
 **Core Capabilities:**
-- **Multi-party visibility**: Real-time tracking across PSA terminals, ground handlers, and airline partners
+- **Multi-party visibility**: Real-time tracking across Port Operator terminals, ground handlers, and airline partners
 - **AI-powered ETA predictions**: Machine learning models for accurate arrival time forecasting
 - **Proactive delay identification**: Automatic detection of disruptions in the multimodal chain
 - **Smart flight recommendations**: AI-driven suggestions for optimal connecting flights
@@ -132,7 +132,7 @@ STAKEHOLDER DASHBOARD
 - E-commerce (fast-moving consumer goods)
 
 **Stakeholders integrated:**
-- PSA terminals (maritime side)
+- Port Operator terminals (maritime side)
 - SATS and dnata ground handlers (airside)
 - Airline partners
 - Freight forwarders and shippers
@@ -153,15 +153,15 @@ The Changi Airfreight Centre is a **Free Trade Zone** facility (~70 hectares) ho
 
 **Intermodal capabilities:**
 - Long-standing sea-air intermodal operations (strengthened during Red Sea crisis)
-- Integrated with OptEModal for end-to-end tracking
-- Direct connectivity to PSA terminals via road and sea
+- Integrated with Intermodal Coordination Platform for end-to-end tracking
+- Direct connectivity to Port Operator terminals via road and sea
 
-### 1.3 PSA-SATS Partnership (2019 MOU)
+### 1.3 Port Operator-SATS Partnership (2019 MOU)
 
-PSA and SATS established sea-air connectivity to promote Singapore as a key multimodal transport hub:
+Port Operator and SATS established sea-air connectivity to promote Singapore as a key multimodal transport hub:
 - **Yard-to-Port data linkages**: Real-time information flow between port and airport
 - **Enhanced track-and-trace**: Data transparency across FTZs
-- **System integration**: CALISTA™ linked with COSYS+ (SATS cargo handling system)
+- **System integration**: Supply Chain Platform linked with COSYS+ (SATS cargo handling system)
 - **Target sectors**: Perishables, electronics, e-commerce
 
 ### 1.4 Changi Airport Growth
@@ -170,15 +170,15 @@ Changi Airport is undergoing infrastructure expansion:
 - Current: 4 passenger terminals and Changi Airfreight Centre
 - Growing intermodal demand driven by Red Sea crisis disruptions
 - Increasing preference for intermodal options balancing cost, speed, and reliability
-- OptEModal identified as key enabler for improved ocean-air coordination
+- Intermodal Coordination Platform identified as key enabler for improved ocean-air coordination
 
 ---
 
 ## 2. Port-Ancillary Warehousing & Distribution
 
-### 2.1 PSA Supply Chain Hub @ Tuas (PSCH)
+### 2.1 Port Operator Supply Chain Hub @ Tuas (Supply Chain Hub)
 
-**Groundbreaking October 2024**, PSCH is PSA's flagship logistics facility:
+**Groundbreaking October 2024**, Supply Chain Hub is Port Operator's flagship logistics facility:
 
 **Location & Size:**
 - Adjacent to Tuas Port within Free Trade Zone
@@ -210,20 +210,20 @@ Changi Airport is undergoing infrastructure expansion:
 ### 2.2 Keppel Distripark (Current Operations)
 
 **Multi-tenanted cargo distribution complex:**
-- Container freight station (CFS) managed by PSA
+- Container freight station (CFS) managed by Port Operator
 - Heavy vehicle and chassis parks
 - Warehousing and office facilities
 - Located within FTZ with direct terminal link
 - Close proximity to highways (city, airport, industrial hubs)
 
-**PSA/OOCL Green Pilot:**
+**Port Operator/OOCL Green Pilot:**
 - Integrated container flow between KD and On-Dock Depot
 - 93% reduction in kgCO2e per trip
 - Demonstrates sustainability potential of port-adjacent logistics
 
 **Transition:**
 - KD operations to be consolidated at Tuas Port by 2027
-- PSCH will replace and expand KD capabilities
+- Supply Chain Hub will replace and expand KD capabilities
 
 ### 2.3 iWX Platform (Intelligent Warehouse eXchange)
 
@@ -238,7 +238,7 @@ Changi Airport is undergoing infrastructure expansion:
 - Real-time inventory tracking
 
 **Integration:**
-- Data from PSA's digital ecosystem (Portnet, SmartBooking)
+- Data from Port Operator's digital ecosystem (Port Community System, Unified Booking Platform)
 - Terminal operations data
 - Haulier and depot systems
 
@@ -260,7 +260,7 @@ Changi Airport is undergoing infrastructure expansion:
 - Saves industry **100,000+ man-hours per year**
 - Manages vessel, immigration, and port health clearances
 
-**digitalPORT@SG™ integration:**
+**digitalPORT@SG integration:**
 - Single digital shopfront for port and customs services
 - Streamlines clearances across multiple agencies
 - Enables JIT operations through AI optimisation
@@ -298,9 +298,9 @@ Changi Airport is undergoing infrastructure expansion:
 
 ## 4. End-to-End Cargo Visibility & Milestone Tracking
 
-### 4.1 CALISTA Platform
+### 4.1 Supply Chain Platform Platform
 
-**CALISTA** (CArgo Logistics, Inventory Streamlining & Trade Aggregation) is PSA's global supply chain orchestration platform.
+**Supply Chain Platform** (CArgo Logistics, Inventory Streamlining & Trade Aggregation) is Port Operator's global supply chain orchestration platform.
 
 **Core Capabilities:**
 - **Physical flow management**: Container tracking across trade corridors
@@ -314,14 +314,14 @@ Changi Airport is undergoing infrastructure expansion:
 - **Phase 1 trial**: ~US$15 million investment
 - Partnerships with MTI, EDB, National Trade Platform
 
-**CALISTA P!NG:**
+**Milestone Tracking Service:**
 - Near-real-time milestone event telemetry
 - End-to-end cargo tracking across international trade corridors
 - Free access offered during supply chain disruptions (COVID response)
 
-### 4.2 PSA BDP Enterprise Solutions
+### 4.2 Global Logistics Solutions
 
-**PSA BDP** (unifying PSA Cargo Solutions and BDP International) provides:
+**Global Logistics Arm** (unifying Logistics Solutions Division and Global Logistics Partner) provides:
 
 **Core capabilities:**
 - **Control tower platform**: Centralised visibility across supply chain
@@ -337,7 +337,7 @@ Changi Airport is undergoing infrastructure expansion:
 
 ### 4.3 Roambee Partnership
 
-**PSA unboXed** (corporate venture arm) invested in Roambee for:
+**Port Operator unboXed** (corporate venture arm) invested in Roambee for:
 - **Real-time sensor intelligence**: Item-level location and condition
 - **Verifiable visibility**: First-hand sensor + port operations data
 - **FCL/LCL tracking**: Full container load and less than container load
@@ -350,7 +350,7 @@ Changi Airport is undergoing infrastructure expansion:
 
 ### 4.4 BoxVoyant Data Ingestion
 
-PSA integrates BoxVoyant data for:
+Port Operator integrates BoxVoyant data for:
 - End-to-end cargo visibility
 - Mileage event tracking across supply chain
 - Predictive analytics for cargo movements
@@ -373,7 +373,7 @@ Common exceptions in multimodal logistics:
 | DG declaration errors | Incomplete/incorrect hazardous cargo info | Safety incident, handling delay |
 | Vessel delay | Schedule disruption affecting connections | Missed connections, rebooking |
 
-### 5.2 PSA Cargo Solutions Response
+### 5.2 Logistics Solutions Division Response
 
 **Value-Added Services (launched during supply chain disruptions):**
 - **Priority Discharge**: Expedited container discharge from vessel
@@ -382,7 +382,7 @@ Common exceptions in multimodal logistics:
 - **Flexi-Alerts**: Proactive notifications on cargo status
 - **Fast Connection Management**: Priority handling for transhipment connections
 
-### 5.3 CALISTA Exception Management
+### 5.3 Supply Chain Platform Exception Management
 
 - **Real-time alerts**: Automatic detection of milestone deviations
 - **Stakeholder notification**: Multi-party visibility of exceptions
@@ -396,11 +396,11 @@ Common exceptions in multimodal logistics:
 1. **Sea-air transfer timing**: 24-hour transfer target requires precise coordination; any delay cascades
 2. **Inter-modal documentation**: Different documentation requirements between sea and air modes
 3. **Customs clearance delays**: Documentation errors or inspections disrupt multimodal flows
-4. **FTZ access coordination**: Moving cargo between PSA FTZ and Changi FTZ requires proper documentation
+4. **FTZ access coordination**: Moving cargo between Port Operator FTZ and Changi FTZ requires proper documentation
 5. **Temperature-sensitive cargo handling**: Cold chain breaks during mode transfers
 6. **DG handling across modes**: Different regulatory frameworks for hazardous cargo in sea vs air
 7. **Real-time data integration**: Connecting disparate systems across maritime, air cargo, and logistics
-8. **Warehousing capacity constraints**: Peak period demand may exceed PSCH/KD capacity
+8. **Warehousing capacity constraints**: Peak period demand may exceed Supply Chain Hub/KD capacity
 9. **Labour availability**: Specialised skills for cold chain, DG, and automated warehouse operations
 
 ---
@@ -409,21 +409,21 @@ Common exceptions in multimodal logistics:
 
 | Source | URL | Verified |
 |--------|-----|----------|
-| PSA/CCN OptEModal Launch | https://www.singaporepsa.com/psa-singapore-and-cargo-community-network-launch-optemodal-to-boost-sea-air-connectivity-through-a-one-stop-digital-platform/ | ✅ |
-| OptEModal PSA Announcement | https://www.singaporepsa.com/2025/08/05/psa-singapore-and-cargo-community-network-launch-optemodal-to-boost-sea-air-connectivity-through-a-one-stop-digital-platform/ | ✅ |
-| Port Technology - OptEModal | https://www.porttechnology.org/psa-ccn-debut-digital-tool-for-intermodal-shipments/ | ✅ |
+| Port Operator/CCN Intermodal Coordination Platform Launch | https://www.port-operator.example.com/Port Operator-singapore-and-cargo-community-network-launch-intermodal-to-boost-sea-air-connectivity-through-a-one-stop-digital-platform/ | ✅ |
+| Intermodal Coordination Platform Port Operator Announcement | https://www.port-operator.example.com/2025/08/05/Port Operator-singapore-and-cargo-community-network-launch-intermodal-to-boost-sea-air-connectivity-through-a-one-stop-digital-platform/ | ✅ |
+| Port Technology - Intermodal Coordination Platform | https://www.porttechnology.org/Port Operator-ccn-debut-digital-tool-for-intermodal-shipments/ | ✅ |
 | Changi Airfreight Centre Growth | https://www.aircargonews.net/interviews/2026/05/changi-goes-for-growth-with-infrastructure-rollout/ | ✅ |
-| PSA Supply Chain Hub @ Tuas | https://www.singaporepsa.com/wp-content/uploads/2024/10/241018-PSA-Celebrates-Groundbreaking-for-its-New-Supply-Chain-Hub.pdf | ✅ |
-| Business Times - PSCH | https://www.businesstimes.com.sg/singapore/psas-upcoming-18-6-ha-supply-chain-facility-support-tuas-port-new-capabilities | ✅ |
-| PSA COSCO MOU | https://www.singaporepsa.com/2025/09/15/psa-singapore-and-cosco-expand-collaboration-beyond-port-operations-with-regional-distribution-facilities-in-singapore/ | ✅ |
-| PSA Port Ecosystem | https://www.singaporepsa.com/our-business/portecosystem/ | ✅ |
-| PSA/SATS Sea-Air MOU | https://www.globalpsa.com/psa-and-sats-establish-sea-air-connectivity-to-promote-singapore-as-key-multimodal-transport-hub/ | ✅ |
-| CALISTA Platform | https://www.globalpsa.com/psa-and-gets-team-up-to-develop-calista/ | ✅ |
-| CALISTA P!NG | https://www.singaporepsa.com/2021/03/03/psa-singapore-responds-to-supply-chain-disruptions-with-cargo-solutions/ | ✅ |
-| Roambee/PSA unboXed | https://www.globalpsa.com/roambee-well-positioned-to-address-ocean-freight-visibility-with-strategic-investment-from-psa-unboxed/ | ✅ |
-| CALISTA Inventory Financing | https://www.globalpsa.com/gets-launches-calista-inventory-financing-platform-integrated-with-sgtradex-to-digitalize-and-streamline-singapores-oil-storage-financing/ | ✅ |
-| Seatrade - PSCH Groundbreaking | https://www.seatrade-maritime.com/ports-logistics/psa-breaks-ground-on-singapore-supply-chain-hub | ✅ |
-| PSA iWX Platform | https://www.businesstimes.com.sg/events-awards/design-ai-tech-awards/design-ai-and-tech-awards/new-era-warehouse-logistics-psa-singapores-ai-powered-iwx-platform | ✅ |
+| Port Operator Supply Chain Hub @ Tuas | https://www.port-operator.example.com/wp-content/uploads/2024/10/241018-Port Operator-Celebrates-Groundbreaking-for-its-New-Supply-Chain-Hub.pdf | ✅ |
+| Business Times - Supply Chain Hub | https://www.businesstimes.com.sg/singapore/psas-upcoming-18-6-ha-supply-chain-facility-support-tuas-port-new-capabilities | ✅ |
+| Port Operator COSCO MOU | https://www.port-operator.example.com/2025/09/15/Port Operator-singapore-and-cosco-expand-collaboration-beyond-port-operations-with-regional-distribution-facilities-in-singapore/ | ✅ |
+| Port Operator Port Ecosystem | https://www.port-operator.example.com/our-business/portecosystem/ | ✅ |
+| Port Operator/SATS Sea-Air MOU | https://www.port-operator.example.com/Port Operator-and-sats-establish-sea-air-connectivity-to-promote-singapore-as-key-multimodal-transport-hub/ | ✅ |
+| Supply Chain Platform Platform | https://www.port-operator.example.com/Port Operator-and-gets-team-up-to-develop-calista/ | ✅ |
+| Milestone Tracking Service | https://www.port-operator.example.com/2021/03/03/Port Operator-singapore-responds-to-supply-chain-disruptions-with-cargo-solutions/ | ✅ |
+| Roambee/Port Operator unboXed | https://www.port-operator.example.com/roambee-well-positioned-to-address-ocean-freight-visibility-with-strategic-investment-from-Port Operator-unboxed/ | ✅ |
+| Supply Chain Platform Inventory Financing | https://www.port-operator.example.com/gets-launches-calista-inventory-financing-platform-integrated-with-sgtradex-to-digitalize-and-streamline-singapores-oil-storage-financing/ | ✅ |
+| Seatrade - Supply Chain Hub Groundbreaking | https://www.seatrade-maritime.com/ports-logistics/Port Operator-breaks-ground-on-singapore-supply-chain-hub | ✅ |
+| Port Operator iWX Platform | https://www.businesstimes.com.sg/events-awards/design-ai-tech-awards/design-ai-and-tech-awards/new-era-warehouse-logistics-Port Operator-singapores-ai-powered-iwx-platform | ✅ |
 | Singapore Customs Transhipment | https://www.customs.gov.sg/doing-business/transhipment-operations/transhipment-procedures/transhipment-procedures-overview/ | ✅ |
-| PSA/OOCL Green Pilot | https://www.singaporepsa.com/2022/06/23/psa-and-oocl-complete-green-pilot-trial-for-integrated-enhanced-container-flow-between-keppel-distripark-and-on-dock-depot/ | ✅ |
-| PSA Tuas Port of the Future | https://www.maritimeinstitute.sg/wp-content/uploads/2023/09/Keynote-Presentation-Nelson-Quek-Tuas-Port-of-the-Future.pdf | ✅ |
+| Port Operator/OOCL Green Pilot | https://www.port-operator.example.com/2022/06/23/Port Operator-and-oocl-complete-green-pilot-trial-for-integrated-enhanced-container-flow-between-keppel-distripark-and-on-dock-depot/ | ✅ |
+| Port Operator Tuas Port of the Future | https://www.maritimeinstitute.sg/wp-content/uploads/2023/09/Keynote-Presentation-Nelson-Quek-Tuas-Port-of-the-Future.pdf | ✅ |

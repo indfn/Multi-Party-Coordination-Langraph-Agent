@@ -18,7 +18,7 @@ from fastapi.responses import RedirectResponse
 # Credentials from env vars (demo defaults for local dev only)
 _ADMIN_USER = os.environ.get("ADMIN_USER", "admin")
 _ADMIN_PASS = os.environ.get("ADMIN_PASS", "admin123")
-_SESSION_SECRET = os.environ.get("ADMIN_SESSION_SECRET", "psa-nexus-admin-dev-secret")
+_SESSION_SECRET = os.environ.get("ADMIN_SESSION_SECRET", "nexus-admin-dev-secret")
 _SESSION_TTL = 3600  # 1 hour
 
 
@@ -55,7 +55,7 @@ def create_session_cookie(username: str) -> str:
 
 def check_auth(request: Request) -> str:
     """Check admin auth from request. Returns username or raises 401."""
-    token = request.cookies.get("psa_admin_session")
+    token = request.cookies.get("nexus_admin_session")
     if not token:
         # Also check Authorization header (Bearer token)
         auth_header = request.headers.get("Authorization", "")

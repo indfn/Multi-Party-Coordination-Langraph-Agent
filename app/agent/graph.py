@@ -10,7 +10,7 @@ from typing import Any
 
 # Optional LangSmith tracing — must be set before graph compilation
 if os.environ.get("LANGCHAIN_TRACING_V2") == "true" and os.environ.get("LANGCHAIN_API_KEY"):
-    os.environ.setdefault("LANGCHAIN_PROJECT", "psa-nexus")
+    os.environ.setdefault("LANGCHAIN_PROJECT", "nexus")
 
 from langgraph.graph import StateGraph, START, END
 from langgraph.checkpoint.memory import MemorySaver

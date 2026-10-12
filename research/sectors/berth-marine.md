@@ -1,8 +1,8 @@
-# Berth & Marine Operations — PSA Singapore
+# Berth & Marine Operations — Port Operator
 
 **Status:** Research complete (Round 1)
 **Last updated:** 2026-08-17
-**Verification:** Multi-source cross-verified (PSA official, MPA official, industry sources)
+**Verification:** Multi-source cross-verified (Port Operator official, MPA official, industry sources)
 
 ---
 
@@ -15,7 +15,7 @@ VESSEL APPROACH (Straits of Malacca)
 VTIS/STRAITREP REPORTING ──── MPA Singapore VTS (Sectors 7-9)
     │
     ▼
-ARRIVAL NOTIFICATION (12-24 hrs pre-arrival via digitalPORT@SG™)
+ARRIVAL NOTIFICATION (12-24 hrs pre-arrival via digitalPORT@SG)
     │
     ▼
 JIT PLATFORM ──── 72-hr berth allocation notification
@@ -27,12 +27,12 @@ JIT PLATFORM ──── 72-hr berth allocation notification
     │   ▼
     ▼
 BOARDING GROUND ──── Pilot boarding (8 grounds: PEBGA/B/C, PSBG, PWBGA/B, PJSB, PGBG)
-    │                   PSA Marine pilots (97.6% within 30 min of SRT)
+    │                   Marine Services Unit pilots (97.6% within 30 min of SRT)
     ▼
 TUG DISPATCH ──── 2-3 tugs per vessel (based on LOA/draft/berth type)
-    │               PSA Marine fleet: 38+ tugs (3,350-5,360 HP)
+    │               Marine Services Unit fleet: 38+ tugs (3,350-5,360 HP)
     ▼
-BERTH ALLOCATION ──── CITOS® dynamic berth assignment
+BERTH ALLOCATION ──── Terminal Operating System dynamic berth assignment
     │                   (vessel draft, tidal windows, LOA, crane split)
     ▼
 QUAY CRANE OPERATIONS ──── DTQCs at Tuas (dual-trolley)
@@ -40,7 +40,7 @@ QUAY CRANE OPERATIONS ──── DTQCs at Tuas (dual-trolley)
     │                       24-row reach, 23m deep-water draft
     ▼
 STOWAGE PLANNING ──── Vessel stability/trim, DG segregation
-    │                   Ship planner + CITOS® integration
+    │                   Ship planner + Terminal Operating System integration
     ▼
 DISCHARGE / LOADING ──── QC sequencing → AGV/aRMG coordination
     │
@@ -72,21 +72,21 @@ MPA is developing a **Next Generation Vessel Traffic Management System (NGVTMS)*
 
 ### 1.2 Just-In-Time (JIT) Arrival Coordination
 
-The digitalPORT@SG™ JIT Planning and Coordination Platform, fully implemented since October 2023 for PSA terminals and Jurong Port, represents a paradigm shift in vessel arrival management. The platform provides:
+The digitalPORT@SG JIT Planning and Coordination Platform, fully implemented since October 2023 for Port Operator terminals and Jurong Port, represents a paradigm shift in vessel arrival management. The platform provides:
 
 - **72-hour berth allocation notification**: MPA notifies Singapore-bound vessels of their berth allocation 72 hours in advance. Vessels are expected to adjust arrival timing accordingly.
 - **Live ETB updates**: Any changes to Estimated Time of Berthing (ETB) are communicated through the JIT system as live notifications.
 - **Anchorage management**: For delays not attributable to the vessel, MPA provides anchorage space if communicated within 12 hours (vessels from the west) or 6 hours (vessels from the east) before ETB.
 - **Concurrent services**: The 72-hour window allows bunkering, crew change, provisioning, and inspections to be planned concurrently with cargo operations.
 
-**PSA's OptEVoyage** is the carrier-facing digital solution that synchronises real-time ship-to-port data exchange to enable JIT arrivals. As of April 2024, 6 shipping lines are onboard with 99 services under trial. In 2023, OptEVoyage achieved inferred bunker savings of 52,551 metric tons and CO2 emission savings of 163,832 metric tons.
+**Port Operator's Voyage Tracking System** is the carrier-facing digital solution that synchronises real-time ship-to-port data exchange to enable JIT arrivals. As of April 2024, 6 shipping lines are onboard with 99 services under trial. In 2023, Voyage Tracking System achieved inferred bunker savings of 52,551 metric tons and CO2 emission savings of 163,832 metric tons.
 
 ### 1.3 Pre-Arrival Notification Requirements
 
 Vessel agents must notify MPA:
 - **12 hours minimum** before arrival (vessels from nearby ports with <12 hours steaming)
 - **24 hours minimum** for vessels carrying hazardous/noxious substances in bulk
-- General Declaration within **24 hours** of arrival via digitalPORT@SG™
+- General Declaration within **24 hours** of arrival via digitalPORT@SG
 
 The Confirmation of Arrival report to VTIS via VHF must include: vessel name, call sign, present position, crew count (passenger vessels), ETA at first destination or pilot boarding ground, and vessel height.
 
@@ -96,7 +96,7 @@ The Confirmation of Arrival report to VTIS via VHF must include: vessel name, ca
 
 ### 2.1 Terminal Infrastructure
 
-PSA Singapore operates **56 berths** across multiple terminals as one seamless integrated facility:
+Port Operator operates **56 berths** across multiple terminals as one seamless integrated facility:
 
 | Terminal | Location | Berths | Capacity | Key Features |
 |----------|----------|--------|----------|--------------|
@@ -110,7 +110,7 @@ PSA Singapore operates **56 berths** across multiple terminals as one seamless i
 
 ### 2.2 Berth Allocation Process
 
-Berth allocation is managed through **CITOS®** (Computer Integrated Terminal Operations System), PSA's proprietary Terminal Operating System. The allocation considers:
+Berth allocation is managed through **Terminal Operating System** (Computer Integrated Terminal Operations System), Port Operator's proprietary Terminal Operating System. The allocation considers:
 
 - **Vessel draft and tidal windows**: Deep-water berths (23m) at PPT and Tuas accommodate the world's largest container vessels
 - **Downstream tidal lockout risk**: Regional feeder destinations (Port Klang shallow berths, Chittagong, Yangon) operate on strict high-tide navigation windows. A 1-hour feeder departure delay from Singapore can cause a 10–12 hour anchorage lockout at destination — the delay is non-linear, not additive.
@@ -129,7 +129,7 @@ Berth allocation is managed through **CITOS®** (Computer Integrated Terminal Op
 
 ZPMC recently delivered a new visual system for DTQCs at a Singapore terminal, combining the Intelligent AGV Positioning System (IAPS) and Visual Dynamic Landing System (VDLS), replacing older laser-based technology with AI-powered object detection.
 
-**At Pasir Panjang**: Standard quay cranes with 24-row reach, being retrofitted with AI-enabled autonomous technology through PSA's partnership with Aidrivers (contract awarded 2024). This includes 3D Chassis Alignment System and real-time 3D Ship Profiling System.
+**At Pasir Panjang**: Standard quay cranes with 24-row reach, being retrofitted with AI-enabled autonomous technology through Port Operator's partnership with Aidrivers (contract awarded 2024). This includes 3D Chassis Alignment System and real-time 3D Ship Profiling System.
 
 ### 2.4 Quay Crane Sequencing
 
@@ -140,7 +140,7 @@ QC sequencing determines the order of discharging and loading jobs to minimise v
 - Yard block congestion (preventing overly-accessed storage blocks)
 - Vessel stability/trim requirements (centre of gravity must remain within specified range)
 
-PSA's research (Choo, Klabjan, Simchi-Levi) addresses multiship QC sequencing with yard congestion constraints using mixed-integer programming and Lagrangian relaxation, enabling large-scale problems to be solved in reasonable computational time.
+Port Operator's research (Choo, Klabjan, Simchi-Levi) addresses multiship QC sequencing with yard congestion constraints using mixed-integer programming and Lagrangian relaxation, enabling large-scale problems to be solved in reasonable computational time.
 
 ---
 
@@ -148,12 +148,12 @@ PSA's research (Choo, Klabjan, Simchi-Levi) addresses multiship QC sequencing wi
 
 ### 3.1 Pilotage Services
 
-PSA Marine Pte Ltd provides pilotage services to **180,000+ vessels annually** in the Port of Singapore. Key operational metrics (June 2026):
+Marine Services Unit Pte Ltd provides pilotage services to **180,000+ vessels annually** in the Port of Singapore. Key operational metrics (June 2026):
 
 | Metric | Value |
 |--------|-------|
 | MPA KPI | 90% within 30 min of Service Required Time (SRT) |
-| PSA Marine actual | **97.6% within 30 min of SRT** |
+| Marine Services Unit actual | **97.6% within 30 min of SRT** |
 | Monthly piloted jobs | ~14,138 |
 | Daily range | 427-532 jobs |
 | Short-notice orders (<6 hrs) | 41.45% |
@@ -179,12 +179,12 @@ Tug assignment follows MPA guidelines based on vessel size, berth type, and oper
 | 101-122m | 2S (4×370kW) | 2S → 3S at berthing point |
 | >122m | Per pilotage guidelines | Per pilotage guidelines |
 
-PSA Marine operates **38+ tugs** ranging from 3,350 to 5,360 HP, with bollard pull of 35-70 metric tons. Tug types include Rampart, Tractor, Pusher, and Z-tug configurations. Service level: **98.8% within 15 minutes** of SRT (2023 average).
+Marine Services Unit operates **38+ tugs** ranging from 3,350 to 5,360 HP, with bollard pull of 35-70 metric tons. Tug types include Rampart, Tractor, Pusher, and Z-tug configurations. Service level: **98.8% within 15 minutes** of SRT (2023 average).
 
 ### 3.3 Bunkering & Simultaneous Operations
 
-Singapore supports bunkering operations concurrent with cargo handling. In May 2024, PSA achieved the **first simultaneous methanol bunkering and cargo operation (SIMOPS)** at Tuas Port:
-- Conducted with X-Press Feeders using PSA's DTQCs and AGVs
+Singapore supports bunkering operations concurrent with cargo handling. In May 2024, Port Operator achieved the **first simultaneous methanol bunkering and cargo operation (SIMOPS)** at Tuas Port:
+- Conducted with X-Press Feeders using Port Operator's DTQCs and AGVs
 - Completed in 4 hours
 - Methanol delivered via mass flow metering (MFM) system
 - Demonstrates readiness for commercial-scale methanol, ammonia, and hydrogen bunkering
@@ -209,17 +209,17 @@ Singapore handles approximately 3% of its 37+ million TEU throughput as DG conta
 
 - **Full electronic declaration**: All DG must be declared with UN Number, IMO Class, container number, packaging type, packing group, gross weight
 - **Declaration timelines**: 12 hours before arrival (discharging/in-transit DG); 24 hours before arrival for transit DG
-- **Dedicated DG yards**: Post-Tianjin 2015, PSA established dedicated segregated storage areas for different DG classes with safety distances
+- **Dedicated DG yards**: Post-Tianjin 2015, Port Operator established dedicated segregated storage areas for different DG classes with safety distances
 - **Quantitative Risk Analysis (QRA)**: Required before any site is approved for DG storage and handling
-- **Inspections**: MPA conducts spot checks on vessels at terminals; PSAC maintains oversight of DG handling at terminals
+- **Inspections**: MPA conducts spot checks on vessels at terminals; Terminal Authority maintains oversight of DG handling at terminals
 - **Class 7 (Radioactive)**: Jointly managed with National Environment Agency (NEA)
 
 ### 4.3 Ship Planner Role
 
-Ship planners at PSA collaborate with internal and external stakeholders to:
+Ship planners at Port Operator collaborate with internal and external stakeholders to:
 - Achieve optimal cargo distribution for vessel stability
 - Facilitate swift vessel turnaround
-- Ensure seamless connectivity in PSA Singapore's network
+- Ensure seamless connectivity in Port Operator's network
 - Plan shift-to-shift ship planning requirements
 - Coordinate with shipping lines on stowage preferences and constraints
 
@@ -229,13 +229,13 @@ Ship planners at PSA collaborate with internal and external stakeholders to:
 
 ### 5.1 Transhipment Architecture
 
-As the **world's largest container transhipment hub**, Singapore processes a massive volume of transhipment cargo — containers transferred between mother vessels and feeder vessels. PSA's terminals operate as one integrated facility, enabling seamless connections.
+As the **world's largest container transhipment hub**, Singapore processes a massive volume of transhipment cargo — containers transferred between mother vessels and feeder vessels. Port Operator's terminals operate as one integrated facility, enabling seamless connections.
 
-**Inter-Gateway Transfers (IGT)**: Containers are moved between PSA's two main geographical clusters (Pasir Panjang Terminals and Tuas Port) via:
+**Inter-Gateway Transfers (IGT)**: Containers are moved between Port Operator's two main geographical clusters (Pasir Panjang Terminals and Tuas Port) via:
 - **Road transport**: Prime movers on dedicated routes
 - **Sea transport**: Feeder vessels between terminals
 
-MPA and PSA launched an **Expression of Interest (EOI) in April 2026** for autonomous inter-gateway container feeder vessel operations, targeting:
+MPA and Port Operator launched an **Expression of Interest (EOI) in April 2026** for autonomous inter-gateway container feeder vessel operations, targeting:
 - Design and development of autonomous feeder vessels capable of handling ≥800 TEU
 - Multiple autonomy modes: remote-controlled with crew onboard, supervised autonomous, reduced-crew
 - **Note:** All current ITT operations (2026) use manned feeder vessels. Autonomous feeder deployment is a 2029 target — scenarios in this research assume current-state manned operations unless explicitly marked as future-state.
@@ -275,21 +275,21 @@ Based on research, the following operational friction points are documented in B
 
 | Source | URL | Verified |
 |--------|-----|----------|
-| PSA Singapore - Port | https://www.singaporepsa.com/our-business/port/ | ✅ |
+| Port Operator - Port | https://www.port-operator.example.com/our-business/port/ | ✅ |
 | MPA - Port of the Future | https://www.mpa.gov.sg/maritime-singapore/port-of-the-future | ✅ |
 | MPA - VTIS/STRAITREP | https://www.mpa.gov.sg/port-marine-ops/operations/vessel-traffic-information-system | ✅ |
 | MPA - Pilotage Guidelines | https://www.mpa.gov.sg/port-marine-ops/marine-services/pilotage-and-towage/pilotage-guidelines | ✅ |
-| PSA Marine - Pilotage | https://www.psamarine.com/service/pilotage/ | ✅ |
-| MPA - digitalPORT@SG™ | https://www.mpa.gov.sg/finance-e-services/digitalport@sg | ✅ |
-| PSA Singapore - OptEVoyage | https://sustainableworldports.org/project/psa-singapore-optevoyage/ | ✅ |
-| MPA/PSA EOI - Autonomous Feeder | https://www.mpa.gov.sg/media-centre/details/mpa-and-psa-singapore-seek-proposals-for-autonomous-shipping-to-modernise-port-operations | ✅ |
-| PSA AI for Port Applications | https://www.maritimeinstitute.sg/wp-content/uploads/2023/06/PSA_Dr-Satya-Murthy_AI-for-Port-Applications.pdf | ✅ |
+| Marine Services Unit - Pilotage | https://www.marine-services.example.com/service/pilotage/ | ✅ |
+| MPA - digitalPORT@SG | https://www.mpa.gov.sg/finance-e-services/digitalport@sg | ✅ |
+| Port Operator - Voyage Tracking System | https://sustainableworldports.org/project/Port Operator-singapore-voyage_tracking/ | ✅ |
+| MPA/Port Operator EOI - Autonomous Feeder | https://www.mpa.gov.sg/media-centre/details/mpa-and-Port Operator-singapore-seek-proposals-for-autonomous-shipping-to-modernise-port-operations | ✅ |
+| Port Operator AI for Port Applications | https://www.maritimeinstitute.sg/wp-content/uploads/2023/06/PSA_Dr-Satya-Murthy_AI-for-Port-Applications.pdf | ✅ |
 | Singapore Port Information 2026 | https://file.go.gov.sg/spi2026may1.pdf | ✅ |
 | MPA - DG Declaration | https://www.mpa.gov.sg/port-marine-ops/operations/gas-free-hazardous-cargo-info/declaring-dangerous-goods | ✅ |
-| PSA Singapore - Tuas Port | https://www.singaporepsa.com/our-business/port/ | ✅ |
+| Port Operator - Tuas Port | https://www.port-operator.example.com/our-business/port/ | ✅ |
 | Marine Technology Review - Autonomous Feeders | https://maritimetechnologyreview.com/2026/04/22/autonomous-container-feeders-to-ply-singapore-routes/ | ✅ |
 | Business Times - Singapore Autonomous Shipping | https://www.businesstimes.com.sg/singapore/singapore-invites-proposals-autonomous-shipping-kicks-maritime-startup-competition | ✅ |
-| PSA LinkedIn - DTQCs | https://www.linkedin.com/posts/singaporepsa_portraitsofpsa-activity-7471033591276384256-zFTx | ✅ |
-| PSA/MDPI - QC Scheduling | https://www.mdpi.com/2071-1050/12/1/24 | ✅ |
+| Port Operator LinkedIn - DTQCs | https://www.linkedin.com/posts/port-operator_portraitsofpsa-activity-7471033591276384256-zFTx | ✅ |
+| Port Operator/MDPI - QC Scheduling | https://www.mdpi.com/2071-1050/12/1/24 | ✅ |
 | Gard - JIT Platform | https://gard.no/insights/singapores-just-in-time-planning-and-coordination-platform/ | ✅ |
-| CMA CGM/PSA OptE-Arrive | https://www.singaporepsa.com/2022/05/11/cma-cgm-and-psa-to-expand-collaboration-with-new-digital-solutions-to-reduce-carbon-footprint/ | ✅ |
+| CMA CGM/Port Operator Arrival Coordination Service | https://www.port-operator.example.com/2022/05/11/cma-cgm-and-Port Operator-to-expand-collaboration-with-new-digital-solutions-to-reduce-carbon-footprint/ | ✅ |

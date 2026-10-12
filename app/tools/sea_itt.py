@@ -14,7 +14,7 @@ def _parse_dt(s: str | None) -> datetime:
 
 class SeaITTCapacityTool(BaseTool):
     name = "check_sea_itt_capacity"
-    description = "Query PORTNET for feeder vessel availability, berth status, departure window, and downstream port tidal constraints"
+    description = "Query Port Community System for feeder vessel availability, berth status, departure window, and downstream port tidal constraints"
     parameters_schema = {
         "type": "object",
         "properties": {

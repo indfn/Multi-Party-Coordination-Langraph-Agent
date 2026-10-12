@@ -10,13 +10,13 @@ systems:
   - vessel_arrival
   - pilot_availability
   - tug_availability
-- name: optevoyage
+- name: voyage_tracking
   type: voyage_planning
   capabilities:
   - berth_booking
   - draft_restrictions
   - tidal_windows
-- name: citos_ppt
+- name: tos_ppt
   type: terminal_os
   capabilities:
   - berth_occupancy
@@ -29,12 +29,12 @@ tools:
   tool_id: tool_1
 - name: check_berth_availability
   systems:
-  - optevoyage
-  - citos_ppt
+  - voyage_tracking
+  - tos_ppt
   tool_id: tool_2
 - name: check_qc_availability
   systems:
-  - citos_ppt
+  - tos_ppt
   tool_id: tool_3
 - name: compute_berth_reassignment
   systems: []
@@ -117,6 +117,6 @@ edge_cases:
 - case_id: ec_2
   name: Tidal window miss
   inject_at_step: 5
-  description: OpteVoyage reports tidal window at B-12 closes at 16:00 - reassigned
+  description: Voyage Tracking System reports tidal window at B-12 closes at 16:00 - reassigned
     vessel draft 15.5m exceeds 14.0m limit at low tide
   agent_response: Trigger escalation, present tidal-risk alert, request pilot standby

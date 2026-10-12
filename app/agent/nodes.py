@@ -596,7 +596,7 @@ async def agent_node(state: dict[str, Any]) -> dict[str, Any]:
                         avail = _ctxd.get("available_trucks", 0) or (_ctxd.get("road_capacity",{}) or {}).get("available_trucks",0) or 0
                         _det.update({"available_trucks": avail, "required_trucks": req, "ratio": round(avail/max(1,req),2) if req else 0, "current_split": _ctxd.get("split_result",{}), "suggested": "sea-heavy"})
                     elif trig == "data_stale":
-                        _det.update({"data_age_minutes": _ctxd.get("data_age_minutes") or (_ctxd.get("candidates",{}) or {}).get("data_age_minutes") if isinstance(_ctxd.get("candidates"),dict) else 0, "source": "CITOS PPT", "freshness_max": 30})
+                        _det.update({"data_age_minutes": _ctxd.get("data_age_minutes") or (_ctxd.get("candidates",{}) or {}).get("data_age_minutes") if isinstance(_ctxd.get("candidates"),dict) else 0, "source": "Terminal Operating System PPT", "freshness_max": 30})
                     elif trig == "feeder_hold_exceeded":
                         fh = _ctxd.get("feeder_hold_result",{}) if isinstance(_ctxd.get("feeder_hold_result"),dict) else {}
                         _det.update({"hold_hours": _ctxd.get("feeder_hold_hours", fh.get("hold_hours",0)), "limit": 1.5, "hold_cost": fh.get("hold_cost",0)})
@@ -999,11 +999,11 @@ async def tool_node(state: dict[str, Any]) -> dict[str, Any]:
                     pass
             elif name == "notify_parties":
                 parties = serialised["output"].get("notified", []) if isinstance(serialised.get("output"), dict) else []
-                if "OptETruck" in parties or "PPT_Yard" in parties:
+                if "Truck Management System" in parties or "PPT_Yard" in parties:
                     ctx["notified_dispatch"] = True
-                if "Feeder_Operator" in parties or "PORTNET" in parties:
+                if "Feeder_Operator" in parties or "Port Community System" in parties:
                     ctx["notified_hold"] = True
-                if "Tuas_Yard" in parties or "CITOS_Tuas" in parties:
+                if "Tuas_Yard" in parties or "Terminal Operating System_Tuas" in parties:
                     ctx["notified_tuas"] = True
         except Exception:
             pass
@@ -1147,7 +1147,7 @@ async def tool_node(state: dict[str, Any]) -> dict[str, Any]:
                     avail2 = _ctx2.get("available_trucks",0) or (_ctx2.get("road_capacity",{}) or {}).get("available_trucks",0) or 0
                     _det2.update({"available_trucks": avail2, "required_trucks": req2, "ratio": round(avail2/max(1,req2),2) if req2 else 0, "current_split": _ctx2.get("split_result",{} ), "total_fleet": (_ctx2.get("road_capacity",{}) or {}).get("total_fleet", 55)})
                 elif trig2 == "data_stale":
-                    _det2.update({"data_age_minutes": _ctx2.get("data_age_minutes") or (_ctx2.get("candidates",{}) or {}).get("data_age_minutes") if isinstance(_ctx2.get("candidates"),dict) else 0, "source": "CITOS PPT", "freshness_max": 30})
+                    _det2.update({"data_age_minutes": _ctx2.get("data_age_minutes") or (_ctx2.get("candidates",{}) or {}).get("data_age_minutes") if isinstance(_ctx2.get("candidates"),dict) else 0, "source": "Terminal Operating System PPT", "freshness_max": 30})
                 elif trig2 == "feeder_hold_exceeded":
                     fh2 = _ctx2.get("feeder_hold_result",{}) if isinstance(_ctx2.get("feeder_hold_result"),dict) else {}
                     _det2.update({"hold_hours": _ctx2.get("feeder_hold_hours", fh2.get("hold_hours",0)), "limit": 1.5})

@@ -281,11 +281,11 @@ class _MockProvider:
 
         if "notify_parties" in available:
             if "dispatch_road_itt" in succeeded_tools and not ctx.get("notified_dispatch") and ("HITL-2" in approved or "hitl_2" in approved) and not _is_rejected("HITL-2"):
-                tool_calls.append({"id": "call_notify_dispatch", "type": "function", "function": {"name": "notify_parties", "arguments": json.dumps({"message": f"Road ITT dispatch confirmed — {ctx.get('dispatch_result', {}).get('num_trucks', '?')} trucks dispatched via PPT→AYE→Tuas", "parties": ["OptETruck", "PPT_Yard"]})}})
+                tool_calls.append({"id": "call_notify_dispatch", "type": "function", "function": {"name": "notify_parties", "arguments": json.dumps({"message": f"Road ITT dispatch confirmed — {ctx.get('dispatch_result', {}).get('num_trucks', '?')} trucks dispatched via PPT→AYE→Tuas", "parties": ["Truck Management System", "PPT_Yard"]})}})
             if "request_feeder_hold" in succeeded_tools and not ctx.get("notified_hold") and ("HITL-3" in approved or "hitl_3" in approved) and not _is_rejected("HITL-3"):
-                tool_calls.append({"id": "call_notify_hold", "type": "function", "function": {"name": "notify_parties", "arguments": json.dumps({"message": f"Feeder hold request sent — {ctx.get('feeder_hold_result', {}).get('hold_hours', '?')}h hold for FEEDER ATLANTIC-03", "parties": ["Feeder_Operator", "PORTNET"]})}})
+                tool_calls.append({"id": "call_notify_hold", "type": "function", "function": {"name": "notify_parties", "arguments": json.dumps({"message": f"Feeder hold request sent — {ctx.get('feeder_hold_result', {}).get('hold_hours', '?')}h hold for FEEDER ATLANTIC-03", "parties": ["Feeder_Operator", "Port Community System"]})}})
             if "update_tuas_loading_sequence" in succeeded_tools and not ctx.get("notified_tuas") and ("HITL-4" in approved or "hitl_4" in approved) and not _is_rejected("HITL-4"):
-                tool_calls.append({"id": "call_notify_tuas", "type": "function", "function": {"name": "notify_parties", "arguments": json.dumps({"message": f"Tuas loading sequence updated — ITT arrivals coordinated for {ctx.get('vessel_id', 'MV PACIFIC STAR')}", "parties": ["Tuas_Yard", "CITOS_Tuas"]})}})
+                tool_calls.append({"id": "call_notify_tuas", "type": "function", "function": {"name": "notify_parties", "arguments": json.dumps({"message": f"Tuas loading sequence updated — ITT arrivals coordinated for {ctx.get('vessel_id', 'MV PACIFIC STAR')}", "parties": ["Tuas_Yard", "Terminal Operating System_Tuas"]})}})
 
         if len(tool_calls) > 3:
             tool_calls = tool_calls[:3]

@@ -11,12 +11,12 @@ systems:
   - customs_declaration
   - document_status
   - hold_management
-- name: calista
+- name: supply_platform
   type: trade_compliance
   capabilities:
   - document_verification
   - compliance_check
-- name: portnet
+- name: pcs
   type: community
   capabilities:
   - container_tracking
@@ -28,7 +28,7 @@ tools:
   tool_id: tool_1
 - name: check_document_status
   systems:
-  - calista
+  - supply_platform
   tool_id: tool_2
 - name: compute_priority_sequence
   systems: []
@@ -39,7 +39,7 @@ tools:
   tool_id: tool_4
 - name: notify_consignee
   systems:
-  - portnet
+  - pcs
   tool_id: tool_5
 hitl_gates:
 - gate_id: hitl_1
@@ -106,7 +106,7 @@ edge_cases:
 - case_id: ec_1
   name: Bulk customs inspection
   inject_at_step: 3
-  description: CALISTA reports 30 containers flagged for inspection - 15 high-priority,
+  description: Supply Chain Platform reports 30 containers flagged for inspection - 15 high-priority,
     15 standard
   agent_response: Compute priority sequence (high-priority first), request re-approval
 - case_id: ec_2

@@ -21,7 +21,7 @@ const SidebarLayout = ({ ...props }: React.ComponentProps<typeof Sidebar>) => {
         >
             <SidebarHeader className="p-3 group-data-[state=collapsed]:px-2.5 flex flex-row items-center border-b border-border">
                 <span className="text-lg font-bold tracking-tight group-data-[state=collapsed]:hidden">
-                  PSA <span className="text-primary">NEXUS</span>
+                  Port Operator <span className="text-primary">NEXUS</span>
                 </span>
             </SidebarHeader>
 

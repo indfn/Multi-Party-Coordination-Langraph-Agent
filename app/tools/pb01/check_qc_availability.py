@@ -6,7 +6,7 @@ from app.tools.base import BaseTool, ToolResult
 
 class CheckQCAvailabilityTool(BaseTool):
     name = "check_qc_availability"
-    description = "Query CITOS for QC count and crane status at berth"
+    description = "Query Terminal Operating System for QC count and crane status at berth"
     parameters_schema = {
         "type": "object",
         "properties": {

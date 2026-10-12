@@ -4,7 +4,7 @@ problem:
   sector: Multimodal Logistics
   description: Decide modal shift when sea cut-off is missed for air cargo handover
 systems:
-- name: optemodal
+- name: intermodal
   type: modal_planning
   capabilities:
   - modal_selection
@@ -23,7 +23,7 @@ systems:
 tools:
 - name: query_cargo_status
   systems:
-  - optemodal
+  - intermodal
   tool_id: tool_1
 - name: check_air_availability
   systems:
@@ -38,7 +38,7 @@ tools:
   tool_id: tool_4
 - name: notify_shipper
   systems:
-  - optemodal
+  - intermodal
   tool_id: tool_5
 hitl_gates:
 - gate_id: hitl_1

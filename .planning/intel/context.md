@@ -1,18 +1,18 @@
 # Context Intel
 
-Running notes keyed by topic. All content copied VERBATIM from `/home/ahnaf/Documents/Projects/PSACodeSprint/CodeSprint.md` (per project-owner instruction: copy-paste, do not regurgitate). Lightweight topic headers added around verbatim blocks.
+Running notes keyed by topic. All content copied VERBATIM from `/home/ahnaf/Documents/Projects/PortCodeSprint/CodeSprint.md` (per project-owner instruction: copy-paste, do not regurgitate). Lightweight topic headers added around verbatim blocks.
 
 ---
 
 ## Topic 1 — Competition Overview (Context & Expectations)
-Source: `/home/ahnaf/Documents/Projects/PSACodeSprint/CodeSprint.md` (§1. The Core Objective & Theme)
+Source: `/home/ahnaf/Documents/Projects/PortCodeSprint/CodeSprint.md` (§1. The Core Objective & Theme)
 
 > The competition, **PSA Code Sprint: Agentic AI in Action**, requires teams to identify a real problem within PSA Singapore's operational or supply chain ecosystem and engineer an **Agentic AI system** capable of reasoning, making decisions, and coordinating actions toward a defined objective. [scope: PSA → PSA Singapore]
 
 ---
 
 ## Topic 2 — The 4 Operational Sectors
-Source: `/home/ahnaf/Documents/Projects/PSACodeSprint/CodeSprint.md` (§3, Phase 1, 1.1)
+Source: `/home/ahnaf/Documents/Projects/PortCodeSprint/CodeSprint.md` (§3, Phase 1, 1.1)
 
 > * **Berth & Marine Operations:**
 >     * Vessel traffic management and arrival sequencing (MPA coordination, Straits of Malacca approach).
@@ -47,7 +47,7 @@ Source: `/home/ahnaf/Documents/Projects/PSACodeSprint/CodeSprint.md` (§3, Phase
 ---
 
 ## Topic 3 — The 7 Baseline Digital Systems (Existing PSA Singapore Digital Infrastructure)
-Source: `/home/ahnaf/Documents/Projects/PSACodeSprint/CodeSprint.md` (§3, Phase 1, 1.2)
+Source: `/home/ahnaf/Documents/Projects/PortCodeSprint/CodeSprint.md` (§3, Phase 1, 1.2)
 
 >   * **CITOS® (Computer Integrated Terminal Operations System):**
 > 	  * PSA Singapore's proprietary, mission-critical Terminal Operating System (TOS). Serves as the operational brain orchestrating real-time berth allocation, automated quay crane (QC) split scheduling, automated rail mounted gantry (aRMG) job sequencing, Automated Guided Vehicle (AGV) fleet dispatching, and vessel stowage stability calculations. [scope: PSA → PSA Singapore]
@@ -73,7 +73,7 @@ Source: `/home/ahnaf/Documents/Projects/PSACodeSprint/CodeSprint.md` (§3, Phase
 ---
 
 ## Topic 4 — The Three Critical Flows (per Sector)
-Source: `/home/ahnaf/Documents/Projects/PSACodeSprint/CodeSprint.md` (§3, Phase 1, 1.3)
+Source: `/home/ahnaf/Documents/Projects/PortCodeSprint/CodeSprint.md` (§3, Phase 1, 1.3)
 
 >   * **Physical Flow:** How containers, ships, cranes, and trucks physically move.
 >   * **Information Flow:** What EDI messages, API calls, sensor alerts, and emails are sent at each step.

@@ -1,6 +1,6 @@
 # Requirements Intel
 
-Synthesized from: `/home/ahnaf/Documents/Projects/PSACodeSprint/CodeSprint.md`
+Synthesized from: `/home/ahnaf/Documents/Projects/PortCodeSprint/CodeSprint.md`
 Classification: `codesprint-md.json` — type PRD, confidence high, locked: false
 PRECEDENCE of this source: PRD (default ordering ADR > SPEC > PRD > DOC)
 
@@ -12,7 +12,7 @@ Text below is copied verbatim from the source document (per project-owner instru
 
 ### REQ-agentic-solution — Engineer an Agentic AI System
 - Title: PSA Code Sprint: Agentic AI in Action — core objective
-- Source: `/home/ahnaf/Documents/Projects/PSACodeSprint/CodeSprint.md` (§1. The Core Objective & Theme)
+- Source: `/home/ahnaf/Documents/Projects/PortCodeSprint/CodeSprint.md` (§1. The Core Objective & Theme)
 - Scope: Competition-level — PSA Singapore operational / supply chain ecosystem
 - Description (verbatim):
 
@@ -23,7 +23,7 @@ Text below is copied verbatim from the source document (per project-owner instru
 > * **Inputs to handle:** State changes, operational alerts, event logs, process metrics, sensor anomalies, or cross-stakeholder requests.
 
 ### REQ-input-handling — Handle Operational Input Types
-- Source: `/home/ahnaf/Documents/Projects/PSACodeSprint/CodeSprint.md` (§1. The Core Objective & Theme)
+- Source: `/home/ahnaf/Documents/Projects/PortCodeSprint/CodeSprint.md` (§1. The Core Objective & Theme)
 - Scope: Agent input layer
 - Description (verbatim):
 
@@ -32,7 +32,7 @@ Text below is copied verbatim from the source document (per project-owner instru
 - Acceptance criteria (verbatim): "State changes, operational alerts, event logs, process metrics, sensor anomalies, or cross-stakeholder requests" must all be handled by the agent.
 
 ### REQ-deliverable-deck — 10-Slide Presentation Deck
-- Source: `/home/ahnaf/Documents/Projects/PSACodeSprint/CodeSprint.md` (§2. Key Deliverables & Format)
+- Source: `/home/ahnaf/Documents/Projects/PortCodeSprint/CodeSprint.md` (§2. Key Deliverables & Format)
 - Scope: Submission deliverable
 - Description (verbatim):
 
@@ -41,7 +41,7 @@ Text below is copied verbatim from the source document (per project-owner instru
 - Acceptance criteria [derived]: Deck must contain problem articulation, baseline vs. agentic delta, architecture, decision logic, safety/security guardrails, and quantified business impact.
 
 ### REQ-deliverable-video — 10-Minute Demonstration Video
-- Source: `/home/ahnaf/Documents/Projects/PSACodeSprint/CodeSprint.md` (§2. Key Deliverables & Format)
+- Source: `/home/ahnaf/Documents/Projects/PortCodeSprint/CodeSprint.md` (§2. Key Deliverables & Format)
 - Scope: Submission deliverable
 - Description (verbatim):
 
@@ -50,7 +50,7 @@ Text below is copied verbatim from the source document (per project-owner instru
 - Acceptance criteria (verbatim): "Walkthrough of the running agent handling normal and edge-case inputs, showcasing the execution trace and UI/operator integration."
 
 ### REQ-deadline-submission — Submission Deadline 4 September 2026
-- Source: `/home/ahnaf/Documents/Projects/PSACodeSprint/CodeSprint.md` (§2. Key Deliverables & Format)
+- Source: `/home/ahnaf/Documents/Projects/PortCodeSprint/CodeSprint.md` (§2. Key Deliverables & Format)
 - Scope: Schedule / hard gate
 - Description (verbatim):
 
@@ -62,7 +62,7 @@ Text below is copied verbatim from the source document (per project-owner instru
 
 ## B. The Six Agentic Capabilities (solution must demonstrate all six)
 
-Source: `/home/ahnaf/Documents/Projects/PSACodeSprint/CodeSprint.md` (§1. Definition of the Agentic Solution) — the source frames these six as mandatory:
+Source: `/home/ahnaf/Documents/Projects/PortCodeSprint/CodeSprint.md` (§1. Definition of the Agentic Solution) — the source frames these six as mandatory:
 
 > For this competition, an **Agentic AI Solution** shouldn't be a simple chatbot or a linear rule engine but rather an intelligent operational system capable of autonomous reasoning, dynamic tool usage, and safe human interaction.
 >
@@ -137,7 +137,7 @@ The organizers' own capability list (from §1. The Core Objective & Theme) is pr
 
 ## C. Evaluation Criteria (rubric requirements — also enforced as gates in constraints.md)
 
-Source: `/home/ahnaf/Documents/Projects/PSACodeSprint/CodeSprint.md` (§2. Key Deliverables & Format). Verbatim:
+Source: `/home/ahnaf/Documents/Projects/PortCodeSprint/CodeSprint.md` (§2. Key Deliverables & Format). Verbatim:
 
 > * **Evaluation Criteria:**
 >   1. *Agentic AI Design & Technical Execution* (ReAct/Plan-and-Solve mechanics, tool orchestration, state management, trace logging).
@@ -173,7 +173,7 @@ Source: `/home/ahnaf/Documents/Projects/PSACodeSprint/CodeSprint.md` (§2. Key D
 
 ## D. Phase 1–3 Workflow Requirements (the .planning/ roadmap scope)
 
-Phases map verbatim from `/home/ahnaf/Documents/Projects/PSACodeSprint/CodeSprint.md` (§2. Overarching Workflow):
+Phases map verbatim from `/home/ahnaf/Documents/Projects/PortCodeSprint/CodeSprint.md` (§2. Overarching Workflow):
 
 > Phase 1: Broad PSA Singapore Operations & Systems Mapping [scope: PSA → PSA Singapore]
 >   ↓

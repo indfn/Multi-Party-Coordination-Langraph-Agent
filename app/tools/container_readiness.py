@@ -6,7 +6,7 @@ from app.tools.base import BaseTool, ToolResult
 
 class ContainerReadinessTool(BaseTool):
     name = "get_itt_candidates"
-    description = "Query PPT CITOS for container readiness status"
+    description = "Query PPT Terminal Operating System for container readiness status"
     parameters_schema = {
         "type": "object",
         "properties": {

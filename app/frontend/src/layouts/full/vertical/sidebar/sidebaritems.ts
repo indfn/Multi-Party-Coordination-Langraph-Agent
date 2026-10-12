@@ -45,7 +45,7 @@ import {
 
 const SidebarContent: MenuItem[] = [
   {
-    heading: 'PSA Nexus',
+    heading: 'Nexus',
     items: [
       {
         id: uniqueId(),

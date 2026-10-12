@@ -7,7 +7,7 @@ def test_health(client):
     r = client.get("/health")
     assert r.status_code == 200
     assert r.json()["status"] == "ok"
-    assert r.json()["service"] == "psa-nexus"
+    assert r.json()["service"] == "nexus"
 
 
 def test_root(client):
@@ -16,18 +16,18 @@ def test_root(client):
     if r.status_code == 307:
         assert "/ui" in r.headers.get("location", "")
     else:
-        assert "PSA Nexus" in r.text
+        assert "Nexus" in r.text
 
 
-def test_mock_citos_ppt(client):
-    r = client.get("/api/citos/ppt/containers")
+def test_mock_tos_ppt(client):
+    r = client.get("/api/tos/ppt/containers")
     assert r.status_code == 200
     assert r.json()["status"] == "success"
     assert r.json()["total_containers"] == 120
 
 
-def test_mock_optetruck(client):
-    r = client.get("/api/optetruck/capacity")
+def test_mock_truck_system(client):
+    r = client.get("/api/truck_system/capacity")
     assert r.status_code == 200
     assert r.json()["status"] == "success"
     assert r.json()["available_trucks"] == 40
@@ -40,11 +40,11 @@ def test_mock_feeder(client):
     assert r.json()["feeder_id"] == "FEEDER ATLANTIC-03"
 
 
-def test_mock_portnet(client):
-    r = client.get("/api/portnet/feeder/FEEDER%20ATLANTIC-03")
+def test_mock_pcs(client):
+    r = client.get("/api/pcs/feeder/FEEDER%20ATLANTIC-03")
     assert r.status_code == 200
     assert r.json()["status"] == "success"
-    assert r.json()["portnet_source"] == "community_sync"
+    assert r.json()["pcs_source"] == "community_sync"
 
 
 def test_webhook_runs(client):

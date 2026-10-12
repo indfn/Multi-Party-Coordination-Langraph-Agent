@@ -43,7 +43,7 @@ def _compute_trips(container_ids: list[str]) -> int:
 
 class DispatchRoadITTTool(BaseTool):
     name = "dispatch_road_itt"
-    description = "Dispatch prime movers via OptETruck for road ITT. Requires HITL Gate 2 approval. Route: PPT \u2192 West Coast Highway \u2192 AYE \u2192 Tuas Port Boulevard."
+    description = "Dispatch prime movers via Truck Management System for road ITT. Requires HITL Gate 2 approval. Route: PPT \u2192 West Coast Highway \u2192 AYE \u2192 Tuas Port Boulevard."
     parameters_schema = {
         "type": "object",
         "properties": {

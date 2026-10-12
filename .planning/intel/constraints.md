@@ -1,6 +1,6 @@
 # Constraints Intel
 
-Synthesized from: `/home/ahnaf/Documents/Projects/PSACodeSprint/CodeSprint.md`
+Synthesized from: `/home/ahnaf/Documents/Projects/PortCodeSprint/CodeSprint.md`
 Classification: `codesprint-md.json` — type PRD, confidence high, locked: false
 PRECEDENCE of this source: PRD (default ordering ADR > SPEC > PRD > DOC)
 

@@ -89,7 +89,7 @@ class SystemConfig:
     name: str
     type: str
     capabilities: list[str] = field(default_factory=list)
-    # optional PSA fields
+    # optional Port Operator fields
     data_freshness_max_min: int | None = None
     response_timeout_min: int | None = None
     extra: dict[str, Any] = field(default_factory=dict)

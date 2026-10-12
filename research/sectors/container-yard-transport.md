@@ -1,8 +1,8 @@
-# Container Yard & Internal Transport — PSA Singapore
+# Container Yard & Internal Transport — Port Operator
 
 **Status:** Research complete (Round 1)
 **Last updated:** 2026-08-17
-**Verification:** Multi-source cross-verified (PSA official, A*STAR, MPA, industry sources)
+**Verification:** Multi-source cross-verified (Port Operator official, A*STAR, MPA, industry sources)
 
 ---
 
@@ -19,7 +19,7 @@ AGV / IGV PICKUP ──── Fleet Management System (5G-enabled, A*STAR/IHPC a
     │                   Navigation: BTG transponder (Phase 1) → IGV natural nav (Phase 2)
     │                   Electric power: ~50% CO2 reduction vs diesel prime movers
     ▼
-YARD BLOCK ASSIGNMENT ──── CITOS® yard planning
+YARD BLOCK ASSIGNMENT ──── Terminal Operating System yard planning
     │                       Stack optimization: transhipment clustering, import/export separation
     │                       Minimize re-handles
     ▼
@@ -32,7 +32,7 @@ aRMG / aYGC STACKING ──── 208 aRMGs at Tuas Phase 1 (ZPMC)
 ├─────────────────────────────────────────────────────┤
 │                                                       │
 │  REEFER ZONE ──── 13,000+ power points               │
-│  │   ARMS automated monitoring (10,000+ reefers)      │
+│  │   Reefer Monitoring System automated monitoring (10,000+ reefers)      │
 │  │   Temperature excursion alerts                     │
 │  │   Power continuity management                     │
 │  │                                                   │
@@ -64,7 +64,7 @@ OUTBOUND
 
 ### 1.1 AGV Fleet at Tuas Port
 
-PSA Singapore operates the world's largest fleet of automated guided vehicles (AGVs) at Tuas Port, the world's single largest fully automated container terminal.
+Port Operator operates the world's largest fleet of automated guided vehicles (AGVs) at Tuas Port, the world's single largest fully automated container terminal.
 
 **Fleet Composition:**
 - **Phase 1**: 160 AGVs from VDL and ST Kinetics, plus 46 from ZPMC (manufactured in Malaysia)
@@ -82,10 +82,10 @@ PSA Singapore operates the world's largest fleet of automated guided vehicles (A
 
 The AGV Fleet Management System is the computational brain coordinating hundreds of vehicles simultaneously. Key development:
 
-**PSA × A*STAR IHPC Collaboration** (signed 2022, Maritime Transformation Programme funded):
+**Port Operator × A*STAR IHPC Collaboration** (signed 2022, Maritime Transformation Programme funded):
 - **Goal**: Large-scale fleet management solution for AGVs at Tuas
 - **A*STAR contribution**: Advanced high-performance computing technologies and algorithms for accelerated solutions
-- **PSA contribution**: Algorithm design expertise, simulation platform, domain knowledge
+- **Port Operator contribution**: Algorithm design expertise, simulation platform, domain knowledge
 - **Focus areas**:
   - Scalable design with multiple AGVs coordinating seamlessly
   - Operational safety assurance
@@ -128,7 +128,7 @@ AGV routing involves:
 
 ### 2.1 Automated Yard Crane Fleet
 
-PSA has deployed **208 automated rail-mounted gantry cranes (aRMGs)** at Tuas Port Phase 1, completing a six-year delivery programme (2020-2026) from ZPMC.
+Port Operator has deployed **208 automated rail-mounted gantry cranes (aRMGs)** at Tuas Port Phase 1, completing a six-year delivery programme (2020-2026) from ZPMC.
 
 **Phase 1 aRMGs:**
 - Final shipment of 5 units delivered August 2026
@@ -167,7 +167,7 @@ aRMG job sequencing determines the order of container movements within yard bloc
 
 ### 2.3 Yard Block Load Balancing
 
-CITOS® manages yard block assignment to prevent over-concentration:
+Terminal Operating System manages yard block assignment to prevent over-concentration:
 
 - **Transhipment clustering**: Containers for the same feeder connection grouped in adjacent blocks
 - **Import/export separation**: Different blocks for import (vessel → yard → gate) and export (gate → yard → vessel)
@@ -177,8 +177,8 @@ CITOS® manages yard block assignment to prevent over-concentration:
 
 ### 2.4 Next Generation Terminal Planning System
 
-PSA's planning system integrates:
-- **Data sources**: TOS (CITOS), PORTNET, Cargo Solutions, CALISTA, Data Exchanges
+Port Operator's planning system integrates:
+- **Data sources**: TOS (Terminal Operating System), Port Community System, Cargo Solutions, Supply Chain Platform, Data Exchanges
 - **Embedded analytics**: ML, DL, and Reinforcement Learning
 - **Capabilities**:
   - Predict container dwell and connectivity
@@ -192,7 +192,7 @@ PSA's planning system integrates:
 
 ### 3.1 Stacking Strategies
 
-PSA employs multiple stacking strategies based on container type and purpose:
+Port Operator employs multiple stacking strategies based on container type and purpose:
 
 **Transhipment clustering:**
 - Containers bound for the same feeder vessel grouped together
@@ -211,7 +211,7 @@ PSA employs multiple stacking strategies based on container type and purpose:
 
 ### 3.2 Stack Profile Management
 
-- **Container positions**: Tracked in real-time by CITOS® yard inventory system
+- **Container positions**: Tracked in real-time by Terminal Operating System yard inventory system
 - **Height monitoring**: Automated detection of stacking heights (6-high maximum)
 - **Weight verification**: Automated weight check at gate and during stacking
 - **Condition tracking**: Damage, cleanliness, and structural integrity status
@@ -229,22 +229,22 @@ Siemens automation includes digital twin capabilities:
 
 ### 4.1 Reefer Infrastructure
 
-PSA Singapore maintains **13,000+ reefer power points** across its terminals, supporting temperature-sensitive cargo through the entire port stay.
+Port Operator maintains **13,000+ reefer power points** across its terminals, supporting temperature-sensitive cargo through the entire port stay.
 
 **Key facilities:**
 - **Dedicated reefer yards**: Designated zones with power distribution infrastructure
 - **Power connection management**: Plug/unplug scheduling, power continuity monitoring
 - **40 reefer platforms**: Equipped with remote SMS alerting systems for power monitoring
 
-### 4.2 Automated Reefer Monitoring System (ARMS)
+### 4.2 Automated Reefer Monitoring System (Reefer Monitoring System)
 
-Developed in 2018 by PSA's ICT Division, ARMS represents a step-change in reefer management:
+Developed in 2018 by Port Operator's ICT Division, Reefer Monitoring System represents a step-change in reefer management:
 
 - **Capacity**: Automatically monitors **10,000+ reefer containers** simultaneously
 - **Intelligent decision-making**: Algorithms detect temperature excursions and trigger alerts
 - **Auto-blocking mechanism**: Malfunctioning reefers automatically blocked from vessel loading
 - **Early warning**: Reduces wastage by preventing faulty reefers from being loaded then unloaded
-- **Award**: Gold Award at PSA Group Innovation Awards
+- **Award**: Gold Award at Port Operator Group Innovation Awards
 
 ### 4.3 Reefer Telemetry
 
@@ -252,12 +252,12 @@ Shipping lines (e.g., ONE) are deploying telematic devices on reefer fleets:
 - **Real-time monitoring**: Temperature, humidity, door open/close events
 - **Proactive decision-making**: Early detection of equipment issues
 - **Customer visibility**: Shippers receive condition reports throughout port stay
-- **Integration**: Telematic data feeds into ARMS for consolidated monitoring
+- **Integration**: Telematic data feeds into Reefer Monitoring System for consolidated monitoring
 
 ### 4.4 Sustainable Reefer Operations
 
 **Refrigerant gas recovery:**
-- PSA is first in Southeast Asia to trial reclaimed refrigerant gas for reefers
+- Port Operator is first in Southeast Asia to trial reclaimed refrigerant gas for reefers
 - ONE was first shipping line to complete trials
 - **Impact**: ~4,000kg CO2 saved per reefer (equivalent to driving a car for 1 year)
 - Refrigerant gas recovered, cleaned, processed, certified, and re-used
@@ -276,7 +276,7 @@ Shipping lines (e.g., ONE) are deploying telematic devices on reefer fleets:
 
 ### 5.1 DG Volume and Classification
 
-PSA handles **500,000+ TEUs of dangerous goods annually** (~3% of 37+ million TEU throughput). DG management follows IMDG Code with Singapore-specific enhancements under MPA DGPE Regulations 2005.
+Port Operator handles **500,000+ TEUs of dangerous goods annually** (~3% of 37+ million TEU throughput). DG management follows IMDG Code with Singapore-specific enhancements under MPA DGPE Regulations 2005.
 
 **IMO Classes handled:**
 - Class 1: Explosives (restricted — specific berths and quantities)
@@ -299,10 +299,10 @@ Post-Tianjin 2015 incident, Singapore significantly enhanced DG yard management:
 - IMDG Code physical segregation rules enforced
 - QRA (Quantitative Risk Analysis) study required before any site approval
 
-**PSA Group Classification:**
-- PSA Group 1S, 2S, 3, etc. — terminal-specific classifications
+**Port Operator Group Classification:**
+- Port Operator Group 1S, 2S, 3, etc. — terminal-specific classifications
 - Each group has specific handling and storage requirements
-- Enquiry directed to terminal operators (PSA or Jurong Port)
+- Enquiry directed to terminal operators (Port Operator or Jurong Port)
 
 ### 5.3 DG Declaration and Tracking
 
@@ -324,18 +324,18 @@ Post-Tianjin 2015 incident, Singapore significantly enhanced DG yard management:
 - Physical inspection aided by remote technology (post-COVID)
 - Common infringements: Improper/missing placarding, incompatible DG segregation
 
-**PSAC oversight:**
+**Terminal Authority oversight:**
 - Terminal operator maintains DG handling oversight
 - DG warehouse inspections conducted
 - Emergency Response Team supported by qualified chemists
 
 ### 5.5 Berth-Specific DG Restrictions
 
-Per MPA DGPE Regulations (Third Schedule), specific PSA berths have DG restrictions:
+Per MPA DGPE Regulations (Third Schedule), specific Port Operator berths have DG restrictions:
 
-- **PSA berths B01, K20-K23**: Flammable gases in isotanks prohibited
-- **PSA berths B01-B09, T01-T08, K14-K23**: Flammable liquids with Class 6.1 subsidiary risk in isotanks prohibited
-- **Propylene Oxide**: Prohibited at PSA berths B01-B09, T01-T08, K09-K23
+- **Port Operator berths B01, K20-K23**: Flammable gases in isotanks prohibited
+- **Port Operator berths B01-B09, T01-T08, K14-K23**: Flammable liquids with Class 6.1 subsidiary risk in isotanks prohibited
+- **Propylene Oxide**: Prohibited at Port Operator berths B01-B09, T01-T08, K09-K23
 - **Class 1.1, 1.2, 1.3 (except 1.3G/H)**: Prohibited at conventional berths
 - **First Schedule DG**: Maximum quantities vary by berth distance from terminal fence
 
@@ -352,7 +352,7 @@ Per MPA DGPE Regulations (Third Schedule), specific PSA berths have DG restricti
 
 ### 6.1 Depot Network
 
-PSA operates **on-dock depots** within the Free Trade Zone (FTZ) at its terminals:
+Port Operator operates **on-dock depots** within the Free Trade Zone (FTZ) at its terminals:
 
 - **Full range of standard depot services**: Cleaning, repair, inspection, storage
 - **Customised services**: Available to meet specific container needs
@@ -361,7 +361,7 @@ PSA operates **on-dock depots** within the Free Trade Zone (FTZ) at its terminal
 
 ### 6.2 Intelligent Warehouse eXchange (iWX)
 
-PSA's **iWX platform** represents AI-powered warehouse logistics innovation:
+Port Operator's **iWX platform** represents AI-powered warehouse logistics innovation:
 
 **Core capabilities:**
 - **Container reuse prediction**: ML models analyse gate-in/gate-out data, container attributes, transporter details to predict when containers will be ready for reuse after unstuffing
@@ -370,7 +370,7 @@ PSA's **iWX platform** represents AI-powered warehouse logistics innovation:
 - **Stakeholder autonomy**: Shipping lines approve/reject reuse requests
 
 **Integration:**
-- Data from PSA's digital ecosystem (Portnet, SmartBooking)
+- Data from Port Operator's digital ecosystem (Port Community System, Unified Booking Platform)
 - Lorry Timeslot Booking for delivery/collection scheduling
 - Real-time visibility into container and cargo movements
 
@@ -382,7 +382,7 @@ PSA's **iWX platform** represents AI-powered warehouse logistics innovation:
 
 ### 6.3 Green Pilot: Keppel Distripark to On-Dock Depot
 
-PSA and OOCL completed a pilot integrating container flow between Keppel Distripark (KD) and On-Dock Depot (ODD):
+Port Operator and OOCL completed a pilot integrating container flow between Keppel Distripark (KD) and On-Dock Depot (ODD):
 - **Result**: 93% reduction in kgCO2e per trip due to shorter distances
 - Demonstrates feasibility of depot-terminal integration for sustainability
 
@@ -399,7 +399,7 @@ PSA and OOCL completed a pilot integrating container flow between Keppel Distrip
 
 ### 7.1 Current ITT Operations
 
-With PSA terminals spread across Pasir Panjang and Tuas, containers must be transferred between these clusters:
+With Port Operator terminals spread across Pasir Panjang and Tuas, containers must be transferred between these clusters:
 
 **Road transport:**
 - Dedicated prime movers on designated routes
@@ -409,7 +409,7 @@ With PSA terminals spread across Pasir Panjang and Tuas, containers must be tran
 **Sea transport:**
 - Feeder vessels between terminal clusters
 - Currently manned vessels
-- MPA/PSA EOI for autonomous inter-gateway feeders (800+ TEU capacity)
+- MPA/Port Operator EOI for autonomous inter-gateway feeders (800+ TEU capacity)
 
 ### 7.2 ITT Coordination
 
@@ -438,21 +438,21 @@ With PSA terminals spread across Pasir Panjang and Tuas, containers must be tran
 
 | Source | URL | Verified |
 |--------|-----|----------|
-| PSA/A*STAR AGV Fleet Management | https://www.singaporepsa.com/2022/03/02/psa-and-astar-collaborate-on-smart-scalable-solutions-for-managing-automated-guided-vehicle-agv-fleets-in-preparation-for-tuas-port/ | ✅ |
-| CNA - PSA A*STAR AGV | https://www.channelnewsasia.com/singapore/psa-singapore-astar-develop-large-scale-fleet-management-solution-agvs-tuas-port-2531431 | ✅ |
-| IMDA 5G PSA Trials | https://www.imda.gov.sg/-/media/imda/files/programme/5g-innovation-and-grant/imda-5g-use-case-findings_psa.pdf | ✅ |
-| PSA Tuas Living Lab | https://www.worldcargonews.com/ports-terminals/2026/03/psa-setting-up-second-living-lab-for-singapore/ | ✅ |
-| PSA IGV Tender | https://www.worldcargonews.com/news/2024/12/psa-holds-igv-tender/ | ✅ |
-| PSA Autonomous Yard Cranes | https://ports.marinelink.com/ports/port/miami-beach/news/psa-singapore-pioneers-fully-autonomous-yard-cranes-at-tuas-port-phase-2 | ✅ |
+| Port Operator/A*STAR AGV Fleet Management | https://www.port-operator.example.com/2022/03/02/Port Operator-and-astar-collaborate-on-smart-scalable-solutions-for-managing-automated-guided-vehicle-agv-fleets-in-preparation-for-tuas-port/ | ✅ |
+| CNA - Port Operator A*STAR AGV | https://www.channelnewsasia.com/singapore/Port Operator-singapore-astar-develop-large-scale-fleet-management-solution-agvs-tuas-port-2531431 | ✅ |
+| IMDA 5G Port Operator Trials | https://www.imda.gov.sg/-/media/imda/files/programme/5g-innovation-and-grant/imda-5g-use-case-findings_psa.pdf | ✅ |
+| Port Operator Tuas Living Lab | https://www.worldcargonews.com/ports-terminals/2026/03/Port Operator-setting-up-second-living-lab-for-singapore/ | ✅ |
+| Port Operator IGV Tender | https://www.worldcargonews.com/news/2024/12/Port Operator-holds-igv-tender/ | ✅ |
+| Port Operator Autonomous Yard Cranes | https://ports.marinelink.com/ports/port/miami-beach/news/Port Operator-singapore-pioneers-fully-autonomous-yard-cranes-at-tuas-port-phase-2 | ✅ |
 | Final aRMGs Tuas Phase 1 | https://www.worldcargonews.com/automation/2026/08/final-armgs-arrive-at-tuas-port-phase-1/ | ✅ |
-| PSA Port Ecosystem | https://www.singaporepsa.com/our-business/portecosystem/ | ✅ |
-| PSA/ONE Reefer Refrigerant Recovery | https://www.singaporepsa.com/2022/05/10/psa-one-announce-successful-use-of-reclaimed-refrigerant-gas-from-reefer-containers-as-part-of-greening-supply-chains/ | ✅ |
+| Port Operator Port Ecosystem | https://www.port-operator.example.com/our-business/portecosystem/ | ✅ |
+| Port Operator/ONE Reefer Refrigerant Recovery | https://www.port-operator.example.com/2022/05/10/Port Operator-one-announce-successful-use-of-reclaimed-refrigerant-gas-from-reefer-containers-as-part-of-greening-supply-chains/ | ✅ |
 | ONE Reefer Telematics | https://sg.one-line.com/news/one-accelerates-digital-transformation-journey-installation-telematic-devices-reefer-fleet | ✅ |
-| Siemens Automation PSA | https://www.automationworld.com/products/motion/blog/13315949/the-worlds-transshipment-hub-automates-crane-operation | ✅ |
+| Siemens Automation Port Operator | https://www.automationworld.com/products/motion/blog/13315949/the-worlds-transshipment-hub-automates-crane-operation | ✅ |
 | Cisco Digital Infrastructure | https://news-blogs.cisco.com/apjc/2023/01/17/a-peek-into-the-digital-infrastructure-underneath-psas-port-of-the-future/ | ✅ |
-| PSA OptETruck | https://www.singaporepsa.com/2023/07/26/psa-innovates-with-optetruck-a-digital-solution-for-singapores-haulier-sector-to-achieve-fleet-optimisation-and-a-greener-footprint/ | ✅ |
-| PSA iWX Platform | https://www.businesstimes.com.sg/events-awards/design-ai-tech-awards/design-ai-and-tech-awards/new-era-warehouse-logistics-psa-singapores-ai-powered-iwx-platform | ✅ |
-| PSA/OOCL Green Pilot | https://www.singaporepsa.com/2022/06/23/psa-and-oocl-complete-green-pilot-trial-for-integrated-enhanced-container-flow-between-keppel-distripark-and-on-dock-depot/ | ✅ |
+| Port Operator Truck Management System | https://www.port-operator.example.com/2023/07/26/Port Operator-innovates-with-truck_system-a-digital-solution-for-singapores-haulier-sector-to-achieve-fleet-optimisation-and-a-greener-footprint/ | ✅ |
+| Port Operator iWX Platform | https://www.businesstimes.com.sg/events-awards/design-ai-tech-awards/design-ai-and-tech-awards/new-era-warehouse-logistics-Port Operator-singapores-ai-powered-iwx-platform | ✅ |
+| Port Operator/OOCL Green Pilot | https://www.port-operator.example.com/2022/06/23/Port Operator-and-oocl-complete-green-pilot-trial-for-integrated-enhanced-container-flow-between-keppel-distripark-and-on-dock-depot/ | ✅ |
 | MPA DG Declaration | https://www.mpa.gov.sg/port-marine-ops/operations/gas-free-hazardous-cargo-info/declaring-dangerous-goods | ✅ |
 | UN ESCAP DG Best Practices | https://www.unescap.org/sites/default/d8files/event-documents/8.5%20Best%20Practices%20of%20Dangerous%20Goods%20%28DG%29%20management%20%28Singapore%29.pdf | ✅ |
 | MPA DGPE Regulations | https://sso.agc.gov.sg/SL/MPASA196-RG7?DocDate=20250228 | ✅ |

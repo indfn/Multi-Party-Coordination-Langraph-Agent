@@ -1,4 +1,4 @@
-"""AgentState — LangGraph state schema for PSA Nexus (Phase 6.1).
+"""AgentState — LangGraph state schema for Nexus (Phase 6.1).
 
 Covers all charter bootstrap fields (Section 3 T6 — 11 fields) plus execution fields.
 """

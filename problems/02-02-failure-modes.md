@@ -38,33 +38,33 @@ Each disruption scenario from 02-01 is analysed across 7 dimensions:
 
 ### Trigger Event
 
-Vessel ETA slip notification received via VTIS/STRAITREP (VHF voice + digitalPORT@SG™ system update). OptEVoyage reports AIS-derived ETA change from 0600 to 1230. The berth allocation in CITOS was computed at T-72 hours based on original ETA.
+Vessel ETA slip notification received via VTIS/STRAITREP (VHF voice + digitalPORT@SG system update). Voyage Tracking System reports AIS-derived ETA change from 0600 to 1230. The berth allocation in Terminal Operating System was computed at T-72 hours based on original ETA.
 
 ### Primary Systems Involved
 
 | System | Role | Data Flow |
 |--------|------|-----------|
-| VTIS/STRAITREP | Vessel traffic management | VHF voice → MPA VTS → PORTNET notification |
-| OptEVoyage | JIT ETA tracking | AIS data → ETA prediction → PORTNET/CITOS feed |
-| CITOS | Berth allocation | Vessel particulars, tidal windows, crane split |
-| PORTNET | Schedule coordination | Vessel call notice → shipping line, agent, terminal |
+| VTIS/STRAITREP | Vessel traffic management | VHF voice → MPA VTS → Port Community System notification |
+| Voyage Tracking System | JIT ETA tracking | AIS data → ETA prediction → Port Community System/Terminal Operating System feed |
+| Terminal Operating System | Berth allocation | Vessel particulars, tidal windows, crane split |
+| Port Community System | Schedule coordination | Vessel call notice → shipping line, agent, terminal |
 | A*STAR FMS | AGV scheduling | Berth plan → AGV dispatch queue |
 
 ### The System Handoff Gap
 
 **Gap 1: Asynchronous ETA updates vs. synchronous berth allocation.**  
-OptEVoyage receives AIS-derived ETA updates every 15 minutes. But CITOS berth allocation is computed once at T-72 hours and only re-optimised when a human planner triggers manual re-allocation. There is no automated trigger that says: "ETA slipped 6+ hours → re-run berth optimisation."
+Voyage Tracking System receives AIS-derived ETA updates every 15 minutes. But Terminal Operating System berth allocation is computed once at T-72 hours and only re-optimised when a human planner triggers manual re-allocation. There is no automated trigger that says: "ETA slipped 6+ hours → re-run berth optimisation."
 
 **Gap 2: Tidal window is a physical constraint that cannot be software-extended.**  
-CITOS can flag that a vessel will miss its tidal window, but it cannot create a new tidal window. The decision to hold the berth (wasting QC capacity) or reallocate (risking the delayed vessel) requires human judgment weighing multiple conflicting objectives: vessel importance, downstream feeder connections, QC availability, and yard congestion.
+Terminal Operating System can flag that a vessel will miss its tidal window, but it cannot create a new tidal window. The decision to hold the berth (wasting QC capacity) or reallocate (risking the delayed vessel) requires human judgment weighing multiple conflicting objectives: vessel importance, downstream feeder connections, QC availability, and yard congestion.
 
 **Gap 3: Feeder connection deadlines are not dynamically linked to mother vessel ETA.**  
-PORTNET tracks feeder schedules separately. When the mother vessel slips, there is no automated system that recalculates which feeder connections are still achievable and which must be rolled. This requires manual coordination between ship planner, shipping line agent, and terminal duty manager.
+Port Community System tracks feeder schedules separately. When the mother vessel slips, there is no automated system that recalculates which feeder connections are still achievable and which must be rolled. This requires manual coordination between ship planner, shipping line agent, and terminal duty manager.
 
 ### Current Manual Workaround
 
-1. **Terminal duty manager** receives ETA slip notification (phone call from ship agent + PORTNET alert)
-2. Duty manager opens CITOS berth planner screen and manually assesses: which berths are available at new ETA?
+1. **Terminal duty manager** receives ETA slip notification (phone call from ship agent + Port Community System alert)
+2. Duty manager opens Terminal Operating System berth planner screen and manually assesses: which berths are available at new ETA?
 3. If no berth available: calls adjacent berth operators to negotiate crane re-deployment
 4. If tidal window missed: contacts harbour pilot to confirm next available window
 5. Contacts shipping line agent (phone/email) to discuss options: hold, re-route, or wait
@@ -101,33 +101,33 @@ DTQC gantry trolley motor failure detected by onboard sensors. ROCC (Remote Oper
 
 | System | Role | Data Flow |
 |--------|------|-----------|
-| CITOS | QC scheduling, vessel plan | QC status update → re-optimisation request |
+| Terminal Operating System | QC scheduling, vessel plan | QC status update → re-optimisation request |
 | ROCC | Remote crane operations | Alarm → operator alert → manual intervention |
 | A*STAR FMS | AGV fleet management | QC offline → AGV rerouting |
-| PORTNET | Vessel schedule | ETA update to shipping line |
+| Port Community System | Vessel schedule | ETA update to shipping line |
 | Ship planner | Vessel stability | Re-sequence discharge bays |
 
 ### The System Handoff Gap
 
 **Gap 1: QC breakdown triggers are reactive, not predictive.**  
-CITOS monitors QC status but does not predict failures. When a QC goes offline, the system must be manually told to re-optimise crane assignments across berths. There is no automated "crane failure → redistribute workload" pathway.
+Terminal Operating System monitors QC status but does not predict failures. When a QC goes offline, the system must be manually told to re-optimise crane assignments across berths. There is no automated "crane failure → redistribute workload" pathway.
 
 **Gap 2: AGV queue at QC is not automatically dissipated.**  
 When a QC goes offline, A*STAR FMS has 12+ AGVs queued at the land-side pickup point. FMS can reroute new AGVs, but the already-queued AGVs must be manually redirected by the FMS operator. Each redirected AGV requires a new task assignment — this takes 2–5 minutes per AGV.
 
 **Gap 3: Vessel stability constraints cannot be dynamically re-sequenced.**  
-The ship planner must manually re-sequence discharge bays to maintain vessel trim. This requires checking the vessel's stability manual (physical document or PDF) and running manual calculations — CITOS does not have an integrated vessel stability calculator for emergency re-sequencing.
+The ship planner must manually re-sequence discharge bays to maintain vessel trim. This requires checking the vessel's stability manual (physical document or PDF) and running manual calculations — Terminal Operating System does not have an integrated vessel stability calculator for emergency re-sequencing.
 
 ### Current Manual Workaround
 
 1. **ROCC operator** acknowledges alarm, halts affected QC, notifies supervisor
 2. **Supervisor** contacts maintenance crew (phone) for emergency repair assessment
 3. **FMS operator** manually reroutes queued AGVs to adjacent QCs (2–5 min/AGV)
-4. **Berth planner** opens CITOS and manually reassigns cranes from adjacent berths
+4. **Berth planner** opens Terminal Operating System and manually reassigns cranes from adjacent berths
 5. **Ship planner** contacts vessel's chief officer (VHF) to discuss re-sequencing options
 6. **Terminal duty manager** calls shipping line to provide updated ETA
 7. **Maintenance crew** arrives, assesses repair time (30 min–8 hrs depending on failure)
-8. All decisions logged in WhatsApp group (not in CITOS or any system of record)
+8. All decisions logged in WhatsApp group (not in Terminal Operating System or any system of record)
 
 **Resolution time:** 30 min for initial containment, 2–8 hours for full recovery.
 
@@ -150,14 +150,14 @@ The ship planner must manually re-sequence discharge bays to maintain vessel tri
 
 ### Trigger Event
 
-PORTNET receives EDI DG amendment message (IMDG Code correction) from shipping line at T-6 hours before vessel arrival. CITOS stowage planner flags IMDG class conflict with existing plan.
+Port Community System receives EDI DG amendment message (IMDG Code correction) from shipping line at T-6 hours before vessel arrival. Terminal Operating System stowage planner flags IMDG class conflict with existing plan.
 
 ### Primary Systems Involved
 
 | System | Role | Data Flow |
 |--------|------|-----------|
-| PORTNET | EDI DG declaration | DG amendment → CITOS stowage planner |
-| CITOS | Stowage planning | IMDG conflict detection → manual resolution |
+| Port Community System | EDI DG declaration | DG amendment → Terminal Operating System stowage planner |
+| Terminal Operating System | Stowage planning | IMDG conflict detection → manual resolution |
 | MPA DGPE | Regulatory enforcement | Compliance check → potential penalties |
 | Ship planner | Vessel stability | Re-stowage plan |
 | Yard operations | DG yard management | Yard re-stack if stowage changes |
@@ -165,21 +165,21 @@ PORTNET receives EDI DG amendment message (IMDG Code correction) from shipping l
 ### The System Handoff Gap
 
 **Gap 1: DG declaration timing vs. stowage plan finalisation.**  
-Stowage plans are typically finalised 24 hours before arrival. DG declarations can be amended up to 12 hours before arrival (MPA requirement). This creates a 12-hour window where DG amendments can invalidate an already-finalised stowage plan. CITOS detects the conflict but cannot automatically resolve it — IMDG segregation rules are complex and vessel-specific.
+Stowage plans are typically finalised 24 hours before arrival. DG declarations can be amended up to 12 hours before arrival (MPA requirement). This creates a 12-hour window where DG amendments can invalidate an already-finalised stowage plan. Terminal Operating System detects the conflict but cannot automatically resolve it — IMDG segregation rules are complex and vessel-specific.
 
 **Gap 2: No automated re-stowage optimisation for DG conflicts.**  
-When CITOS flags an IMDG conflict, the ship planner must manually identify compliant positions. The vessel may have limited positions that satisfy both IMDG segregation AND vessel stability constraints. This is a multi-constraint optimisation problem that CITOS does not solve for emergency re-stowage scenarios.
+When Terminal Operating System flags an IMDG conflict, the ship planner must manually identify compliant positions. The vessel may have limited positions that satisfy both IMDG segregation AND vessel stability constraints. This is a multi-constraint optimisation problem that Terminal Operating System does not solve for emergency re-stowage scenarios.
 
 **Gap 3: MPA re-approval is a manual phone/email process.**  
 After the ship planner develops a re-stowage plan, it must be submitted to MPA for re-approval. This is done via phone call and email — not through an automated system. Approval may take 1–4 hours depending on MPA officer availability.
 
 ### Current Manual Workaround
 
-1. **CITOS** flags DG conflict in stowage plan notification
+1. **Terminal Operating System** flags DG conflict in stowage plan notification
 2. **Ship planner** manually reviews IMDG Code segregation tables (physical book or PDF)
 3. Ship planner identifies 3–5 potential compliant positions on vessel
 4. Ship planner runs manual stability check for each position
-5. Ship planner selects optimal position, updates stowage plan in CITOS
+5. Ship planner selects optimal position, updates stowage plan in Terminal Operating System
 6. **Terminal duty manager** calls MPA DGPE officer (phone) to request re-approval
 7. MPA officer reviews re-stowage plan (email attachment)
 8. **Yard planner** receives updated plan, adjusts yard DG block assignments if needed
@@ -206,27 +206,27 @@ After the ship planner develops a re-stowage plan, it must be submitted to MPA f
 
 ### Trigger Event
 
-OptEVoyage reports mother vessel ETA slip of 10 hours (Red Sea diversion). PORTNET shows 3 feeder vessels with departure times at 1800, 2000, 2200 tonight. CITOS berth allocation shows mother vessel will berth at 1600.
+Voyage Tracking System reports mother vessel ETA slip of 10 hours (Red Sea diversion). Port Community System shows 3 feeder vessels with departure times at 1800, 2000, 2200 tonight. Terminal Operating System berth allocation shows mother vessel will berth at 1600.
 
 ### Primary Systems Involved
 
 | System | Role | Data Flow |
 |--------|------|-----------|
-| CITOS | Berth allocation, ship planning | Vessel delay → re-optimise berth + crane split |
-| PORTNET | Feeder schedules | Feeder departure times → connection feasibility |
-| OptEVoyage | JIT tracking | AIS ETA → delay notification |
+| Terminal Operating System | Berth allocation, ship planning | Vessel delay → re-optimise berth + crane split |
+| Port Community System | Feeder schedules | Feeder departure times → connection feasibility |
+| Voyage Tracking System | JIT tracking | AIS ETA → delay notification |
 | Yard operations | Transhipment clustering | Yard block assignments → connection priority |
 
 ### The System Handoff Gap
 
 **Gap 1: No automated connection risk assessment.**  
-CITOS and PORTNET do not jointly calculate: "Given mother vessel delay of X hours, which feeder connections are still achievable?" This requires manual computation by the ship planner: discharge rate × time available = containers recoverable.
+Terminal Operating System and Port Community System do not jointly calculate: "Given mother vessel delay of X hours, which feeder connections are still achievable?" This requires manual computation by the ship planner: discharge rate × time available = containers recoverable.
 
 **Gap 2: Feeder hold vs. roll decision requires multi-party reasoning.**  
 Holding a feeder vessel delays its entire schedule (downstream ports affected). Rolling containers to next sailing causes customer SLA breach and demurrage. No single system can reason over: vessel schedule, customer commitments, yard congestion, and downstream port impacts simultaneously.
 
 **Gap 3: Yard-to-wharf transport time is not factored into connection risk.**  
-Containers in yard blocks far from the wharf require 15–30 minutes of AGV transport. The ship planner must mentally account for this when computing whether containers can be loaded before feeder departure. CITOS does not provide a "time to load" estimate that includes yard-to-wharf transport.
+Containers in yard blocks far from the wharf require 15–30 minutes of AGV transport. The ship planner must mentally account for this when computing whether containers can be loaded before feeder departure. Terminal Operating System does not provide a "time to load" estimate that includes yard-to-wharf transport.
 
 ### Current Manual Workaround
 
@@ -238,7 +238,7 @@ Containers in yard blocks far from the wharf require 15–30 minutes of AGV tran
 6. Feeder operator contacts downstream ports to assess impact
 7. Decision made: hold Feeder 1 by 2 hours, roll 40 containers to next day
 8. **Yard planner** receives manual notification to re-sequence transhipment blocks
-9. **Ship planner** updates CITOS stowage plan for adjusted loading sequence
+9. **Ship planner** updates Terminal Operating System stowage plan for adjusted loading sequence
 10. All parties notified via WhatsApp group and email
 
 **Resolution time:** 3–6 hours for full recovery plan.
@@ -266,31 +266,31 @@ Containers in yard blocks far from the wharf require 15–30 minutes of AGV tran
 
 ### Trigger Event
 
-ARMS detects temperature excursion (>2°C deviation from setpoint) on reefer container ONEU4567890. Alert generated to operations team via SMS and dashboard notification. Container is in reefer yard block R-07, power point #4521.
+Reefer Monitoring System detects temperature excursion (>2°C deviation from setpoint) on reefer container ONEU4567890. Alert generated to operations team via SMS and dashboard notification. Container is in reefer yard block R-07, power point #4521.
 
 ### Primary Systems Involved
 
 | System | Role | Data Flow |
 |--------|------|-----------|
-| ARMS | Reefer monitoring | Temperature alarm → operations team |
-| CITOS | Yard assignment | Container position → M&R dispatch |
+| Reefer Monitoring System | Reefer monitoring | Temperature alarm → operations team |
+| Terminal Operating System | Yard assignment | Container position → M&R dispatch |
 | Shipping line agent | Cargo owner | Spoilage assessment → insurance notification |
 | Maintenance crew | Physical repair | Dispatch → repair → reconnection |
 
 ### The System Handoff Gap
 
-**Gap 1: ARMS detects but cannot diagnose.**  
-ARMS knows temperature is rising but cannot determine root cause: power plug fault? Compressor failure? Door seal breach? Power supply interruption? Each cause requires a different response (replug, repair, seal replacement, generator dispatch). ARMS alerts the operations team, but the diagnosis is manual.
+**Gap 1: Reefer Monitoring System detects but cannot diagnose.**  
+Reefer Monitoring System knows temperature is rising but cannot determine root cause: power plug fault? Compressor failure? Door seal breach? Power supply interruption? Each cause requires a different response (replug, repair, seal replacement, generator dispatch). Reefer Monitoring System alerts the operations team, but the diagnosis is manual.
 
 **Gap 2: No automated escalation path based on cargo value.**  
-Pharma cargo valued at $500,000 requires faster response than general reefer cargo. ARMS does not differentiate alert priority based on cargo value or spoilage risk. All reefer alerts are treated equally.
+Pharma cargo valued at $500,000 requires faster response than general reefer cargo. Reefer Monitoring System does not differentiate alert priority based on cargo value or spoilage risk. All reefer alerts are treated equally.
 
 **Gap 3: M&R dispatch is phone-based.**  
 Operations team must call maintenance crew (phone) to dispatch a technician. There is no automated dispatch system that routes the nearest available technician based on location, skill set, and spare parts inventory. At 0200, staff availability is limited.
 
 ### Current Manual Workaround
 
-1. **ARMS** generates temperature alarm (auto)
+1. **Reefer Monitoring System** generates temperature alarm (auto)
 2. **Operations team** acknowledges alarm, checks power supply status on dashboard
 3. Operations team calls maintenance crew (phone) — 15–30 min response time
 4. **Maintenance technician** arrives, diagnoses: power plug fault (visual inspection)
@@ -299,7 +299,7 @@ Operations team must call maintenance crew (phone) to dispatch a technician. The
 7. Operations team calls shipping line agent (phone) to report excursion
 8. Shipping line agent contacts cargo owner and insurer
 9. If cargo spoiled: insurance claim initiated (weeks-long process)
-10. All events logged in ARMS but not in CITOS or any unified system of record
+10. All events logged in Reefer Monitoring System but not in Terminal Operating System or any unified system of record
 
 **Resolution time:** 30 min–4 hrs depending on cause and staff availability.
 
@@ -323,13 +323,13 @@ Operations team must call maintenance crew (phone) to dispatch a technician. The
 
 ### Trigger Event
 
-CITOS yard planner receives vessel delay notification. Export containers continue arriving at gate (OptETruck bookings confirmed). Yard blocks B-12 through B-15 (assigned for delayed vessel) approaching capacity.
+Terminal Operating System yard planner receives vessel delay notification. Export containers continue arriving at gate (Truck Management System bookings confirmed). Yard blocks B-12 through B-15 (assigned for delayed vessel) approaching capacity.
 
 ### Primary Systems Involved
 
 | System | Role | Data Flow |
 |--------|------|-----------|
-| CITOS | Yard planning | Block utilisation → overflow detection |
+| Terminal Operating System | Yard planning | Block utilisation → overflow detection |
 | A*STAR FMS | AGV dispatch | Yard congestion → AGV routing adjustment |
 | aRMG controllers | Yard crane operations | Block full → re-handle operations |
 | Gate operations | Export arrivals | Container intake → yard assignment |
@@ -337,24 +337,24 @@ CITOS yard planner receives vessel delay notification. Export containers continu
 ### The System Handoff Gap
 
 **Gap 1: Yard block capacity is not dynamically linked to vessel ETA.**  
-CITOS assigns yard blocks based on vessel schedule. When vessel delays, the yard plan is not automatically re-optimised. Export containers continue arriving because gate operations have no real-time signal to slow down. OptETruck bookings were made hours/days in advance and cannot be instantly cancelled.
+Terminal Operating System assigns yard blocks based on vessel schedule. When vessel delays, the yard plan is not automatically re-optimised. Export containers continue arriving because gate operations have no real-time signal to slow down. Truck Management System bookings were made hours/days in advance and cannot be instantly cancelled.
 
 **Gap 2: Overflow container routing requires manual planner intervention.**  
-When blocks reach 95% utilisation, CITOS can suggest alternative blocks, but the planner must manually verify: (a) alternative block is not already committed, (b) AGV travel time increase is acceptable, (c) loading sequence is not disrupted. This is a multi-constraint decision with no automated solution.
+When blocks reach 95% utilisation, Terminal Operating System can suggest alternative blocks, but the planner must manually verify: (a) alternative block is not already committed, (b) AGV travel time increase is acceptable, (c) loading sequence is not disrupted. This is a multi-constraint decision with no automated solution.
 
 **Gap 3: aRMG re-handle operations compete with loading operations.**  
 Re-stacking containers to create space uses aRMG capacity that could otherwise be used for loading. The yard planner must manually schedule re-handles during a window that doesn't conflict with active QC loading. No system provides a "re-handle vs. loading trade-off" analysis.
 
 ### Current Manual Workaround
 
-1. **Yard planner** notices block utilisation approaching 95% (CITOS dashboard)
-2. Planner manually checks alternative blocks in CITOS
+1. **Yard planner** notices block utilisation approaching 95% (Terminal Operating System dashboard)
+2. Planner manually checks alternative blocks in Terminal Operating System
 3. Planner calls gate operations (phone) to request slowing export arrivals
-4. Gate operator contacts OptETruck to adjust slot availability
+4. Gate operator contacts Truck Management System to adjust slot availability
 5. Planner schedules aRMG re-handles during a 2-hour window (no loading conflicts)
 6. aRMG operator executes re-handles (~15–30 min for 20 containers)
 7. **Ship planner** notified that containers may not be in optimal positions
-8. Ship planner adjusts vessel loading sequence in CITOS
+8. Ship planner adjusts vessel loading sequence in Terminal Operating System
 9. All decisions logged in planner's notebook (not in system)
 
 **Resolution time:** 4–8 hours from detection to resolution.
@@ -377,21 +377,21 @@ Re-stacking containers to create space uses aRMG capacity that could otherwise b
 
 ### Trigger Event
 
-PORTNET receives DG amendment EDI message for Container B (Class 9 → Class 4.1). CITOS yard inventory system detects IMDG class conflict with adjacent Container A (Class 3). Alert generated to yard planner and DG compliance officer.
+Port Community System receives DG amendment EDI message for Container B (Class 9 → Class 4.1). Terminal Operating System yard inventory system detects IMDG class conflict with adjacent Container A (Class 3). Alert generated to yard planner and DG compliance officer.
 
 ### Primary Systems Involved
 
 | System | Role | Data Flow |
 |--------|------|-----------|
-| PORTNET | DG declaration | Amendment → CITOS conflict detection |
-| CITOS | Yard inventory | IMDG conflict flag → re-handle plan |
+| Port Community System | DG declaration | Amendment → Terminal Operating System conflict detection |
+| Terminal Operating System | Yard inventory | IMDG conflict flag → re-handle plan |
 | aRMG | Yard crane | Re-handle execution |
 | MPA DGPE | Regulatory compliance | Re-stowage plan approval |
 
 ### The System Handoff Gap
 
 **Gap 1: DG amendments arrive after stacking — no pre-stacking validation against future amendments.**  
-CITOS validates IMDG segregation at time of stacking based on current declarations. But DG amendments can arrive up to 12 hours before arrival (or later in emergency cases). There is no system that predicts: "What if Container B's classification changes?" The conflict is only discovered after the amendment arrives.
+Terminal Operating System validates IMDG segregation at time of stacking based on current declarations. But DG amendments can arrive up to 12 hours before arrival (or later in emergency cases). There is no system that predicts: "What if Container B's classification changes?" The conflict is only discovered after the amendment arrives.
 
 **Gap 2: Minimum-move relocation plan requires manual computation.**  
 The yard planner must manually identify the minimum number of container moves to resolve the conflict. This requires checking: all adjacent containers' DG classes, available compliant positions, and aRMG scheduling. No automated optimisation exists for this.
@@ -401,7 +401,7 @@ Same gap as A3 — regulatory approval is manual, time-consuming, and creates de
 
 ### Current Manual Workaround
 
-1. **CITOS** flags IMDG class conflict (auto)
+1. **Terminal Operating System** flags IMDG class conflict (auto)
 2. **Yard planner** manually reviews DG segregation tables (IMDG Code book)
 3. Planner identifies 2–3 potential compliant positions in DG yard
 4. Planner checks aRMG availability for re-handle window
@@ -409,7 +409,7 @@ Same gap as A3 — regulatory approval is manual, time-consuming, and creates de
 6. **DG compliance officer** reviews plan for regulatory compliance
 7. Officer calls MPA DGPE (phone) to request re-approval
 8. **aRMG operator** executes re-handles during designated window
-9. CITOS yard inventory updated after re-handles complete
+9. Terminal Operating System yard inventory updated after re-handles complete
 10. All events logged in DG compliance register (paper or spreadsheet)
 
 **Resolution time:** 2–6 hours from amendment receipt to re-approval.
@@ -441,7 +441,7 @@ Private 5G base station at Tuas Port fails. A*STAR FMS detects increased AGV com
 |--------|------|-----------|
 | 5G network (Singtel) | AGV communication | Latency spike → FMS degradation |
 | A*STAR FMS | AGV fleet management | De-rating → throughput reduction |
-| CITOS | QC scheduling | QC productivity drop → vessel delay |
+| Terminal Operating System | QC scheduling | QC productivity drop → vessel delay |
 | DTQC operations | Crane operations | AGV wait time increase |
 
 ### The System Handoff Gap
@@ -491,25 +491,25 @@ AGVs cannot receive updated charging instructions during 5G outage. Some AGVs ma
 
 ### Trigger Event
 
-AGS (Automated Gate System) detects eDO not found in PORTNET for arriving truck. Weighbridge shows VGM discrepancy >5% between declared and actual weight. AGS blocks entry, truck pulled to exception lane.
+AGS (Automated Gate System) detects eDO not found in Port Community System for arriving truck. Weighbridge shows VGM discrepancy >5% between declared and actual weight. AGS blocks entry, truck pulled to exception lane.
 
 ### Primary Systems Involved
 
 | System | Role | Data Flow |
 |--------|------|-----------|
 | AGS/OCR | Gate processing | Block entry → exception lane |
-| PORTNET | eDO status | Delivery order check → not found |
+| Port Community System | eDO status | Delivery order check → not found |
 | Weighbridge | VGM validation | Weight discrepancy → block |
-| OptETruck | Slot management | Queue build-up → rebalancing |
+| Truck Management System | Slot management | Queue build-up → rebalancing |
 | Yard operations | Container pickup | Container not released → hold |
 
 ### The System Handoff Gap
 
 **Gap 1: eDO release timing is not coordinated with truck arrival.**  
-Shipping lines release eDOs in PORTNET based on their own schedules, which may not align with haulier booking times. A haulier books a slot via OptETruck at 1800 for pickup at 2300, but the shipping line may not release the eDO until 2200 (or later). AGS checks eDO in real-time — if not yet released, entry is blocked. No system alerts the haulier that eDO is not yet available before they depart depot.
+Shipping lines release eDOs in Port Community System based on their own schedules, which may not align with haulier booking times. A haulier books a slot via Truck Management System at 1800 for pickup at 2300, but the shipping line may not release the eDO until 2200 (or later). AGS checks eDO in real-time — if not yet released, entry is blocked. No system alerts the haulier that eDO is not yet available before they depart depot.
 
 **Gap 2: VGM discrepancy resolution is time-constrained.**  
-If VGM discrepancy >5%, haulier must re-advise VGM in PORTNET (>4 hrs before vessel ETB). At 2300, the 4-hour window may have already passed. The haulier cannot amend VGM — the container is stuck. No system provides a "VGM amendment feasibility check" before the haulier departs depot.
+If VGM discrepancy >5%, haulier must re-advise VGM in Port Community System (>4 hrs before vessel ETB). At 2300, the 4-hour window may have already passed. The haulier cannot amend VGM — the container is stuck. No system provides a "VGM amendment feasibility check" before the haulier departs depot.
 
 **Gap 3: Exception lane blocks OCR lane — no automated overflow.**  
 When a truck is pulled to the exception lane, it physically blocks one of 4 OCR lanes. Queue builds rapidly (60% of trucks arrive in the 2300–0100 peak window). AGS does not automatically open overflow lanes or redirect trucks to alternate gates. Manual intervention is required to open additional lanes.
@@ -517,12 +517,12 @@ When a truck is pulled to the exception lane, it physically blocks one of 4 OCR 
 ### Current Manual Workaround
 
 1. **AGS** blocks entry, directs truck to exception lane (auto)
-2. **Gate operator** checks PORTNET for eDO status (manual lookup)
+2. **Gate operator** checks Port Community System for eDO status (manual lookup)
 3. Operator contacts shipping line agent (phone) to request eDO release
 4. Shipping line agent checks internal system, releases eDO (15–60 min)
 5. **Weighbridge operator** verifies VGM discrepancy, contacts haulier (phone)
 6. Haulier contacts consignee to correct VGM (phone/email)
-7. Consignee amends VGM in PORTNET (if within time window)
+7. Consignee amends VGM in Port Community System (if within time window)
 8. **Operations supervisor** opens overflow gate lane (manual)
 9. Queue clears in 30–60 min after eDO/VGM resolved
 10. All events logged in gate operations log (paper)
@@ -548,37 +548,37 @@ When a truck is pulled to the exception lane, it physically blocks one of 4 OCR 
 
 ### Trigger Event
 
-AYE expressway accident blocks 2 lanes for 3 hours. OptETruck GPS tracking shows 60% of booked hauliers delayed. SmartBooking slot system shows 45 trucks missed 0700–0800 window.
+AYE expressway accident blocks 2 lanes for 3 hours. Truck Management System GPS tracking shows 60% of booked hauliers delayed. Unified Booking Platform slot system shows 45 trucks missed 0700–0800 window.
 
 ### Primary Systems Involved
 
 | System | Role | Data Flow |
 |--------|------|-----------|
-| OptETruck | TMS, routing | GPS delay detection → rebalancing |
-| SmartBooking | Slot management | Missed slots → rebooking |
-| PORTNET | Gate schedule | Delayed arrivals → gate plan update |
-| CITOS | Yard planning | Late containers → loading sequence update |
+| Truck Management System | TMS, routing | GPS delay detection → rebalancing |
+| Unified Booking Platform | Slot management | Missed slots → rebooking |
+| Port Community System | Gate schedule | Delayed arrivals → gate plan update |
+| Terminal Operating System | Yard planning | Late containers → loading sequence update |
 
 ### The System Handoff Gap
 
-**Gap 1: OptETruck cannot dynamically re-route around expressway blockage.**  
-OptETruck uses HERE Technologies for routing, which can detect traffic incidents. But re-routing 60 trucks in real-time requires: (a) each truck's current position, (b) alternative routes, (c) updated ETAs. The system provides recommendations but cannot force trucks to take alternate routes — drivers make their own decisions.
+**Gap 1: Truck Management System cannot dynamically re-route around expressway blockage.**  
+Truck Management System uses HERE Technologies for routing, which can detect traffic incidents. But re-routing 60 trucks in real-time requires: (a) each truck's current position, (b) alternative routes, (c) updated ETAs. The system provides recommendations but cannot force trucks to take alternate routes — drivers make their own decisions.
 
-**Gap 2: SmartBooking slots are fixed once booked.**  
-When hauliers book slots via SmartBooking, the slots are locked. If a haulier is delayed, the slot is wasted. SmartBooking does not have an automated "slot release and reassign" mechanism. The haulier must manually cancel and rebook — but at 0700, there are no available slots for the rest of the morning.
+**Gap 2: Unified Booking Platform slots are fixed once booked.**  
+When hauliers book slots via Unified Booking Platform, the slots are locked. If a haulier is delayed, the slot is wasted. Unified Booking Platform does not have an automated "slot release and reassign" mechanism. The haulier must manually cancel and rebook — but at 0700, there are no available slots for the rest of the morning.
 
 **Gap 3: Yard planner is not automatically notified of delayed containers.**  
-CITOS yard plan assumes containers will arrive per schedule. When 60% are delayed, the yard plan becomes invalid. The yard planner learns about delays through phone calls from gate operations — not from any automated system. This delays the loading sequence re-planning.
+Terminal Operating System yard plan assumes containers will arrive per schedule. When 60% are delayed, the yard plan becomes invalid. The yard planner learns about delays through phone calls from gate operations — not from any automated system. This delays the loading sequence re-planning.
 
 ### Current Manual Workaround
 
-1. **OptETruck** detects traffic delay, sends route advisory to affected drivers (auto)
-2. **SmartBooking** shows missed slots on dashboard (auto)
+1. **Truck Management System** detects traffic delay, sends route advisory to affected drivers (auto)
+2. **Unified Booking Platform** shows missed slots on dashboard (auto)
 3. **Operations team** calls delayed hauliers (phone) to confirm ETAs
 4. Operations team contacts gate operations to open overflow lanes for afternoon
 5. **Gate operator** manually rebalances afternoon slot availability
 6. Operations team calls yard planner (phone) to notify delayed container arrivals
-7. **Yard planner** manually re-sequences loading plan in CITOS
+7. **Yard planner** manually re-sequences loading plan in Terminal Operating System
 8. Operations team contacts shipping line to discuss loading delay options
 9. All events logged in operations WhatsApp group
 
@@ -609,8 +609,8 @@ AGS gate inspection detects structural damage to empty container corner post. Co
 | System | Role | Data Flow |
 |--------|------|-----------|
 | AGS | Gate inspection | Damage detection → rejection |
-| iBOX | Depot management | M&R slot availability |
-| OptETruck | Haulier routing | Return job matching |
+| Depot Management System | Depot management | M&R slot availability |
+| Truck Management System | Haulier routing | Return job matching |
 | Shipping line agent | Container ownership | M&R authorisation |
 
 ### The System Handoff Gap
@@ -618,8 +618,8 @@ AGS gate inspection detects structural damage to empty container corner post. Co
 **Gap 1: Damage detection at gate has no automated M&R routing.**  
 AGS detects damage and flags the container, but it does not automatically find an available M&R facility. The haulier must manually search for available depots, call each to check M&R slot availability, and negotiate pricing. No integrated M&R marketplace exists.
 
-**Gap 2: Haulier's OptETruck return job conflicts with M&R requirement.**  
-OptETruck matched the haulier with a return job (empty pickup from another depot) based on the assumption the current container would be dropped off quickly. The M&R rejection creates a conflict: complete the return job (lose time) or divert to M&R (lose the return job incentive). OptETruck does not dynamically re-route for M&R scenarios.
+**Gap 2: Haulier's Truck Management System return job conflicts with M&R requirement.**  
+Truck Management System matched the haulier with a return job (empty pickup from another depot) based on the assumption the current container would be dropped off quickly. The M&R rejection creates a conflict: complete the return job (lose time) or divert to M&R (lose the return job incentive). Truck Management System does not dynamically re-route for M&R scenarios.
 
 **Gap 3: Shipping line M&R authorisation is phone-based.**  
 The haulier or depot must contact the shipping line to authorise M&R. This is done via phone call. The shipping line may take 1–4 hours to respond (especially after hours). Without authorisation, the depot cannot proceed with repairs.
@@ -630,8 +630,8 @@ The haulier or depot must contact the shipping line to authorise M&R. This is do
 2. **Gate operator** notifies haulier of rejection (phone/verbal)
 3. Haulier calls depot (phone) to check M&R availability
 4. Depot checks M&R schedule, offers slot in 2–4 hours
-5. Haulier calls OptETruck support to re-route (phone)
-6. OptETruck support manually cancels return job, assigns M&R route
+5. Haulier calls Truck Management System support to re-route (phone)
+6. Truck Management System support manually cancels return job, assigns M&R route
 7. Haulier drives to M&R depot (45 min)
 8. Depot contacts shipping line (phone) for M&R authorisation
 9. Shipping line responds in 1–4 hours
@@ -646,7 +646,7 @@ The haulier or depot must contact the shipping line to authorise M&R. This is do
 |----------|--------|---------------|
 | M&R repair | Corner post repair | ~$200–$800 |
 | Haulier deadhead | Fuel + time to M&R facility | ~$50–$100 |
-| Missed return job | OptETruck incentive lost | ~$80–$150 |
+| Missed return job | Truck Management System incentive lost | ~$80–$150 |
 | Chassis pool blocking | Chassis held during M&R | ~$30–$50/day |
 | Carbon waste | 45 km deadhead × 2.5 kg CO2/km | ~112 kg CO2 |
 
@@ -659,40 +659,40 @@ The haulier or depot must contact the shipping line to authorise M&R. This is do
 
 ### Trigger Event
 
-PORTNET demurrage tracking shows import container CMAU5678901 approaching free time expiry (midnight). Haulier's chassis pool is fully utilised. Earliest chassis available: 0200 tomorrow.
+Port Community System demurrage tracking shows import container CMAU5678901 approaching free time expiry (midnight). Haulier's chassis pool is fully utilised. Earliest chassis available: 0200 tomorrow.
 
 ### Primary Systems Involved
 
 | System | Role | Data Flow |
 |--------|------|-----------|
-| PORTNET | Demurrage tracking | Free time expiry alert |
-| OptETruck | Asset pooling | Chassis availability check |
-| SmartBooking | Slot management | Pickup slot booking |
-| iBOX | Depot operations | Chassis pool status |
+| Port Community System | Demurrage tracking | Free time expiry alert |
+| Truck Management System | Asset pooling | Chassis availability check |
+| Unified Booking Platform | Slot management | Pickup slot booking |
+| Depot Management System | Depot operations | Chassis pool status |
 
 ### The System Handoff Gap
 
 **Gap 1: Demurrage clock is not linked to chassis availability.**  
-PORTNET tracks free time expiry but does not check whether the haulier has chassis available for pickup. The haulier learns about the demurrage risk only when they attempt to book a slot — and discovers no chassis available. No system proactively alerts: "Free time expires in 24 hours, chassis pool at 100% — book now."
+Port Community System tracks free time expiry but does not check whether the haulier has chassis available for pickup. The haulier learns about the demurrage risk only when they attempt to book a slot — and discovers no chassis available. No system proactively alerts: "Free time expires in 24 hours, chassis pool at 100% — book now."
 
-**Gap 2: OptETruck asset pooling has stale data.**  
-OptETruck shows partner haulier chassis availability, but the data may be 15–30 minutes old. By the time the haulier requests a chassis, it may already be assigned to another job. No real-time chassis reservation system exists.
+**Gap 2: Truck Management System asset pooling has stale data.**  
+Truck Management System shows partner haulier chassis availability, but the data may be 15–30 minutes old. By the time the haulier requests a chassis, it may already be assigned to another job. No real-time chassis reservation system exists.
 
 **Gap 3: Free time extension is a manual negotiation.**  
 Extending free time requires contacting the shipping line (phone/email). The shipping line may refuse or charge a fee. No automated system exists for requesting/accepting free time extensions.
 
 ### Current Manual Workaround
 
-1. **PORTNET** shows free time expiry approaching (auto alert)
-2. **Haulier** checks OptETruck for chassis availability — pool at 100%
+1. **Port Community System** shows free time expiry approaching (auto alert)
+2. **Haulier** checks Truck Management System for chassis availability — pool at 100%
 3. Haulier calls partner hauliers (phone) to request chassis loan
 4. Partner confirms 4 chassis available (15–30 min response)
 5. Haulier calls shipping line (phone) to request free time extension
 6. Shipping line offers 1-day extension for $50 fee
-7. Haulier accepts, books chassis from partner via OptETruck
-8. Books pickup slot via SmartBooking for tomorrow 0800
+7. Haulier accepts, books chassis from partner via Truck Management System
+8. Books pickup slot via Unified Booking Platform for tomorrow 0800
 9. Container picked up on time — demurrage avoided
-10. All events logged in haulier's system (not in PSA systems)
+10. All events logged in haulier's system (not in Port Operator systems)
 
 **Resolution time:** 4–12 hours of coordination.
 
@@ -719,15 +719,15 @@ Extending free time requires contacting the shipping line (phone/email). The shi
 
 ### Trigger Event
 
-OptEModal detects vessel arrival 8 hours late. AI calculates that 50 sea-air containers cannot reach Changi Airfreight Centre and clear customs before 2000 flight departure. Risk alert generated to operations team.
+Intermodal Coordination Platform detects vessel arrival 8 hours late. AI calculates that 50 sea-air containers cannot reach Changi Airfreight Centre and clear customs before 2000 flight departure. Risk alert generated to operations team.
 
 ### Primary Systems Involved
 
 | System | Role | Data Flow |
 |--------|------|-----------|
-| OptEModal | Sea-air coordination | Delay detection → risk alert |
-| CITOS | Terminal ops | Priority discharge request |
-| CALISTA | Milestone tracking | Exception flag |
+| Intermodal Coordination Platform | Sea-air coordination | Delay detection → risk alert |
+| Terminal Operating System | Terminal ops | Priority discharge request |
+| Supply Chain Platform | Milestone tracking | Exception flag |
 | TradeNet | Customs | Pre-clearance submission |
 | SATS/dnata | Ground handling | Cargo acceptance slot |
 | Airline | Flight operations | Rebooking decision |
@@ -735,20 +735,20 @@ OptEModal detects vessel arrival 8 hours late. AI calculates that 50 sea-air con
 ### The System Handoff Gap
 
 **Gap 1: No single system has authority to expedite all steps.**  
-The 24-hour transfer requires: (a) priority QC discharge, (b) priority ITT dispatch, (c) express customs clearance, (d) priority SATS handling. Each step is controlled by a different system/operator. OptEModal can detect the risk and recommend actions, but it cannot force CITOS to assign extra QCs, or force TradeNet to expedite clearance, or force SATS to accept cargo outside normal hours.
+The 24-hour transfer requires: (a) priority QC discharge, (b) priority ITT dispatch, (c) express customs clearance, (d) priority SATS handling. Each step is controlled by a different system/operator. Intermodal Coordination Platform can detect the risk and recommend actions, but it cannot force Terminal Operating System to assign extra QCs, or force TradeNet to expedite clearance, or force SATS to accept cargo outside normal hours.
 
 **Gap 2: Customs pre-clearance requires documents that may not be ready.**  
-TradeNet allows pre-clearance submission, but the customs broker may not have all documents ready (bill of lading, certificate of origin, etc.). OptEModal cannot automatically generate or validate customs documents — these come from the forwarder's system.
+TradeNet allows pre-clearance submission, but the customs broker may not have all documents ready (bill of lading, certificate of origin, etc.). Intermodal Coordination Platform cannot automatically generate or validate customs documents — these come from the forwarder's system.
 
 **Gap 3: Flight rebooking is a commercial decision, not a system decision.**  
-OptEModal can suggest alternative flights, but the decision to rebook involves: cargo owner approval, airline availability, additional cost authorisation. No system can autonomously rebook a flight — it requires human judgment and commercial negotiation.
+Intermodal Coordination Platform can suggest alternative flights, but the decision to rebook involves: cargo owner approval, airline availability, additional cost authorisation. No system can autonomously rebook a flight — it requires human judgment and commercial negotiation.
 
 ### Current Manual Workaround
 
-1. **OptEModal** generates risk alert (auto)
+1. **Intermodal Coordination Platform** generates risk alert (auto)
 2. **Operations team** assesses feasibility of 12-hour window (manual calculation)
-3. Team calls CITOS terminal ops (phone) to request priority discharge
-4. CITOS assigns 2 additional QCs (manual override)
+3. Team calls Terminal Operating System terminal ops (phone) to request priority discharge
+4. Terminal Operating System assigns 2 additional QCs (manual override)
 5. Team calls customs broker (phone) to pre-lodge TradeNet clearance
 6. Customs broker submits documents to TradeNet (15–30 min)
 7. Team calls SATS (phone) to request expedited cargo acceptance
@@ -778,15 +778,15 @@ OptEModal can suggest alternative flights, but the decision to rebook involves: 
 
 ### Trigger Event
 
-TradeNet flags shipment for phytosanitary inspection (random HS code selection). CALISTA milestone tracker shows hold status. Cargo cannot proceed past Changi FTZ "In" gate.
+TradeNet flags shipment for phytosanitary inspection (random HS code selection). Supply Chain Platform milestone tracker shows hold status. Cargo cannot proceed past Changi FTZ "In" gate.
 
 ### Primary Systems Involved
 
 | System | Role | Data Flow |
 |--------|------|-----------|
 | TradeNet | Customs | Inspection hold flag |
-| CALISTA | Milestone tracking | Hold status → all parties |
-| OptEModal | Transfer coordination | Delay notification → schedule recalculation |
+| Supply Chain Platform | Milestone tracking | Hold status → all parties |
+| Intermodal Coordination Platform | Transfer coordination | Delay notification → schedule recalculation |
 | SATS/dnata | Ground handling | Cargo acceptance slot at risk |
 | Forwarder | Documentation | Certificate of origin retrieval |
 
@@ -799,13 +799,13 @@ When TradeNet flags a shipment for inspection, the entire shipment is held. Ther
 The phytosanitary certificate is with the shipper in Mumbai (2.5 hours behind Singapore). The forwarder must contact the shipper, who must find the document, scan it, and email it. No digital document repository or blockchain-based document sharing exists for this scenario.
 
 **Gap 3: Inspection timing is not coordinated with flight schedule.**  
-The inspector is available at 1500, but the flight departs at 1600. There is no system that alerts the inspector: "This cargo has a flight at 1600 — please prioritise." The inspection queue is managed internally by the agency, not linked to OptEModal's timeline.
+The inspector is available at 1500, but the flight departs at 1600. There is no system that alerts the inspector: "This cargo has a flight at 1600 — please prioritise." The inspection queue is managed internally by the agency, not linked to Intermodal Coordination Platform's timeline.
 
 ### Current Manual Workaround
 
 1. **TradeNet** flags inspection hold (auto)
-2. **CALISTA** notifies all parties of hold (auto)
-3. **OptEModal** recalculates feasibility of making flight (auto suggestion)
+2. **Supply Chain Platform** notifies all parties of hold (auto)
+3. **Intermodal Coordination Platform** recalculates feasibility of making flight (auto suggestion)
 4. **Operations team** calls customs broker (phone) to discuss inspection timeline
 5. Customs broker contacts phytosanitary agency (phone) to check inspector availability
 6. **Forwarder** contacts shipper in Mumbai (email/WhatsApp) to retrieve certificate
@@ -836,16 +836,16 @@ The inspector is available at 1500, but the flight departs at 1600. There is no 
 
 ### Trigger Event
 
-PSCH warehouse ops detects temperature logger discrepancy during container devanning. Physical logger shows 3-hour excursion; digital telematics shows compliance. Roambee sensor confirms current temperature is within range.
+Supply Chain Hub warehouse ops detects temperature logger discrepancy during container devanning. Physical logger shows 3-hour excursion; digital telematics shows compliance. Roambee sensor confirms current temperature is within range.
 
 ### Primary Systems Involved
 
 | System | Role | Data Flow |
 |--------|------|-----------|
 | Roambee | Sensor data | Item-level tracking → historical data |
-| PSA BDP Temp Guard | Cold chain monitoring | Discrepancy flag → control tower |
-| CALISTA | Milestone tracking | Exception status update |
-| PSCH warehouse | Devanning ops | Physical inspection |
+| Cold-Chain Monitor | Cold chain monitoring | Discrepancy flag → control tower |
+| Supply Chain Platform | Milestone tracking | Exception status update |
+| Supply Chain Hub warehouse | Devanning ops | Physical inspection |
 | Insurer | Coverage decision | Excursion verification |
 
 ### The System Handoff Gap
@@ -857,13 +857,13 @@ Physical logger (placed at origin) and digital telematics (installed on reefer) 
 The insurance policy requires independent lab analysis before coverage decision. No system integrates with lab services or provides automated sample collection scheduling. The forwarder must manually arrange lab testing (phone call to lab, sample courier, 24–48 hr turnaround).
 
 **Gap 3: Accept/reject decision requires multi-party consensus.**  
-The decision to accept, reject, or partially accept the cargo involves: forwarder, consignee, insurer, and PSA warehouse. No system facilitates this decision — it happens via email chain and phone calls. The cargo sits in cold storage ($2,000–$5,000/day) while the decision is made.
+The decision to accept, reject, or partially accept the cargo involves: forwarder, consignee, insurer, and Port Operator warehouse. No system facilitates this decision — it happens via email chain and phone calls. The cargo sits in cold storage ($2,000–$5,000/day) while the decision is made.
 
 ### Current Manual Workaround
 
-1. **PSCH warehouse** detects logger discrepancy during devanning (manual observation)
-2. Warehouse operator flags container in system (CITOS/PSCH inventory)
-3. **PSA BDP Temp Guard** shows discrepancy on control tower dashboard (auto)
+1. **Supply Chain Hub warehouse** detects logger discrepancy during devanning (manual observation)
+2. Warehouse operator flags container in system (Terminal Operating System/Supply Chain Hub inventory)
+3. **Cold-Chain Monitor** shows discrepancy on control tower dashboard (auto)
 4. Warehouse operator calls operations manager (phone)
 5. Manager calls forwarder (phone) to discuss discrepancy
 6. Forwarder calls shipper (phone) to retrieve logger calibration certificate
@@ -880,7 +880,7 @@ The decision to accept, reject, or partially accept the cargo involves: forwarde
 
 | Category | Impact | Estimated Cost |
 |----------|--------|---------------|
-| Cargo hold | Cold storage at PSCH | ~$2,000–$5,000/day |
+| Cargo hold | Cold storage at Supply Chain Hub | ~$2,000–$5,000/day |
 | Lab testing | Third-party analysis | ~$1,000–$3,000 |
 | Insurance claim | Processing + investigation | ~$5,000–$15,000 |
 | Customer impact | Pharma supply chain disruption | ~$10,000–$100,000/day |
@@ -901,30 +901,30 @@ The decision to accept, reject, or partially accept the cargo involves: forwarde
 
 | System | Role | Data Flow |
 |--------|------|-----------|
-| CITOS (PPT) | Yard operations | Container availability → ITT dispatch |
-| CITOS (Tuas) | Yard receiving | ITT arrival → yard assignment |
-| OptETruck | Road ITT | Truck dispatch → GPS tracking |
+| Terminal Operating System (PPT) | Yard operations | Container availability → ITT dispatch |
+| Terminal Operating System (Tuas) | Yard receiving | ITT arrival → yard assignment |
+| Truck Management System | Road ITT | Truck dispatch → GPS tracking |
 | Feeder vessel | Sea ITT | Berth availability → departure |
-| PORTNET | Inventory tracking | Container status across terminals |
+| Port Community System | Inventory tracking | Container status across terminals |
 
 ### The System Handoff Gap
 
 **Gap 1: Road ITT and sea ITT are not coordinated.**  
-OptETruck manages road ITT. Feeder vessels manage sea ITT. No system coordinates both options simultaneously to optimise the split. The decision of "send 80 containers by road and 40 by sea" requires manual computation and multi-party agreement.
+Truck Management System manages road ITT. Feeder vessels manage sea ITT. No system coordinates both options simultaneously to optimise the split. The decision of "send 80 containers by road and 40 by sea" requires manual computation and multi-party agreement.
 
-**Gap 2: PPT and Tuas CITOS are separate instances.**  
-CITOS at Pasir Panjang and CITOS at Tuas are not integrated. Container availability at PPT is not visible to Tuas yard planner in real-time. The Tuas planner must rely on PORTNET inventory updates, which may be 30–60 minutes delayed.
+**Gap 2: PPT and Tuas Terminal Operating System are separate instances.**  
+Terminal Operating System at Pasir Panjang and Terminal Operating System at Tuas are not integrated. Container availability at PPT is not visible to Tuas yard planner in real-time. The Tuas planner must rely on Port Community System inventory updates, which may be 30–60 minutes delayed.
 
 **Gap 3: ITT arrival timing is not linked to QC loading sequence.**  
 Tuas yard planner expects containers at 1600 (road ITT estimate). But if sea ITT delivers at 1800, the QC loading sequence must be re-planned. No system provides a "containers in transit" view that updates the loading sequence in real-time.
 
 ### Current Manual Workaround
 
-1. **PPT yard planner** identifies 120 containers ready for ITT (CITOS query)
+1. **PPT yard planner** identifies 120 containers ready for ITT (Terminal Operating System query)
 2. Planner contacts Tuas yard planner (phone) to discuss receiving capacity
 3. Tuas planner confirms yard blocks available, suggests 60/40 road/sea split
-4. PPT planner contacts OptETruck (phone) to dispatch 15 trucks
-5. OptETruck dispatches trucks (auto, but PPT gate congestion delays 5 trucks)
+4. PPT planner contacts Truck Management System (phone) to dispatch 15 trucks
+5. Truck Management System dispatches trucks (auto, but PPT gate congestion delays 5 trucks)
 6. PPT planner contacts feeder vessel operator (phone) to confirm 1400 departure
 7. Feeder operator reports berth conflict — departure delayed to 1600
 8. Tuas planner learns of feeder delay (phone from PPT planner)
@@ -955,12 +955,12 @@ Across all 16 scenarios, three systemic patterns emerge:
 
 ### Pattern 1: Asynchronous State Updates
 Multiple systems maintain separate state copies that are not synchronised in real-time:
-- CITOS berth plan vs. OptEVoyage ETA updates (A1)
-- PORTNET eDO vs. haulier arrival time (C1)
-- PPT CITOS vs. Tuas CITOS (D4)
+- Terminal Operating System berth plan vs. Voyage Tracking System ETA updates (A1)
+- Port Community System eDO vs. haulier arrival time (C1)
+- PPT Terminal Operating System vs. Tuas Terminal Operating System (D4)
 - Physical logger vs. digital telematics (D3)
 
-**Root cause:** No unified event bus or real-time state synchronisation across PSA systems.
+**Root cause:** No unified event bus or real-time state synchronisation across Port Operator systems.
 
 ### Pattern 2: Manual Multi-Party Coordination
 Every scenario requires phone calls, WhatsApp groups, or email chains to resolve:

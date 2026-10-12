@@ -86,7 +86,7 @@ def test_switch_via_http(client):
     r2 = client.post("/agent/switch-problem/pb-12-itt")
     assert r2.status_code == 200
     data2 = r2.json()
-    assert "citos_ppt" in data2["systems"]
+    assert "tos_ppt" in data2["systems"]
     assert "get_itt_candidates" in data2["tools"]
     assert len(data2["hitl_gates"]) == 5
     # verify active-problem endpoint reflects latest
@@ -97,7 +97,7 @@ def test_switch_via_http(client):
 def test_prompt_templated_from_config():
     # Simulate Phase 6.2 build_system_prompt(config) — must be templated, not hardcoded
     def build_system_prompt(cfg):
-        return f"You are PSA Nexus coordinator for {cfg.problem.name} ({cfg.problem.id}) in {cfg.problem.sector}. Tools: {', '.join(t.name for t in cfg.tools)}"
+        return f"You are Nexus coordinator for {cfg.problem.name} ({cfg.problem.id}) in {cfg.problem.sector}. Tools: {', '.join(t.name for t in cfg.tools)}"
 
     cfg12 = load_problem_config("pb-12-itt")
     p12 = build_system_prompt(cfg12)

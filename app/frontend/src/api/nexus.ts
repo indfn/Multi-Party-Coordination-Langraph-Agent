@@ -143,11 +143,11 @@ export async function switchProblem(problemId: string) {
 }
 
 export async function getContainerData() {
-  return apiFetch<ContainerData>('/api/citos/ppt/containers');
+  return apiFetch<ContainerData>('/api/tos/ppt/containers');
 }
 
 export async function getTruckData() {
-  return apiFetch<TruckData>('/api/optetruck/capacity');
+  return apiFetch<TruckData>('/api/truck_system/capacity');
 }
 
 export async function getFeederData(feederId?: string) {
@@ -160,7 +160,7 @@ export async function getQcData(berthId: string = 'B-03') {
 }
 
 export async function getLoadingSequence() {
-  return apiFetch<LoadingSequence>('/api/citos/tuas/loading-sequence', {
+  return apiFetch<LoadingSequence>('/api/tos/tuas/loading-sequence', {
     method: 'POST',
   });
 }

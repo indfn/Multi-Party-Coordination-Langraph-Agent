@@ -1,1 +1,1 @@
-"""PSA Nexus — Agentic Multi-Party Coordination Platform."""
+"""Nexus — Agentic Multi-Party Coordination Platform."""

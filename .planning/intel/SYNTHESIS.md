@@ -7,7 +7,7 @@ Generated: 2026-08-17 (MODE: new; PRECEDENCE: ADR > SPEC > PRD > DOC)
 ## Docs consumed
 
 - 1 doc synthesized: 1 × PRD
-  - `/home/ahnaf/Documents/Projects/PSACodeSprint/CodeSprint.md` (classification `codesprint-md.json`, type PRD, confidence high, locked: false)
+  - `/home/ahnaf/Documents/Projects/PortCodeSprint/CodeSprint.md` (classification `codesprint-md.json`, type PRD, confidence high, locked: false)
 - Sources with precedence override: none
 - UNKNOWN low-confidence docs: 0
 - Cross-ref cycles: 0 (no cross_refs exist; cycle detection clean)
@@ -55,7 +55,7 @@ This directory's .planning/ roadmap covers IN-DEPTH DEEP RESEARCH and PROBLEM EV
 - Blockers: 0
 - Competing-variants: 0
 - Auto-resolved: 0
-- Detail: `/home/ahnaf/Documents/Projects/PSACodeSprint/.planning/INGEST-CONFLICTS.md` (INFO-only; no gates tripped)
+- Detail: `/home/ahnaf/Documents/Projects/PortCodeSprint/.planning/INGEST-CONFLICTS.md` (INFO-only; no gates tripped)
 
 ## Intel files
 

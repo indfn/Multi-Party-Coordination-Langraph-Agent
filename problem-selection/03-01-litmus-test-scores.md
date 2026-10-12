@@ -13,7 +13,7 @@
 | # | Criterion | Pass Condition | Strict Fail Condition |
 |---|---|---|---|
 | **L1** | Non-Deterministic Reasoning | Unstructured communications, fuzzy trade-offs, dynamic multi-party negotiation | Solvable by standard SQL, deterministic `if/else` rules, or pure MILP/math solvers |
-| **L2** | Multi-Tool Calling (≥3 Systems) | Dynamically queries/mutates ≥3 distinct PSA platforms | Operates within 1–2 isolated databases |
+| **L2** | Multi-Tool Calling (≥3 Systems) | Dynamically queries/mutates ≥3 distinct Port Operator platforms | Operates within 1–2 isolated databases |
 | **L3** | Multi-Step Dynamic Loop | Ingest → Diagnose → Simulate → Coordinate → Verify → Execute | Single-turn prompt-response or single API call |
 | **L4** | Uncertainty & Latency | Noisy telemetry, unconfirmed replies, delayed manifest data | All inputs 100% complete, synchronous, static |
 | **L5** | Significant Macro ROI | ≥$5,000 per incident in demurrage, crane idling, re-handles, or SLA penalties | < $1,000/incident with negligible macro impact |
@@ -26,10 +26,10 @@
 
 | Criterion | Verdict | Justification |
 |-----------|---------|---------------|
-| **L1** | **PASS** | Requires reconciling conflicting objectives: vessel priority vs. QC capacity vs. feeder reliability vs. tidal windows. OptEVoyage ETA updates are fuzzy (AIS-derived,±2 hrs); tidal windows are physical constraints; feeder hold vs. roll is a multi-party trade-off. No single formula produces the optimal answer — depends on real-time context. |
-| **L2** | **PASS** | VTIS/STRAITREP (vessel traffic), OptEVoyage (JIT tracking), CITOS (berth allocation), PORTNET (feeder schedules) — 4 distinct PSA platforms. |
+| **L1** | **PASS** | Requires reconciling conflicting objectives: vessel priority vs. QC capacity vs. feeder reliability vs. tidal windows. Voyage Tracking System ETA updates are fuzzy (AIS-derived,±2 hrs); tidal windows are physical constraints; feeder hold vs. roll is a multi-party trade-off. No single formula produces the optimal answer — depends on real-time context. |
+| **L2** | **PASS** | VTIS/STRAITREP (vessel traffic), Voyage Tracking System (JIT tracking), Terminal Operating System (berth allocation), Port Community System (feeder schedules) — 4 distinct Port Operator platforms. |
 | **L3** | **PASS** | 8-step resolution workflow: receive ETA slip → assess berth alternatives → negotiate crane redeployment → confirm tidal window → contact shipping line → recalculate crane split → adjust yard plan → coordinate feeders. |
-| **L4** | **PASS** | OptEVoyage ETAs shift ±2 hrs; tidal windows are physically non-delayable; harbour pilot availability uncertain; feeder operator responsiveness variable. |
+| **L4** | **PASS** | Voyage Tracking System ETAs shift ±2 hrs; tidal windows are physically non-delayable; harbour pilot availability uncertain; feeder operator responsiveness variable. |
 | **L5** | **PASS** | $58,600–$131,600 per incident (vessel demurrage + QC idle + missed feeders + anchorage). 2–3 incidents/month during monsoon. |
 
 **Result: PASS (5/5)**
@@ -40,8 +40,8 @@
 
 | Criterion | Verdict | Justification |
 |-----------|---------|---------------|
-| **L1** | **PASS** | Requires reasoning over which adjacent berths can spare QCs without disrupting their own vessels — a context-dependent judgment. Emergency re-sequencing must account for vessel stability constraints (physical document/PDF) that CITOS cannot compute. Repair time is unpredictable and affects all downstream planning. |
-| **L2** | **PASS** | ROCC (crane ops), CITOS (QC scheduling), A*STAR FMS (AGV dispatch), PORTNET (vessel schedule) — 4 systems. |
+| **L1** | **PASS** | Requires reasoning over which adjacent berths can spare QCs without disrupting their own vessels — a context-dependent judgment. Emergency re-sequencing must account for vessel stability constraints (physical document/PDF) that Terminal Operating System cannot compute. Repair time is unpredictable and affects all downstream planning. |
+| **L2** | **PASS** | ROCC (crane ops), Terminal Operating System (QC scheduling), A*STAR FMS (AGV dispatch), Port Community System (vessel schedule) — 4 systems. |
 | **L3** | **PASS** | Containment → AGV rerouting → QC reassignment → vessel re-sequencing → shipping line notification → recovery monitoring. |
 | **L4** | **PASS** | Maintenance repair time is unpredictable (30 min–8 hrs). QC status transitions are sudden. AGV queue builds in real-time during containment. |
 | **L5** | **PASS** | $16,000–$24,000 per incident (QC downtime + vessel delay + AGV idle + cascade). 4–6 incidents/month across terminals. |
@@ -55,7 +55,7 @@
 | Criterion | Verdict | Justification |
 |-----------|---------|---------------|
 | **L1** | **FAIL** | IMDG segregation rules are deterministic — defined by class, UN number, and vessel-specific segregation table. Re-stowage under IMDG + stability constraints is a constraint satisfaction problem solvable by MILP. The ship planner's manual work is time-consuming but not cognitively ambiguous: identify compliant positions → check stability → select optimal. A rule engine with the IMDG table and vessel stability model can solve this. |
-| **L2** | **PASS** | PORTNET (EDI DG declaration), CITOS (stowage planning), MPA DGPE (regulatory) — 3 systems. |
+| **L2** | **PASS** | Port Community System (EDI DG declaration), Terminal Operating System (stowage planning), MPA DGPE (regulatory) — 3 systems. |
 | **L3** | **PASS** | Multi-step: receive DG amendment → review IMDG tables → identify compliant positions → stability check → update stowage → MPA re-approval → yard adjustment. |
 | **L4** | **PASS** | MPA re-approval turnaround is uncertain (1–4 hrs). DG amendment timing is unpredictable (up to 12 hrs before arrival). |
 | **L5** | **PASS** | $7,650–$23,250 per incident + regulatory penalty risk (up to $100,000). 1–2 incidents/month. |
@@ -69,8 +69,8 @@
 | Criterion | Verdict | Justification |
 |-----------|---------|---------------|
 | **L1** | **PASS** | Multi-objective trade-off: minimise total cost across vessel demurrage, feeder delays, customer SLA, and yard congestion. Requires reasoning over customer relationships and shipping line negotiations — qualitative judgment that cannot be captured in an objective function. Dynamic replanning as new ETA information arrives. |
-| **L2** | **PASS** | CITOS (berth + ship planning), PORTNET (feeder schedules), OptEVoyage (JIT tracking), yard operations (transhipment clustering) — 4 systems. |
-| **L3** | **PASS** | Delay notification → compute recoverable containers → assess feeder flexibility → simulate hold vs. roll → negotiate with shipping line → update CITOS → re-sequence yard. |
+| **L2** | **PASS** | Terminal Operating System (berth + ship planning), Port Community System (feeder schedules), Voyage Tracking System (JIT tracking), yard operations (transhipment clustering) — 4 systems. |
+| **L3** | **PASS** | Delay notification → compute recoverable containers → assess feeder flexibility → simulate hold vs. roll → negotiate with shipping line → update Terminal Operating System → re-sequence yard. |
 | **L4** | **PASS** | Feeder flexibility is unknown until assessed. Downstream port tidal windows constrain feeder hold decisions. Customer SLA terms vary per shipment. |
 | **L5** | **PASS** | $6,500–$36,500 per incident (feeder demurrage + rolled containers + SLA penalties + QC re-prioritisation). 3–5 incidents/month. |
 
@@ -83,12 +83,12 @@
 | Criterion | Verdict | Justification |
 |-----------|---------|---------------|
 | **L1** | **FAIL** | Diagnosis follows deterministic fault trees: temperature pattern + power status + compressor telemetry → root cause. Each cause (power fault, compressor failure, seal breach) maps to a specific response. Priority escalation based on cargo value is a simple if/then rule. M&R dispatch is nearest-available routing — a classical optimisation problem. No fuzzy reasoning required. |
-| **L2** | **FAIL** | ARMS (reefer monitoring) + CITOS (yard assignment) + maintenance crew (dispatch). Maintenance is a phone-based service, not a software platform. Only 2 distinct PSA software systems are dynamically queried. |
+| **L2** | **FAIL** | Reefer Monitoring System (reefer monitoring) + Terminal Operating System (yard assignment) + maintenance crew (dispatch). Maintenance is a phone-based service, not a software platform. Only 2 distinct Port Operator software systems are dynamically queried. |
 | **L3** | **PASS** | Alarm → diagnose root cause → prioritise by cargo value → dispatch technician → notify shipping line → log excursion. |
 | **L4** | **PASS** | Spoilage window is time-critical (2–4 hrs). Technician availability is uncertain. Root cause is ambiguous until technician arrives. |
 | **L5** | **PASS** | $505,700–$517,500 per incident for pharma total loss scenario. 5–8 incidents/month (all reefer types). |
 
-**Result: FAIL on L1 and L2** — Deterministic fault tree diagnosis; insufficient distinct PSA software platforms.
+**Result: FAIL on L1 and L2** — Deterministic fault tree diagnosis; insufficient distinct Port Operator software platforms.
 
 ---
 
@@ -97,7 +97,7 @@
 | Criterion | Verdict | Justification |
 |-----------|---------|---------------|
 | **L1** | **PASS** | Dynamic overflow routing requires real-time capacity assessment across multiple yard blocks. Re-handle vs. loading trade-off requires predicting downstream impact on vessel loading sequence — a temporal reasoning problem. Anticipatory action (slowing gate arrivals before overflow) requires prediction, not reaction. |
-| **L2** | **PASS** | CITOS (yard planning), A*STAR FMS (AGV dispatch), gate operations, aRMG controllers — 4 systems. |
+| **L2** | **PASS** | Terminal Operating System (yard planning), A*STAR FMS (AGV dispatch), gate operations, aRMG controllers — 4 systems. |
 | **L3** | **PASS** | Detect overflow risk → assess alternative blocks → verify constraints → schedule re-handles → adjust gate rate → update ship planner. |
 | **L4** | **PASS** | Vessel delay duration uncertain. Gate arrival rate fluctuates. Alternative block availability changes in real-time. |
 | **L5** | **PASS** | $12,900–$20,500 per incident (re-handles + AGV efficiency loss + extended berthing). 6–10 incidents/month during peak. |
@@ -111,7 +111,7 @@
 | Criterion | Verdict | Justification |
 |-----------|---------|---------------|
 | **L1** | **PASS** | While 5G→4G fallback is a network event, the operational response requires: predicting which AGVs are at risk of stranding based on battery level and position, deciding which QCs to slow first based on vessel priority, and coordinating graceful degradation that preserves maximum throughput. These are operational judgment calls, not network failover logic. |
-| **L2** | **PASS** | 5G network (Singtel), A*STAR FMS (AGV fleet), CITOS (QC scheduling), DTQC operations — 4 systems. |
+| **L2** | **PASS** | 5G network (Singtel), A*STAR FMS (AGV fleet), Terminal Operating System (QC scheduling), DTQC operations — 4 systems. |
 | **L3** | **PASS** | Detect latency spike → activate de-rating → predict stranded AGVs → adjust fleet parameters → notify QC operators → coordinate with Singtel → monitor restoration. |
 | **L4** | **PASS** | 5G restoration time uncertain (1–4 hrs). Battery depletion rates vary. AGV positions change during outage. |
 | **L5** | **PASS** | $21,100–$65,100 per incident (QC productivity + vessel delay + AGV fleet loss + restoration). 1–2 incidents/month. |
@@ -125,7 +125,7 @@
 | Criterion | Verdict | Justification |
 |-----------|---------|---------------|
 | **L1** | **PASS** | Predictive check before haulier departs depot requires reasoning over eDO release probability and VGM amendment feasibility — uncertain outcomes. Real-time queue management requires dynamic overflow lane activation and slot rebalancing. Multi-party coordination (shipping line, haulier, consignee) under time pressure involves unstructured phone/email communication. |
-| **L2** | **PASS** | AGS/OCR (gate processing), PORTNET (eDO status), weighbridge (VGM), OptETruck (slot management) — 4 systems. |
+| **L2** | **PASS** | AGS/OCR (gate processing), Port Community System (eDO status), weighbridge (VGM), Truck Management System (slot management) — 4 systems. |
 | **L3** | **PASS** | Pre-departure check → detect queue build → contact shipping line → resolve eDO → verify VGM → open overflow → rebalance slots → clear queue. |
 | **L4** | **PASS** | eDO release timing is shipping-line-dependent and unpredictable. VGM amendment window is time-constrained (>4 hrs before ETB). Queue build-up rate varies with peak arrival patterns. |
 | **L5** | **PASS** | $1,050–$2,000 per incident × 8–12 incidents/month = ~$8,400–$24,000/month. Per-incident below $5,000 threshold but aggregate is significant. |
@@ -138,22 +138,22 @@
 
 | Criterion | Verdict | Justification |
 |-----------|---------|---------------|
-| **L1** | **PASS** | Real-time GPS data analysis to predict which hauliers will miss slots requires dynamic reasoning. Slot rebalancing across OptETruck and SmartBooking involves multi-party coordination with hauliers who make independent routing decisions. Yard planner notification must anticipate cascade to vessel loading — temporal prediction. |
-| **L2** | **PASS** | OptETruck (TMS), SmartBooking (slot management), PORTNET (gate schedule), CITOS (yard planning) — 4 systems. |
+| **L1** | **PASS** | Real-time GPS data analysis to predict which hauliers will miss slots requires dynamic reasoning. Slot rebalancing across Truck Management System and Unified Booking Platform involves multi-party coordination with hauliers who make independent routing decisions. Yard planner notification must anticipate cascade to vessel loading — temporal prediction. |
+| **L2** | **PASS** | Truck Management System (TMS), Unified Booking Platform (slot management), Port Community System (gate schedule), Terminal Operating System (yard planning) — 4 systems. |
 | **L3** | **PASS** | Detect delay → predict slot misses → rebalance slots → notify yard planner → adjust vessel loading → monitor recovery. |
-| **L4** | **PASS** | Haulier routing decisions are autonomous (OptETruck cannot force routes). Traffic conditions evolve. Slot availability changes in real-time. |
+| **L4** | **PASS** | Haulier routing decisions are autonomous (Truck Management System cannot force routes). Traffic conditions evolve. Slot availability changes in real-time. |
 | **L5** | **PASS** | $15,500–$20,000 per incident (haulier idle + vessel delay + re-sequencing + carbon). 2–4 incidents/month. |
 
 **Result: PASS (5/5)**
 
 ---
 
-#### PB-10: Sea-to-Air Flight Cut-Off Threat (OptEModal)
+#### PB-10: Sea-to-Air Flight Cut-Off Threat (Intermodal Coordination Platform)
 
 | Criterion | Verdict | Justification |
 |-----------|---------|---------------|
 | **L1** | **PASS** | Multi-system orchestration with no single system having authority. Commercial judgment required: rebooking cost vs. customer SLA value. Document pre-clearance coordination with forwarders across time zones. Temporal reasoning over 12-hour window with fixed deadlines. |
-| **L2** | **PASS** | OptEModal (sea-air platform), CITOS (terminal ops), CALISTA (milestone tracking), TradeNet (customs), SATS/dnata (ground handling) — 5 systems. |
+| **L2** | **PASS** | Intermodal Coordination Platform (sea-air platform), Terminal Operating System (terminal ops), Supply Chain Platform (milestone tracking), TradeNet (customs), SATS/dnata (ground handling) — 5 systems. |
 | **L3** | **PASS** | Detect delay → list affected containers → request priority discharge → pre-lodge customs → check flight availability → estimate feasibility → rebook if necessary. |
 | **L4** | **PASS** | Vessel ETA may continue slipping. Customs broker document readiness uncertain. SATS slot availability variable. Flight rebooking depends on airline capacity. |
 | **L5** | **PASS** | $18,000–$73,000 per incident (flight rebooking + SLA + priority premiums + carbon). 1–2 incidents/month. |
@@ -167,7 +167,7 @@
 | Criterion | Verdict | Justification |
 |-----------|---------|---------------|
 | **L1** | **PASS** | Partial release reasoning: which containers can proceed while others are inspected — requires judgment about shipment dependencies. Cross-time-zone document retrieval involves coordination with parties in different time zones. Inspection prioritisation based on flight schedule urgency requires temporal reasoning. |
-| **L2** | **PASS** | TradeNet (customs), CALISTA (milestone tracking), OptEModal (transfer coordination) — 3 systems. |
+| **L2** | **PASS** | TradeNet (customs), Supply Chain Platform (milestone tracking), Intermodal Coordination Platform (transfer coordination) — 3 systems. |
 | **L3** | **PASS** | Detect hold → assess inspection requirements → retrieve documents cross-time-zone → request partial release → prioritise inspection → coordinate cargo release. |
 | **L4** | **PASS** | Inspector availability uncertain. Document retrieval across time zones involves latency (shipper in Mumbai, 2.5 hrs behind). Inspection completion time variable. |
 | **L5** | **PASS** | $3,700–$59,500 per incident (flight delay + cargo hold + customer impact + inspection fee). 2–4 incidents/month. |
@@ -180,10 +180,10 @@
 
 | Criterion | Verdict | Justification |
 |-----------|---------|---------------|
-| **L1** | **PASS** | Real-time split optimisation across road and sea modes requires reasoning over cost, time, and capacity simultaneously. Cross-terminal visibility gap (PPT and Tuas CITOS are separate instances) creates genuine information asymmetry. Dynamic re-routing when one mode is delayed requires multi-constraint judgment. |
-| **L2** | **PASS** | CITOS (PPT), CITOS (Tuas) — separate instances, OptETruck (road ITT), feeder vessels (sea ITT), PORTNET (inventory tracking) — 5 systems. |
+| **L1** | **PASS** | Real-time split optimisation across road and sea modes requires reasoning over cost, time, and capacity simultaneously. Cross-terminal visibility gap (PPT and Tuas Terminal Operating System are separate instances) creates genuine information asymmetry. Dynamic re-routing when one mode is delayed requires multi-constraint judgment. |
+| **L2** | **PASS** | Terminal Operating System (PPT), Terminal Operating System (Tuas) — separate instances, Truck Management System (road ITT), feeder vessels (sea ITT), Port Community System (inventory tracking) — 5 systems. |
 | **L3** | **PASS** | Identify candidates → assess road capacity → assess sea capacity → optimise split → dispatch → monitor arrivals → update Tuas loading sequence. |
-| **L4** | **PASS** | PPT container availability not visible to Tuas in real-time (PORTNET delayed 30–60 min). Feeder berth availability uncertain. Road ITT affected by traffic. |
+| **L4** | **PASS** | PPT container availability not visible to Tuas in real-time (Port Community System delayed 30–60 min). Feeder berth availability uncertain. Road ITT affected by traffic. |
 | **L5** | **PASS** | $15,600–$29,000 per incident (vessel delay + road ITT + sea ITT + re-handles). 4–6 incidents/month. |
 
 **Result: PASS (5/5)**
@@ -195,8 +195,8 @@
 | Criterion | Verdict | Justification |
 |-----------|---------|---------------|
 | **L1** | **PASS** | Multiship QC scheduling is NP-hard — requires heuristic search over combinatorial solution space. Reasoning over conflicting multi-vessel objectives with safety constraints and yard congestion prediction. Real-time re-optimisation as new information arrives (vessel updates, QC status changes). |
-| **L2** | **PASS** | CITOS (QC scheduling + berth allocation), A*STAR FMS (AGV dispatch), ROCC (crane operations), PORTNET (vessel schedules) — 4 systems. |
-| **L3** | **PASS** | Detect QC conflict → assess vessel priorities → predict yard congestion → run heuristic re-allocation → negotiate QC sharing → update CITOS → notify parties. |
+| **L2** | **PASS** | Terminal Operating System (QC scheduling + berth allocation), A*STAR FMS (AGV dispatch), ROCC (crane operations), Port Community System (vessel schedules) — 4 systems. |
+| **L3** | **PASS** | Detect QC conflict → assess vessel priorities → predict yard congestion → run heuristic re-allocation → negotiate QC sharing → update Terminal Operating System → notify parties. |
 | **L4** | **PASS** | Multiple vessels updating simultaneously. QC maintenance status changes. Yard block capacity fluctuates. |
 | **L5** | **PASS** | $20,000–$55,000 per incident (QC idle + vessel delay + yard cascade). 3–5 incidents/month. |
 
@@ -208,8 +208,8 @@
 
 | Criterion | Verdict | Justification |
 |-----------|---------|---------------|
-| **L1** | **PASS** | Real-time container availability verification requires cross-referencing iWX prediction, CITOS gate status, and shipping line approval — three asynchronous data sources. Routing decision must account for prediction uncertainty (wait vs. reroute vs. skip). Learning from prediction errors requires adaptive reasoning. |
-| **L2** | **PASS** | iWX (reuse marketplace), CITOS (gate data), PORTNET (shipping line approvals), OptETruck (haulier routing), iBOX (depot management) — 5 systems. |
+| **L1** | **PASS** | Real-time container availability verification requires cross-referencing iWX prediction, Terminal Operating System gate status, and shipping line approval — three asynchronous data sources. Routing decision must account for prediction uncertainty (wait vs. reroute vs. skip). Learning from prediction errors requires adaptive reasoning. |
+| **L2** | **PASS** | iWX (reuse marketplace), Terminal Operating System (gate data), Port Community System (shipping line approvals), Truck Management System (haulier routing), Depot Management System (depot management) — 5 systems. |
 | **L3** | **PASS** | Get candidates → verify availability → check approval → route haulier → handle failure → reroute or skip. |
 | **L4** | **PASS** | iWX predictions have 15–30 min uncertainty window. Shipping line approval timing is asynchronous. Container availability changes between prediction and dispatch. |
 | **L5** | **FAIL** | $200–$800 per failed reuse match. 15–25 incidents/month = $3,000–$20,000/month. Per-incident cost is micro-ROI (<$1,000). Aggregate monthly impact is moderate but does not meet the ≥$5,000 per-incident threshold for macro significance. |
@@ -223,7 +223,7 @@
 | Criterion | Verdict | Justification |
 |-----------|---------|---------------|
 | **L1** | **PASS** | Dynamic load balancing across multiple yard blocks requires real-time flow computation. Feedback loop between yard congestion and QC productivity creates coupled dynamics. Predictive buffering (anticipate QC rate changes and pre-adjust) requires temporal reasoning. |
-| **L2** | **PASS** | CITOS (QC scheduling + yard planning), A*STAR FMS (AGV dispatch), ROCC (crane operations), aRMG controllers — 4 systems. |
+| **L2** | **PASS** | Terminal Operating System (QC scheduling + yard planning), A*STAR FMS (AGV dispatch), ROCC (crane operations), aRMG controllers — 4 systems. |
 | **L3** | **PASS** | Get QC productivity → check AGV queue → check aRMG job queue → compute balanced flow → redirect AGVs → monitor synchronisation. |
 | **L4** | **PASS** | QC rate changes are sudden (breakdown, weather). AGV arrivals are continuous and variable. aRMG job completion times are stochastic. |
 | **L5** | **PASS** | $3,000–$8,000 per incident × 8–12 incidents/day = $24,000–$96,000/day during peak. Per-incident is borderline but daily aggregate is significant. |
@@ -237,7 +237,7 @@
 | Criterion | Verdict | Justification |
 |-----------|---------|---------------|
 | **L1** | **FAIL** | Core problem is depot-to-depot repositioning — a classic transportation/assignment problem solvable by MILP. Supply/demand matching across depots with truck routing constraints is a deterministic optimisation. Coordination with shipping line preferences adds some complexity but does not require LLM reasoning. |
-| **L2** | **PASS** | iWX (container reuse), OptETruck (haulier routing), iBOX (depot management), CITOS (container inventory), PORTNET (import/export data) — 5 systems. |
+| **L2** | **PASS** | iWX (container reuse), Truck Management System (haulier routing), Depot Management System (depot management), Terminal Operating System (container inventory), Port Community System (import/export data) — 5 systems. |
 | **L3** | **PASS** | Get depot inventory → predict demand → optimise repositioning → coordinate with shipping lines → track execution. |
 | **L4** | **PASS** | Depot inventory levels change in real-time. Shipping line preferences are variable. Truck fleet availability fluctuates. |
 | **L5** | **FAIL** | $50,000–$150,000/month across all depots (200–400 trips/month). Per-trip repositioning cost is $100–$200. Micro-ROI per action (<$1,000). Systemic issue, not incident-based. |
@@ -271,7 +271,7 @@
 
 Eliminated candidates:
 - **PB-03** (L1): Deterministic IMDG constraint satisfaction — rule engine with IMDG table + vessel stability model solves this.
-- **PB-05** (L1, L2): Deterministic fault tree diagnosis + only 2 PSA software systems (ARMS, CITOS).
+- **PB-05** (L1, L2): Deterministic fault tree diagnosis + only 2 Port Operator software systems (Reefer Monitoring System, Terminal Operating System).
 - **PB-14** (L5): Micro-ROI ($200–$800/incident) — insufficient macro impact per occurrence.
 - **PB-16** (L1, L5): Classic MILP transportation/assignment problem; micro-ROI per repositioning action.
 
@@ -295,7 +295,7 @@ Eliminated candidates:
 | Dimension | Weight | Description |
 |-----------|--------|-------------|
 | **Agentic AI Sweet Spot** | 30% | Degree of unstructured data, semantic ambiguity, and multi-party negotiation vs. simple math solvers |
-| **Cluster Multiplier / Coverage** | 25% | Number of passing problems resolved and total aggregate monthly impact across PSA |
+| **Cluster Multiplier / Coverage** | 25% | Number of passing problems resolved and total aggregate monthly impact across Port Operator |
 | **Demo Drama & Trace Visibility** | 25% | How visually clear and impressive the execution trace will be in a 10-minute video |
 | **Feasibility & API Mockability** | 20% | Practicality of building high-fidelity mock environments within hackathon timelines |
 
@@ -320,7 +320,7 @@ Eliminated candidates:
 
 **Demo Drama (5/5):** Maximum visibility. The execution trace shows: agent receives disruption → parses email/VHF notification → queries tools across multiple systems → reasons over options → drafts recovery proposal → presents HITL card to operator → operator approves → agent executes. Each step is visible, auditable, and compelling.
 
-**Feasibility (4/5):** Mock endpoints for PORTNET, CITOS, OptETruck, and email parsing are straightforward. The main challenge is simulating realistic multi-party response timing.
+**Feasibility (4/5):** Mock endpoints for Port Community System, Terminal Operating System, Truck Management System, and email parsing are straightforward. The main challenge is simulating realistic multi-party response timing.
 
 #### C6: QC-to-Yard Flow Synchronisation — Score: 3.40
 
@@ -364,13 +364,13 @@ Eliminated candidates:
 
 #### C5: Cross-Terminal Visibility Gap — Score: 2.20
 
-**Agentic Sweet Spot (2/5):** The core problem is data integration — creating a unified view across separate CITOS instances. This is an integration/middleware challenge, not an agentic reasoning problem.
+**Agentic Sweet Spot (2/5):** The core problem is data integration — creating a unified view across separate Terminal Operating System instances. This is an integration/middleware challenge, not an agentic reasoning problem.
 
 **Coverage (1/5):** Only 1 passing problem (PB-12) after PB-16 was eliminated. Lowest cluster multiplier.
 
 **Demo Drama (3/5):** Cross-terminal visibility is important but the demo trace is less dramatic.
 
-**Feasibility (3/5):** Mock cross-terminal queries require simulating two separate CITOS instances.
+**Feasibility (3/5):** Mock cross-terminal queries require simulating two separate Terminal Operating System instances.
 
 ---
 
@@ -388,17 +388,17 @@ Three candidates from C2 are the strongest:
 
 | Candidate | Financial Impact | Systems | Multi-Party Complexity | Demo Drama |
 |-----------|-----------------|---------|----------------------|------------|
-| **PB-01** | $58.6K–$131.6K/incident | 4 (VTIS, OptEVoyage, CITOS, PORTNET) | Duty manager, pilot, shipping line, ship planner, feeder operators | Highest — tidal windows, feeder cascades |
-| **PB-12** | $15.6K–$29K/incident | 5 (CITOS×2, OptETruck, feeder, PORTNET) | PPT planner, Tuas planner, ITT coordinator, feeder operator, gate | High — cross-terminal gap is systemic |
-| **PB-04** | $6.5K–$36.5K/incident | 4 (CITOS, PORTNET, OptEVoyage, yard) | Duty manager, ship planner, shipping line, feeder operator | High — hold vs. roll trade-off |
+| **PB-01** | $58.6K–$131.6K/incident | 4 (VTIS, Voyage Tracking System, Terminal Operating System, Port Community System) | Duty manager, pilot, shipping line, ship planner, feeder operators | Highest — tidal windows, feeder cascades |
+| **PB-12** | $15.6K–$29K/incident | 5 (Terminal Operating System×2, Truck Management System, feeder, Port Community System) | PPT planner, Tuas planner, ITT coordinator, feeder operator, gate | High — cross-terminal gap is systemic |
+| **PB-04** | $6.5K–$36.5K/incident | 4 (Terminal Operating System, Port Community System, Voyage Tracking System, yard) | Duty manager, ship planner, shipping line, feeder operator | High — hold vs. roll trade-off |
 
 ### Selected Flagship: PB-12 — Multi-Party ITT Coordination Failure (Cross-Terminal)
 
 **Rationale:**
 
-1. **Systemic Architecture Gap:** PB-12 exposes the most fundamental infrastructure limitation — PPT and Tuas CITOS are separate instances with no real-time integration. This is not a process problem that better phone calls could solve; it is a systems architecture gap that requires an intelligent coordination layer.
+1. **Systemic Architecture Gap:** PB-12 exposes the most fundamental infrastructure limitation — PPT and Tuas Terminal Operating System are separate instances with no real-time integration. This is not a process problem that better phone calls could solve; it is a systems architecture gap that requires an intelligent coordination layer.
 
-2. **Highest System Count (5):** PB-12 involves more distinct PSA platforms than any other C2 candidate: CITOS (PPT), CITOS (Tuas), OptETruck (road ITT), feeder vessels (sea ITT), PORTNET (inventory tracking). This maximises the multi-tool orchestration showcase.
+2. **Highest System Count (5):** PB-12 involves more distinct Port Operator platforms than any other C2 candidate: Terminal Operating System (PPT), Terminal Operating System (Tuas), Truck Management System (road ITT), feeder vessels (sea ITT), Port Community System (inventory tracking). This maximises the multi-tool orchestration showcase.
 
 3. **Dual Transport Mode Optimisation:** The road/sea ITT split decision is a genuinely multi-objective problem — cost, time, capacity, and downstream loading impact must be balanced simultaneously. This is more complex than single-mode coordination.
 
@@ -410,7 +410,7 @@ Three candidates from C2 are the strongest:
 
 | Check | Requirement | Evidence |
 |-------|-------------|----------|
-| **Event Trigger Ingestion** | Can receive and parse structured/unstructured disruption events | Container readiness notification from CITOS PPT + ITT dispatch request from coordinator |
+| **Event Trigger Ingestion** | Can receive and parse structured/unstructured disruption events | Container readiness notification from Terminal Operating System PPT + ITT dispatch request from coordinator |
 | **Observable Multi-Step Trace** | Execution produces visible thought → action → observation chain | 7-step workflow: identify → check road → check sea → optimise → dispatch → monitor → update |
 | **HITL Risk Gate** | At least one state-changing action requires human approval | Committing to road/sea split and dispatching 15 trucks requires ITT coordinator sign-off |
 | **Injected Failure Recovery** | Demonstrates graceful handling of a failure scenario | Feeder vessel berth conflict → agent dynamically shifts from 60/40 sea/road to 30/70 split, reroutes trucks |

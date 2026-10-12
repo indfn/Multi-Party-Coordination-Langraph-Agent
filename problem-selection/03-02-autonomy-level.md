@@ -12,17 +12,17 @@
 
 | Decision | Owner | Authority Scope | Agent Role |
 |----------|-------|----------------|------------|
-| **Container release from PPT yard** | PSA Singapore (PPT Yard Planner) | Approve container readiness for ITT dispatch | Agent can verify readiness, cannot override yard hold |
-| **Road ITT truck dispatch** | PSA Singapore (ITT Coordinator) via OptETruck | Authorise truck deployment from PPT | Agent can compute optimal dispatch, cannot commit without sign-off |
+| **Container release from PPT yard** | Port Operator (PPT Yard Planner) | Approve container readiness for ITT dispatch | Agent can verify readiness, cannot override yard hold |
+| **Road ITT truck dispatch** | Port Operator (ITT Coordinator) via Truck Management System | Authorise truck deployment from PPT | Agent can compute optimal dispatch, cannot commit without sign-off |
 | **Sea ITT feeder departure** | Feeder Operator | Confirm berth availability, departure time | Agent can query schedule, cannot force departure |
 | **Feeder vessel schedule hold** | Feeder Operator + Shipping Line | Commercial decision to hold or depart | Agent can simulate cost of hold vs. departure, cannot negotiate |
-| **Tuas yard receiving capacity** | PSA Singapore (Tuas Yard Planner) | Approve incoming container allocation | Agent can recommend block assignment, cannot override |
-| **QC loading sequence at Tuas** | PSA Singapore (Ship Planner) | Final loading order | Agent can propose re-sequence, cannot commit |
-| **Cross-terminal inventory visibility** | PORTNET (shared inventory layer) | Real-time container status | Agent queries but does not modify PORTNET state |
+| **Tuas yard receiving capacity** | Port Operator (Tuas Yard Planner) | Approve incoming container allocation | Agent can recommend block assignment, cannot override |
+| **QC loading sequence at Tuas** | Port Operator (Ship Planner) | Final loading order | Agent can propose re-sequence, cannot commit |
+| **Cross-terminal inventory visibility** | Port Community System (shared inventory layer) | Real-time container status | Agent queries but does not modify Port Community System state |
 
 ### Governance Constraints
 
-**PSA Singapore** controls the terminal operations at both PPT and Tuas. The agent operates within PSA's authority — it can query, simulate, and recommend, but state-mutating actions at both terminals require PSA operator approval.
+**Port Operator** controls the terminal operations at both PPT and Tuas. The agent operates within Port Operator's authority — it can query, simulate, and recommend, but state-mutating actions at both terminals require Port Operator operator approval.
 
 **Feeder Operators** are external commercial entities. The agent cannot compel schedule changes. It can only present cost-benefit analysis and recommend actions to the ITT coordinator, who then contacts the feeder operator.
 
@@ -61,7 +61,7 @@ The HIGH risk rating comes from financial exposure ($15K–$29K per incident) an
 
 1. **Multi-party authority boundaries:** The agent cannot unilaterally commit feeder operators or shipping lines to schedule changes. It must present recommendations to the ITT coordinator, who then communicates with external parties. Tier 2 enforces this boundary by halting at the approval gate before any external commitment.
 
-2. **Cross-terminal state asymmetry:** PPT and Tuas CITOS are separate instances with 30–60 min data latency. The agent operates on potentially stale data. Tier 2 ensures a human reviews the recommendation against current operational reality before execution.
+2. **Cross-terminal state asymmetry:** PPT and Tuas Terminal Operating System are separate instances with 30–60 min data latency. The agent operates on potentially stale data. Tier 2 ensures a human reviews the recommendation against current operational reality before execution.
 
 3. **Financial cascade risk:** The wrong road/sea split can cascade to missed feeder connections, downstream port delays, and customer SLA breaches. The cost of a bad recommendation exceeds the cost of a 30-second human review. Tier 2 eliminates this risk.
 
@@ -87,9 +87,9 @@ These actions execute without human approval. They are all read-only queries or 
 
 | Tool Call | Description | Risk Level | Justification |
 |-----------|-------------|------------|---------------|
-| `get_itt_candidates(cit_ppt, vessel_id)` | Query PPT CITOS for containers requiring cross-terminal transfer | None | Read-only inventory query |
-| `check_road_itt_capacity(optetruck, terminal, time_window)` | Query OptETruck for available trucks, transit time, and road conditions | None | Read-only capacity check |
-| `check_sea_itt_capacity(portnet, feeder_id)` | Query PORTNET for feeder vessel availability, berth status, and departure window | None | Read-only schedule query |
+| `get_itt_candidates(cit_ppt, vessel_id)` | Query PPT Terminal Operating System for containers requiring cross-terminal transfer | None | Read-only inventory query |
+| `check_road_itt_capacity(truck_system, terminal, time_window)` | Query Truck Management System for available trucks, transit time, and road conditions | None | Read-only capacity check |
+| `check_sea_itt_capacity(pcs, feeder_id)` | Query Port Community System for feeder vessel availability, berth status, and departure window | None | Read-only schedule query |
 | `get_feeder_downstream_impact(feeder_id, hold_hours)` | Simulate downstream port impact of holding feeder | None | Simulation only — no commitment |
 | `compute_itt_split(candidates, road_capacity, sea_capacity)` | Run multi-constraint optimisation for road/sea allocation | None | Computation only — output is a recommendation |
 | `estimate_yard_to_qc_time(tuas_yard_block, qc_id)` | Estimate time from yard block to QC loading position | None | Read-only time estimate |
@@ -102,8 +102,8 @@ These actions require ITT coordinator sign-off before execution. The agent prese
 
 | Tool Call | Description | Risk Level | Approval Gate |
 |-----------|-------------|------------|---------------|
-| `dispatch_road_itt(optetruck, truck_count, route)` | Commit trucks to road ITT dispatch | High | ITT coordinator must approve truck count and route before dispatch |
-| `request_feeder_hold(portnet, feeder_id, hold_hours)` | Request feeder operator to hold departure | High | ITT coordinator must review cost analysis before contacting feeder operator |
+| `dispatch_road_itt(truck_system, truck_count, route)` | Commit trucks to road ITT dispatch | High | ITT coordinator must approve truck count and route before dispatch |
+| `request_feeder_hold(pcs, feeder_id, hold_hours)` | Request feeder operator to hold departure | High | ITT coordinator must review cost analysis before contacting feeder operator |
 | `update_tuas_loading_sequence(cit_tuas, itt_eta, container_ids)` | Modify Tuas QC loading sequence to accommodate ITT arrivals | High | Ship planner must approve re-sequence before commit |
 | `notify_yard_delay(cit_tuas, delayed_containers, new_eta)` | Notify Tuas yard planner of delayed container arrivals | Medium | Yard planner must acknowledge before re-allocation |
 | `commit_itt_split(road_count, sea_count, container_ids)` | Finalise the road/sea ITT split for execution | Critical | ITT coordinator must sign off on final split — this is the single most consequential decision |
@@ -147,7 +147,7 @@ These conditions force escalation to the Terminal Duty Manager (one level above 
 | **Model confidence below threshold** | Confidence score < 0.85 | Agent is uncertain about optimal split — requires senior judgment |
 | **Feeder hold exceeds downstream tolerance** | Hold request > 1.5 hrs | Feeder may miss downstream tidal window — commercial risk escalation |
 | **Financial recovery cost exceeds limit** | Recommended action cost > $10,000 | High single-action cost — requires duty manager sign-off |
-| **Data latency exceeds freshness window** | PPT/Tuas CITOS data age > 30 min | Agent operating on stale cross-terminal data — human must verify current state |
+| **Data latency exceeds freshness window** | PPT/Tuas Terminal Operating System data age > 30 min | Agent operating on stale cross-terminal data — human must verify current state |
 | **Road ITT capacity below threshold** | Available trucks < 60% of requirement | Insufficient road capacity — requires emergency sea ITT coordination |
 | **Feeder operator unresponsive** | No response within 15 min of query | Cannot confirm feeder availability — human must escalate via phone |
 | **Conflict between PPT and Tuas planners** | PPT planner and Tuas planner recommend different splits | Cross-terminal disagreement — requires duty manager arbitration |
@@ -176,7 +176,7 @@ When an escalation trigger fires:
 
 ## Acceptance Criteria Verification
 
-- [x] **Clear separation between PSA authority vs. Carrier/Feeder authority** — Step 1 decision ownership matrix defines 7 decision categories with explicit owners.
+- [x] **Clear separation between Port Operator authority vs. Carrier/Feeder authority** — Step 1 decision ownership matrix defines 7 decision categories with explicit owners.
 - [x] **Defensible justification against full autonomy** — Step 3 counters the Autonomy Trap with 4 arguments (multi-party boundaries, data asymmetry, cascade risk, competition alignment).
 - [x] **Concrete table of Automated Tool Calls vs. Mandatory HITL Approval Gates** — Step 4 defines 6 automated tools and 5 human-gated actions with risk ratings.
 
@@ -204,4 +204,4 @@ When an escalation trigger fires:
 - `problems/02-03-problem-bank.md` — PB-12 problem charter and mock tools
 - `problems/02-02-failure-modes.md` — D4 failure mode analysis
 - `research/flows/critical-flows.md` — ITT coordination decision flow
-- `research/systems/baseline-systems.md` — OptETruck, CITOS, PORTNET profiles
+- `research/systems/baseline-systems.md` — Truck Management System, Terminal Operating System, Port Community System profiles

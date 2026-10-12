@@ -1,4 +1,4 @@
-"""Realistic mock data for PSA systems — grounded in Master Charter cost parameters.
+"""Realistic mock data for Port Operator systems — grounded in Master Charter cost parameters.
 
 Supports scenario-based randomization via app.mocks.scenarios.
 When a scenario is active, data generators randomize within scenario distributions.
@@ -39,12 +39,12 @@ COST_PARAMS = {
 
 
 # ---------------------------------------------------------------------------
-# Container data (CITOS PPT) — 120 containers across 4 yard blocks
+# Container data (Terminal Operating System PPT) — 120 containers across 4 yard blocks
 # ---------------------------------------------------------------------------
 
 CONSIGNEES = [
     "DB Schenker", "Kuehne+Nagel", "DHL Supply Chain", "Sinotrans",
-    "CMA CGM Logistics", "Maersk Logistics", "PSA Marine", "YCH Group",
+    "CMA CGM Logistics", "Maersk Logistics", "Marine Services Unit", "YCH Group",
     "CEVA Logistics", "Agility Logistics", "Bolloré Logistics", "Expeditors",
 ]
 
@@ -128,7 +128,7 @@ _stale_overrides: dict[str, int] = {}
 
 
 def get_container_data(vessel_id: str = "MV PACIFIC STAR", run_id: str = "") -> dict:
-    """CITOS PPT container readiness — Tool 1 response.
+    """Terminal Operating System PPT container readiness — Tool 1 response.
 
     When a scenario is active, generates randomized data within scenario distributions.
     Otherwise returns deterministic hardcoded data (backward compatible).
@@ -188,7 +188,7 @@ def get_container_data(vessel_id: str = "MV PACIFIC STAR", run_id: str = "") -> 
         result["data_timestamp"] = (datetime.now(timezone.utc) - timedelta(minutes=effective_stale)).isoformat()
         result["data_age_minutes"] = float(effective_stale)
         result["edge_case"] = "data_staleness"
-        result["edge_case_note"] = f"PPT CITOS data is {effective_stale} min old — containers may not be ready."
+        result["edge_case_note"] = f"PPT Terminal Operating System data is {effective_stale} min old — containers may not be ready."
     else:
         result["data_timestamp"] = datetime.now(timezone.utc).isoformat()
         result["data_age_minutes"] = 0.5
@@ -197,7 +197,7 @@ def get_container_data(vessel_id: str = "MV PACIFIC STAR", run_id: str = "") -> 
 
 
 # ---------------------------------------------------------------------------
-# Truck data (OptETruck) — road ITT capacity
+# Truck data (Truck Management System) — road ITT capacity
 # ---------------------------------------------------------------------------
 
 TRUCK_DATA = {
@@ -218,7 +218,7 @@ TRUCK_DATA = {
 
 
 def get_truck_data(terminal: str = "PPT") -> dict:
-    """OptETruck road ITT capacity — Tool 2 response.
+    """Truck Management System road ITT capacity — Tool 2 response.
 
     When a scenario is active, randomizes truck availability and transit time.
     """
@@ -261,7 +261,7 @@ def get_truck_data(terminal: str = "PPT") -> dict:
 
 
 # ---------------------------------------------------------------------------
-# Feeder data (PORTNET) — sea ITT capacity
+# Feeder data (Port Community System) — sea ITT capacity
 # ---------------------------------------------------------------------------
 
 FEEDER_DATA = {
@@ -291,7 +291,7 @@ _FEEDER_DATA_ORIGINAL: dict = copy.deepcopy(FEEDER_DATA)
 
 
 def get_feeder_data(feeder_id: str = "FEEDER ATLANTIC-03", run_id: str = "") -> dict:
-    """PORTNET sea ITT capacity — Tool 3 response (per-run override isolated).
+    """Port Community System sea ITT capacity — Tool 3 response (per-run override isolated).
 
     When a scenario is active, randomizes feeder occupancy.
     """
@@ -329,7 +329,7 @@ def get_feeder_data(feeder_id: str = "FEEDER ATLANTIC-03", run_id: str = "") -> 
 
 
 # ---------------------------------------------------------------------------
-# Tuas yard data (CITOS Tuas) — loading sequence
+# Tuas yard data (Terminal Operating System Tuas) — loading sequence
 # ---------------------------------------------------------------------------
 
 TUAS_YARD_DATA = {
@@ -350,13 +350,13 @@ def get_loading_sequence_data(
     itt_eta_road: str = "14:30",
     itt_eta_sea: str = "16:30",
 ) -> dict:
-    """CITOS Tuas loading sequence — Tool 5 response.
+    """Terminal Operating System Tuas loading sequence — Tool 5 response.
 
     When a scenario is active, adjusts QC assignments based on container volume.
     """
     from app.mocks.scenarios import _active_scenario_id, _rng, PB12_SCENARIOS
 
-    # Scale QC assignments by container volume — realistic PSA Tuas operation
+    # Scale QC assignments by container volume — realistic Port Operator Tuas operation
     # Normal: 4-5 cranes; high-volume (130+): 6-7; very high (150+): 8
     if _active_scenario_id in PB12_SCENARIOS:
         sc = PB12_SCENARIOS[_active_scenario_id]

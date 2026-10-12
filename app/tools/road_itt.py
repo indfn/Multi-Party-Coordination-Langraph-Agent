@@ -53,7 +53,7 @@ def _fleet_for_hour(hour: int | None) -> int:
 
 class RoadITTCapacityTool(BaseTool):
     name = "check_road_itt_capacity"
-    description = "Query OptETruck for available trucks, transit time, and road conditions for PPT→Tuas"
+    description = "Query Truck Management System for available trucks, transit time, and road conditions for PPT→Tuas"
     parameters_schema = {
         "type": "object",
         "properties": {

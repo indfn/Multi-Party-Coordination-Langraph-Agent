@@ -29,7 +29,7 @@ export default function EventCard({ eventId, eventData, scenario, problemId, onR
     );
   }
 
-  const source = (eventData.source as string) || 'CITOS_PPT';
+  const source = (eventData.source as string) || 'Terminal Operating System_PPT';
   const eventType = (eventData.event_type as string) || 'ITT_COORDINATION_REQUEST';
   const vesselId = (eventData.vessel_id as string) || '—';
   const containerCount = (eventData.container_count as number) || 0;

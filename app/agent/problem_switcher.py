@@ -1,4 +1,4 @@
-"""Problem switching — runtime config reload for PSA Nexus platform.
+"""Problem switching — runtime config reload for Nexus platform.
 
 Consumer of app/tools/registry.py (owned by Phase 5.1) — do NOT redefine registry here.
 This module only loads ProblemConfig and updates the active problem id.

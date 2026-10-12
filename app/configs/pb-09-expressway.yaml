@@ -4,18 +4,18 @@ problem:
   sector: Gate & External Haulage
   description: Reroute trucks when AYE/ECP is blocked, reallocate time slots
 systems:
-- name: optetruck
+- name: truck_system
   type: transport
   capabilities:
   - truck_tracking
   - route_optimisation
   - gate_booking
-- name: smartbooking
+- name: booking_platform
   type: gate_booking
   capabilities:
   - time_slot_management
   - gate_capacity
-- name: ibox
+- name: depot_system
   type: gate_system
   capabilities:
   - truck_arrival
@@ -23,22 +23,22 @@ systems:
 tools:
 - name: query_traffic_status
   systems:
-  - optetruck
+  - truck_system
   tool_id: tool_1
 - name: check_alternate_routes
   systems:
-  - optetruck
+  - truck_system
   tool_id: tool_2
 - name: compute_reroute_plan
   systems: []
   tool_id: tool_3
 - name: reallocate_time_slots
   systems:
-  - smartbooking
+  - booking_platform
   tool_id: tool_4
 - name: notify_gate_operations
   systems:
-  - ibox
+  - depot_system
   tool_id: tool_5
 hitl_gates:
 - gate_id: hitl_1
@@ -104,11 +104,11 @@ edge_cases:
 - case_id: ec_1
   name: Secondary expressway closure
   inject_at_step: 4
-  description: OptETruck reports PIE also congested - alternate route TPE blocked
+  description: Truck Management System reports PIE also congested - alternate route TPE blocked
     by accident at 14:30
   agent_response: Re-compute reroute (TPE->BKE->PIE), request re-approval
 - case_id: ec_2
   name: Gate capacity exceeded
   inject_at_step: 6
-  description: SmartBooking reports gate slots 100% booked - reallocation window missed
+  description: Unified Booking Platform reports gate slots 100% booked - reallocation window missed
   agent_response: Trigger escalation, hold gate sequence

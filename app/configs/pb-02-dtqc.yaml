@@ -10,7 +10,7 @@ systems:
   - crane_status
   - diagnostics
   - maintenance_schedule
-- name: citos_ppt
+- name: tos_ppt
   type: terminal_os
   capabilities:
   - container_backlog
@@ -28,14 +28,14 @@ tools:
   tool_id: tool_1
 - name: check_container_backlog
   systems:
-  - citos_ppt
+  - tos_ppt
   tool_id: tool_2
 - name: compute_crane_reallocation
   systems: []
   tool_id: tool_3
 - name: notify_yard_planner
   systems:
-  - citos_ppt
+  - tos_ppt
   tool_id: tool_4
 - name: request_emergency_crane
   systems:

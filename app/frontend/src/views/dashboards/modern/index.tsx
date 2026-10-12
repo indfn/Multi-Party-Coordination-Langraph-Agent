@@ -164,7 +164,7 @@ export default function NexusDashboard() {
   }, [activeProblem]);
 
   // Status cards populate progressively via SSE tool_result events
-  // (get_itt_candidates → CITOS, check_road → OptETruck, check_sea → Feeder, compute_split → QC)
+  // (get_itt_candidates → Terminal Operating System, check_road → Truck Management System, check_sea → Feeder, compute_split → QC)
 
   const applyCostFromPayload = useCallback((payload: Record<string, unknown>) => {
     try {
@@ -655,17 +655,17 @@ export default function NexusDashboard() {
           />
 
           <SystemStatusCard
-            name="CITOS PPT"
+            name="Terminal Operating System PPT"
             awaiting={!containers}
             metric={containers ? `Total ${containers.total_teu} TEU for Transfer` : '—'}
             value={containers?.total_teu ?? 0}
             max={containers?.total_teu ?? 1}
             status={containerStatus}
             detail={containers ? `${containers.container_breakdown?.['40ft_feu'] ?? 0} · 40ft Containers\n${containers.container_breakdown?.['20ft_teu'] ?? 0} · 20ft Containers` : undefined}
-            tooltip={containers ? `ITT need: ${containers.container_breakdown?.['40ft_feu'] ?? 0}×40ft (×2 TEU) + ${containers.container_breakdown?.['20ft_teu'] ?? 0}×20ft = ${containers.total_teu} TEU · ${containers.dg_containers} DG · ${containers.blocks_affected?.join(', ') || '4 blocks'} · ${containers.data_age_minutes < 10 ? `${containers.data_age_minutes.toFixed(1)}m fresh` : `${containers.data_age_minutes.toFixed(0)}m stale`}` : 'ITT candidates from CITOS PPT'}
+            tooltip={containers ? `ITT need: ${containers.container_breakdown?.['40ft_feu'] ?? 0}×40ft (×2 TEU) + ${containers.container_breakdown?.['20ft_teu'] ?? 0}×20ft = ${containers.total_teu} TEU · ${containers.dg_containers} DG · ${containers.blocks_affected?.join(', ') || '4 blocks'} · ${containers.data_age_minutes < 10 ? `${containers.data_age_minutes.toFixed(1)}m fresh` : `${containers.data_age_minutes.toFixed(0)}m stale`}` : 'ITT candidates from Terminal Operating System PPT'}
           />
           <SystemStatusCard
-            name="OptETruck"
+            name="Truck Management System"
             awaiting={!trucks}
             metric={`${trucks?.available_trucks ?? 0} / ${trucks?.total_fleet ?? 0} trucks`}
             value={trucks?.available_trucks ?? 0}

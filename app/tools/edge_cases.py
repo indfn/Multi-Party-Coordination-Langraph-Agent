@@ -30,7 +30,7 @@ def inject_feeder_berth_conflict(
         ov["delay_minutes"] = 120
         ov["edge_case"] = "feeder_berth_conflict"
         ov["edge_case_note"] = (
-            "PORTNET reports feeder berth conflict — departure delayed to 1600. "
+            "Port Community System reports feeder berth conflict — departure delayed to 1600. "
             "Feeder will miss downstream tidal window at Port Klang."
         )
         return copy.deepcopy({**mock_data.FEEDER_DATA, **ov})
@@ -44,7 +44,7 @@ def inject_feeder_berth_conflict(
     mock_data.FEEDER_DATA["delay_minutes"] = 120
     mock_data.FEEDER_DATA["edge_case"] = "feeder_berth_conflict"
     mock_data.FEEDER_DATA["edge_case_note"] = (
-        "PORTNET reports feeder berth conflict — departure delayed to 1600. "
+        "Port Community System reports feeder berth conflict — departure delayed to 1600. "
         "Feeder will miss downstream tidal window at Port Klang."
     )
     return copy.deepcopy(mock_data.FEEDER_DATA)
